@@ -13,9 +13,9 @@
             default-active="apps"
             router
           >
-            <el-menu-item index="apps">apps</el-menu-item>
-            <el-menu-item index="store">store</el-menu-item>
-            <el-menu-item index="setting">setting</el-menu-item>
+            <el-menu-item index="apps">{{$t("index.apps")}}</el-menu-item>
+            <el-menu-item index="store">{{$t("index.store")}}</el-menu-item>
+            <el-menu-item index="setting">{{$t("index.setting")}}</el-menu-item>
           </el-menu>
         </el-header>
 
