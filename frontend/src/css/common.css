@@ -1,27 +1,47 @@
-.no-padding{
+.no-padding {
     padding: 0px;
 }
 
-.full_size{
-    width: 100%; 
+.full_size {
+    width: 100%;
     height: 100%
 }
 
-.main_router{
-    padding: 6px;
+.main_router {
+    padding: 8px;
     height: 100%;
     background-color: rgb(238, 238, 238);
 }
 
-.main_page{
-    background-color: white;
-    width: 100%; 
-    min-height: 100%
+.main_page {
+    background-color: rgb(238, 238, 238);
+    width: 100%;
+    min-height: 100%;
 }
 
-.two_item_div{
-    display:flex;
+.two_item_div {
+    display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 5px;
 }
+
+.vertical_div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main_text{
+    font-weight: bold;
+    font-size: 18px;
+    margin-top:12px
+}
+
+.secondary_text{
+    color: rgb(71, 71, 71);
+    font-size: 14px;
+    margin-top:6px
+}
+

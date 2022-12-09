@@ -4,7 +4,6 @@
       <div class="two_item_div">
         <div
           style="
-            margin-left: 10px;
             margin-right: 10px;
             font-weight: 500;
             font-size: large;
