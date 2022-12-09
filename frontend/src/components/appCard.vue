@@ -3,12 +3,12 @@
     <div class="vertical_div">
       <el-image
         style="width: 120px; height: 120px;Border-radius:3px;margin-top: 36px;"
-        src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+        :src="url"
       />
     </div>
     <div class="vertical_div" style="">
-      <div class="main_text">mysql</div>
-      <div class="secondary_text">数据库</div>
+      <div class="main_text">{{name}}</div>
+      <div class="secondary_text">{{category}}</div>
     </div>
   </div>
 </template>

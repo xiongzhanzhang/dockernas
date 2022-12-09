@@ -1,11 +1,14 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"tinycloud/internal/api"
 
-func registerRoutes(router *gin.Engine){
-	router.GET("/api/test", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "test",
-		})
-	})
+	"github.com/gin-gonic/gin"
+)
+
+func registerRoutes(router *gin.Engine) {
+	apiv1 := router.Group("/api")
+	{
+		apiv1.GET("app", api.GetApps)
+	}
 }

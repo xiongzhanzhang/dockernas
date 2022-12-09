@@ -2,14 +2,9 @@
   <div class="main_page">
     <div class="two_item_div">
       <div class="two_item_div">
-        <div
-          style="
-            margin-right: 10px;
-            font-weight: 500;
-            font-size: large;
-          "
-          >{{ $t("store.appType") }}</div
-        >
+        <div style="margin-right: 10px; font-weight: 500; font-size: large">
+          {{ $t("store.appType") }}
+        </div>
         <el-select
           v-model="selectTypes"
           multiple
@@ -30,7 +25,7 @@
         <el-input
           v-model="searchStr"
           class="w-50 m-2"
-          style="width:300px"
+          style="width: 300px"
           placeholder="search"
           size="large"
         >
@@ -41,15 +36,23 @@
       </div>
     </div>
 
-    <div style="padding:6px">
-        <el-row>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-            <el-col :xs="8" :sm="6" :md="4" :lg="4"><appCard></appCard></el-col>
-        </el-row>
+    <div style="padding: 6px">
+      <el-row>
+        <el-col
+          :xs="8"
+          :sm="6"
+          :md="4"
+          :lg="4"
+          v-for="app in apps"
+          :key="app.name"
+        >
+          <appCard
+            :name="app.name"
+            :url="app.imgUrl"
+            :category="app.category"
+          ></appCard>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -57,14 +60,16 @@
 
 <script>
 import appCard from "../components/appCard.vue";
+import { getApps } from "../api/store";
 
 export default {
-    components: {
-        appCard,
+  components: {
+    appCard,
   },
   name: "store",
   data() {
     return {
+      apps: [],
       selectTypes: [],
       searchStr: "",
       appTypes: [
@@ -75,12 +80,25 @@ export default {
         {
           value: "Option2",
           label: "Option2",
-        }
+        },
       ],
     };
   },
   methods: {
     filterChange() {},
+    flushApps() {
+      getApps()
+        .then((response) => {
+          console.log(response);
+          this.apps = response["data"]["list"];
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    this.flushApps();
   },
 };
 </script>
