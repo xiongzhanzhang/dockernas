@@ -47,9 +47,7 @@
           :key="app.name"
         >
           <appCard
-            :name="app.name"
-            :url="app.imgUrl"
-            :category="app.category"
+            :app="app"
           ></appCard>
         </el-col>
       </el-row>

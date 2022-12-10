@@ -19,7 +19,8 @@ export default defineConfig({
         target: 'http://localhost:8080',
         ws: true,
         changeOrigin: true
-      }
+      },
+      '/apps':  'http://localhost:8080',
     }
   },
   define: {

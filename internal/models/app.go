@@ -1,7 +1,8 @@
 package models
 
 type App struct {
-	Name     string `json:"name"`
-	Category string `json:"category"`
-	ImgUrl   string `json:"imgUrl"`
+	Name     string
+	Category []string
+	Summary  string
+	ImgUrl   string
 }

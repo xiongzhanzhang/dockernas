@@ -2,7 +2,7 @@ const setting = {
   }
   
   const index = {
-    apps: '我的应用',
+    apps: '应用实例',
     store: '应用市场',
     setting: '设置'
   }
