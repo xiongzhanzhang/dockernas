@@ -3,7 +3,7 @@
     <div class="vertical_div">
       <el-image
         style="width: 120px; height: 120px;Border-radius:3px;margin-top: 36px;"
-        :src="app.ImgUrl"
+        :src="app.IconUrl"
       />
     </div>
     <div class="vertical_div" style="">

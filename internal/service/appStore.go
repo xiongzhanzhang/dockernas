@@ -1,11 +1,11 @@
 package service
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"strings"
 	"tinycloud/internal/models"
+	"tinycloud/internal/utils"
 )
 
 func GetApps() []models.App {
@@ -15,7 +15,7 @@ func GetApps() []models.App {
 func getAppsFromPath(path string) []models.App {
 	dirs, err := ioutil.ReadDir(path)
 	if err != nil {
-		log.Print("list dir error", err)
+		log.Println("list dir error", err)
 		return nil
 	}
 
@@ -24,19 +24,34 @@ func getAppsFromPath(path string) []models.App {
 		if fi.IsDir() {
 			var app models.App
 			app.Name = fi.Name()
-
-			introduction, error := ioutil.ReadFile(path + "/" + fi.Name() + "/introduction.json")
-			if error == nil {
-				err := json.Unmarshal([]byte(introduction), &app)
-				if err != nil {
-					log.Print("read json error", err)
-				}
-			}
-
-			app.ImgUrl = strings.Replace(path, "./", "/", 1) + "/" + fi.Name() + "/icon.jpg"
+			app.IconUrl = strings.Replace(path, "./", "/", 1) + "/" + fi.Name() + "/icon.jpg"
+			utils.GetObjFromJsonFile(path+"/"+fi.Name()+"/introduction.json", &app)
+			app.DockerVersions = getDockerTemplates(path + "/" + fi.Name() + "/docker")
 			apps = append(apps, app)
 		}
 	}
 
 	return apps
+}
+
+func getDockerTemplates(path string) []models.DockerTemplate {
+	var dockerTemplates []models.DockerTemplate
+
+	dirs, err := ioutil.ReadDir(path)
+	if err != nil {
+		log.Println("list dir error", err)
+		return dockerTemplates
+	}
+
+	for _, fi := range dirs {
+		if fi.IsDir() {
+			var dockerTemplate models.DockerTemplate
+			dockerTemplate.Version = fi.Name()
+			if utils.GetObjFromJsonFile(path+"/"+fi.Name()+"/template.json", &dockerTemplate) != nil {
+				dockerTemplates = append(dockerTemplates, dockerTemplate)
+			}
+		}
+	}
+
+	return dockerTemplates
 }

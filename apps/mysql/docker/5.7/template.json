@@ -1,0 +1,28 @@
+{
+    "ImageUrl":"mysql:5.7.40",
+    "PortParams":[
+        {
+            "Prompt":"数据库端口",
+            "Key":"3306",
+            "Value":"3306",
+            "Reg":""
+        }
+    ],
+    "EnvParams":[
+        {
+            "Prompt":"初始密码",
+            "Key":"MYSQL_ROOT_PASSWORD",
+            "Value":"",
+            "Reg":""
+        }
+    ],
+    "LocalVolume":[
+        {
+            "Prompt":"数据库数据目录",
+            "Key":"/var/lib/mysql",
+            "Value":"",
+            "Reg":""
+        }
+    ],
+    "DfsVolume":[]
+}
