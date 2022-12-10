@@ -1,28 +1,28 @@
 {
-    "ImageUrl":"mysql:5.7.40",
-    "PortParams":[
+    "imageUrl":"mysql:5.7.40",
+    "portParams":[
         {
-            "Prompt":"数据库端口",
-            "Key":"3306",
-            "Value":"3306",
-            "Reg":""
+            "prompt":"数据库端口",
+            "key":"3306",
+            "value":"3306",
+            "reg":""
         }
     ],
-    "EnvParams":[
+    "envParams":[
         {
-            "Prompt":"初始密码",
-            "Key":"MYSQL_ROOT_PASSWORD",
-            "Value":"",
-            "Reg":""
+            "prompt":"初始密码",
+            "key":"MYSQL_ROOT_PASSWORD",
+            "value":"",
+            "reg":""
         }
     ],
-    "LocalVolume":[
+    "localVolume":[
         {
-            "Prompt":"数据库数据目录",
-            "Key":"/var/lib/mysql",
-            "Value":"",
-            "Reg":""
+            "prompt":"数据库数据目录",
+            "key":"/var/lib/mysql",
+            "value":"",
+            "reg":""
         }
     ],
-    "DfsVolume":[]
+    "dfsVolume":[]
 }

@@ -1,21 +1,21 @@
 {
-    "ImageUrl":"redis:7.0.5",
-    "PortParams":[
+    "imageUrl":"redis:7.0.5",
+    "portParams":[
         {
-            "Prompt":"数据库端口",
-            "Key":"6379",
-            "Value":"6379",
-            "Reg":""
+            "prompt":"数据库端口",
+            "key":"6379",
+            "value":"6379",
+            "reg":""
         }
     ],
-    "EnvParams":[],
-    "LocalVolume":[
+    "envParams":[],
+    "localVolume":[
         {
-            "Prompt":"数据库数据目录",
-            "Key":"/data",
-            "Value":"",
-            "Reg":""
+            "prompt":"数据库数据目录",
+            "key":"/data",
+            "value":"",
+            "reg":""
         }
     ],
-    "DfsVolume":[]
+    "dfsVolume":[]
 }
