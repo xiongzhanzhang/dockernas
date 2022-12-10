@@ -1,25 +1,25 @@
 package models
 
 type App struct {
-	Name           string
-	Category       []string
-	Summary        string
-	IconUrl        string
-	DockerVersions []DockerTemplate
+	Name           string           `json:"name"`
+	Category       []string         `json:"category"`
+	Summary        string           `json:"summary"`
+	IconUrl        string           `json:"iconUrl"`
+	DockerVersions []DockerTemplate `json:"dockerVersions"`
 }
 
 type ParamItem struct {
-	Prompt string
-	Key    string // resource in contariner
-	Value  string // resource in host
-	Reg    string // Regular for input
+	Prompt string `json:"prompt"`
+	Key    string `json:"key"`   // resource in contariner
+	Value  string `json:"value"` // resource in host
+	Reg    string `json:"reg"`   // Regular for input
 }
 
 type DockerTemplate struct {
-	ImageUrl    string
-	Version     string
-	PortParams  []ParamItem
-	EnvParams   []ParamItem
-	LocalVolume []ParamItem
-	DfsVolume   []ParamItem
+	ImageUrl    string      `json:"imageUrl"`
+	Version     string      `json:"c"`
+	PortParams  []ParamItem `json:"portParams"`
+	EnvParams   []ParamItem `json:"envParams"`
+	LocalVolume []ParamItem `json:"localVolume"`
+	DfsVolume   []ParamItem `json:"dfsVolume"`
 }

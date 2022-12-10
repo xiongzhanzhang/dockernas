@@ -15,9 +15,9 @@
         >
           <el-option
             v-for="item in appTypes"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item"
+            :label="item"
+            :value="item"
           />
         </el-select>
       </div>
@@ -82,13 +82,10 @@ export default {
           this.appTypes = [];
           let categorys = [];
           for (let app of this.apps) {
-            categorys = categorys.concat(app.Category);
+            categorys = categorys.concat(app.category);
           }
           for (let category of new Set(categorys)) {
-            this.appTypes.push({
-              value: category,
-              label: category,
-            });
+            this.appTypes.push(category);
           }
         })
         .catch((error) => {
