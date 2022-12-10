@@ -46,9 +46,7 @@
           v-for="app in apps"
           :key="app.name"
         >
-          <appCard
-            :app="app"
-          ></appCard>
+          <appCard :app="app"></appCard>
         </el-col>
       </el-row>
     </div>
@@ -70,16 +68,7 @@ export default {
       apps: [],
       selectTypes: [],
       searchStr: "",
-      appTypes: [
-        {
-          value: "Option1",
-          label: "Option1",
-        },
-        {
-          value: "Option2",
-          label: "Option2",
-        },
-      ],
+      appTypes: [],
     };
   },
   methods: {
@@ -89,6 +78,18 @@ export default {
         .then((response) => {
           console.log(response);
           this.apps = response["data"]["list"];
+
+          this.appTypes = [];
+          let categorys = [];
+          for (let app of this.apps) {
+            categorys = categorys.concat(app.Category);
+          }
+          for (let category of new Set(categorys)) {
+            this.appTypes.push({
+              value: category,
+              label: category,
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
