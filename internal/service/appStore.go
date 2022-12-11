@@ -9,6 +9,7 @@ import (
 )
 
 func GetApps() []models.App {
+	models.GetDb()
 	return getAppsFromPath("./apps")
 }
 
