@@ -45,26 +45,44 @@
         <div class="input_div" v-for="param in portParams" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
-            <el-input v-model="param.value" class="w-50 m-2" style="width: 400px" size="large"></el-input>
+            <el-input
+              v-model="param.value"
+              class="w-50 m-2"
+              style="width: 400px"
+              size="large"
+            ></el-input>
           </div>
         </div>
         <div class="input_div" v-for="param in dfsVolume" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
-            <el-input v-model="param.value" class="w-50 m-2" style="width: 400px" size="large"></el-input>
+            <el-input
+              v-model="param.value"
+              class="w-50 m-2"
+              style="width: 400px"
+              size="large"
+            ></el-input>
           </div>
         </div>
         <div class="input_div" v-for="param in envParams" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
-            <el-input v-model="param.value" class="w-50 m-2" style="width: 400px" size="large"></el-input>
+            <el-input
+              v-model="param.value"
+              class="w-50 m-2"
+              style="width: 400px"
+              size="large"
+            ></el-input>
           </div>
         </div>
 
         <div class="center_div" style="margin-top: 50px">
-          <el-button type="primary" style="height: 40px; width: 200px">{{
-            $t("common.yes")
-          }}</el-button>
+          <el-button
+            type="primary"
+            style="height: 40px; width: 200px"
+            @click="createApp"
+            >{{ $t("common.yes") }}</el-button
+          >
         </div>
       </div>
     </div>
@@ -72,6 +90,8 @@
 </template>
 
 <script>
+import { newInstance } from "../api/instance";
+
 export default {
   name: "createCard",
   props: ["app"],
@@ -103,11 +123,31 @@ export default {
     versionChange() {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.selectVersion) {
+          this.imageUrl = d.imageUrl;
           this.portParams = JSON.parse(JSON.stringify(d.portParams));
           this.dfsVolume = JSON.parse(JSON.stringify(d.dfsVolume));
           this.envParams = JSON.parse(JSON.stringify(d.envParams));
         }
       }
+    },
+    createApp() {
+      newInstance(
+        this.instanceName,
+        this.appName,
+        this.imageUrl,
+        this.selectVersion,
+        this.portParams,
+        this.envParams,
+        this.localVolume,
+        this.dfsVolume
+      )
+        .then((response) => {
+          console.log(response);
+          this.dialogTableVisible = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

@@ -2,7 +2,7 @@ import axios from 'axios'
 import storage from "@/utils/storage"
 
 const http = axios.create({
-    timeout: 1000 * 10
+    timeout: 1000 * 60
 })
 
 // request interceptor
