@@ -23,11 +23,7 @@ func GetDb() *gorm.DB {
 		return db
 	}
 
-	basePath := config.GetBasePath()
-	basePath += "/meta"
-	utils.CheckCreateDir(basePath)
-
-	dbFilePath := basePath + "/data.db3"
+	dbFilePath := config.GetDBFilePath()
 	isInited := utils.IsFileExist(dbFilePath) != false
 
 	_db, err := gorm.Open("sqlite3", dbFilePath)

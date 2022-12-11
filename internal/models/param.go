@@ -2,6 +2,7 @@ package models
 
 type ParamItem struct {
 	Prompt string `json:"prompt"`
+	Name   string `json:"name"`  // used for resource identification like local volume
 	Key    string `json:"key"`   // resource in contariner
 	Value  string `json:"value"` // resource in host
 	Reg    string `json:"reg"`   // Regular for input

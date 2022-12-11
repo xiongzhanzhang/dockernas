@@ -108,6 +108,7 @@ export default {
       portParams: [],
       dfsVolume: [],
       envParams: [],
+      localVolume: [],
     };
   },
   methods: {
@@ -127,6 +128,7 @@ export default {
           this.portParams = JSON.parse(JSON.stringify(d.portParams));
           this.dfsVolume = JSON.parse(JSON.stringify(d.dfsVolume));
           this.envParams = JSON.parse(JSON.stringify(d.envParams));
+          this.localVolume = JSON.parse(JSON.stringify(d.localVolume));
         }
       }
     },

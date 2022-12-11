@@ -21,7 +21,8 @@
             "prompt":"数据库数据目录",
             "key":"/var/lib/mysql",
             "value":"",
-            "reg":""
+            "reg":"",
+            "name":"data"
         }
     ],
     "dfsVolume":[]
