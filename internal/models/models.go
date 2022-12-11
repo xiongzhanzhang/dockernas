@@ -9,7 +9,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
 	"tinycloud/internal/config"
-	"tinycloud/internal/utils"
 )
 
 var db *gorm.DB = nil
@@ -24,7 +23,6 @@ func GetDb() *gorm.DB {
 	}
 
 	dbFilePath := config.GetDBFilePath()
-	isInited := utils.IsFileExist(dbFilePath) != false
 
 	_db, err := gorm.Open("sqlite3", dbFilePath)
 	if err != nil || _db == nil {
@@ -33,12 +31,11 @@ func GetDb() *gorm.DB {
 	}
 
 	_db.SingularTable(true)
+	_db.AutoMigrate(&ParamItem{})
+	_db.AutoMigrate(&Instance{})
 	_db.DB().SetMaxIdleConns(3)
 	_db.DB().SetMaxOpenConns(20)
 
-	if isInited == false {
-		_db.AutoMigrate(&ParamItem{})
-	}
 	db = _db
 
 	return db

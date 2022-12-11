@@ -2,7 +2,6 @@ package docker
 
 import (
 	"context"
-	"fmt"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
@@ -14,7 +13,7 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func Create(param models.InstanceParam) {
+func Create(param models.InstanceParam) string {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
@@ -37,7 +36,7 @@ func Create(param models.InstanceParam) {
 		panic(err)
 	}
 
-	fmt.Println(resp.ID)
+	return resp.ID
 }
 
 func buildConfig(param models.InstanceParam) (container.Config, container.HostConfig) {

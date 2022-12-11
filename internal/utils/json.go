@@ -23,3 +23,13 @@ func GetObjFromJsonFile(filePath string, obj any) any {
 
 	return obj
 }
+
+func GetJsonFromObj(obj any) string {
+	json_str, err := json.Marshal(obj)
+	if err != nil {
+		log.Panicln(err)
+		panic(err)
+	}
+
+	return string(json_str)
+}
