@@ -14,7 +14,8 @@
             "prompt":"数据库数据目录",
             "key":"/data",
             "value":"",
-            "reg":""
+            "reg":"",
+            "name":"data"
         }
     ],
     "dfsVolume":[]

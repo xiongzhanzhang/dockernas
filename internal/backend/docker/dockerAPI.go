@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
+	"tinycloud/internal/utils"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -44,7 +45,13 @@ func buildConfig(param models.InstanceParam) (container.Config, container.HostCo
 	for _, item := range param.DfsVolume {
 		m = append(m, mount.Mount{Type: mount.TypeBind, Source: item.Key, Target: item.Value})
 	}
+
+	var usedVolumeName []string
 	for _, item := range param.LocalVolume {
+		if item.Name == "" || utils.Contains(usedVolumeName, item.Name) {
+			panic("local volume name error:" + item.Name)
+		}
+		usedVolumeName = append(usedVolumeName, item.Name)
 		m = append(m, mount.Mount{
 			Type:   mount.TypeBind,
 			Source: config.GetLocalVolumePath(param.Name, item.Name),
