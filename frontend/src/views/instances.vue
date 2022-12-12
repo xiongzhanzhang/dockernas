@@ -3,10 +3,10 @@
     <div style="padding: 6px">
       <el-row>
         <el-col
-          :xs="8"
-          :sm="6"
-          :md="4"
-          :lg="4"
+          :xs="12"
+          :sm="8"
+          :md="8"
+          :lg="6"
           v-for="instance in instances"
           :key="instance.name"
         >

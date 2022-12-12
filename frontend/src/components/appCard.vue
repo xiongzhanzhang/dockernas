@@ -42,4 +42,17 @@ export default {
 
 <style scoped>
 @import "../css/common.css";
+
+.card {
+    width: 95%;
+    height: 250px;
+    background-color: white;
+    margin: 6px;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px #ccc;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0 8px 8px #ccc;
+  }
 </style>
