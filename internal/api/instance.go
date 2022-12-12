@@ -14,6 +14,13 @@ func PostInstance(c *gin.Context) {
 	service.CreateInstance(param)
 
 	c.JSON(200, gin.H{
-		"list": "ok",
+		"state": "ok",
+	})
+}
+
+func GetInstance(c *gin.Context) {
+	instances := models.GetInstance()
+	c.JSON(200, gin.H{
+		"list": instances,
 	})
 }

@@ -12,6 +12,7 @@ func CreateInstance(param models.InstanceParam) {
 	instance.Name = param.Name
 	instance.AppName = param.AppName
 	instance.Version = param.Version
+	instance.IconUrl = param.IconUrl
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 
 	models.AddInstance(&instance)

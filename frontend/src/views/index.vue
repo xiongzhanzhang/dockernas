@@ -14,7 +14,7 @@
             router
             style="height:100%"
           >
-            <el-menu-item index="apps">{{$t("index.apps")}}</el-menu-item>
+            <el-menu-item index="instances">{{$t("index.apps")}}</el-menu-item>
             <el-menu-item index="store">{{$t("index.store")}}</el-menu-item>
             <el-menu-item index="setting">{{$t("index.setting")}}</el-menu-item>
           </el-menu>

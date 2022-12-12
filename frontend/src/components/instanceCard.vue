@@ -9,26 +9,26 @@
             border-radius: 3px;
             margin-top: 36px;
           "
-          :src="app.iconUrl"
+          :src="instance.iconUrl"
         />
       </div>
       <div class="vertical_div" style="">
-        <div class="main_text">{{ app.name }}</div>
-        <div class="secondary_text">{{ app.category[0] }}</div>
+        <div class="main_text">{{ instance.name }}</div>
+        <div class="secondary_text">{{ instance.appName }}</div>
       </div>
     </div>
-    <createCard ref="createCard" :app="app"></createCard>
+    <!-- <createCard ref="createCard" :app="instance"></createCard> -->
   </div>
 </template>
-
-<script>
+  
+  <script>
 import createCard from "../components/createApp.vue";
 export default {
-  name: "appCard",
+  name: "instanceCard",
   components: {
     createCard,
   },
-  props: ["app"],
+  props: ["instance"],
   data() {
     return {};
   },
@@ -39,7 +39,7 @@ export default {
   },
 };
 </script>
-
-<style scoped>
+  
+  <style scoped>
 @import "../css/common.css";
 </style>

@@ -141,7 +141,8 @@ export default {
         this.portParams,
         this.envParams,
         this.localVolume,
-        this.dfsVolume
+        this.dfsVolume,
+        this.app.iconUrl,
       )
         .then((response) => {
           console.log(response);

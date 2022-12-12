@@ -3,16 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {path:'/',redirect:'/index/apps'},
+    {path:'/',redirect:'/index/instances'},
     {
       path: '/index',
       name: 'index',
       component: () => import('../views/index.vue'),
       children:[
         {
-          path: 'apps',
-          name: 'apps',
-          component: () => import('../views/apps.vue')
+          path: 'instances',
+          name: 'instances',
+          component: () => import('../views/instances.vue')
         },
         {
           path: 'store',

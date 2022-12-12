@@ -10,6 +10,8 @@ func registerRoutes(router *gin.Engine) {
 	apiv1 := router.Group("/api")
 	{
 		apiv1.GET("app", api.GetApps)
+
 		apiv1.POST("instance", api.PostInstance)
+		apiv1.GET("instance", api.GetInstance)
 	}
 }

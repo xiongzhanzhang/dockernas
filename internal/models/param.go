@@ -21,5 +21,6 @@ type InstanceParam struct {
 	Name    string `json:"name"`
 	AppName string `json:"appName"`
 	Summary string `json:"summary"`
+	IconUrl string `json:"iconUrl"`
 	DockerTemplate
 }

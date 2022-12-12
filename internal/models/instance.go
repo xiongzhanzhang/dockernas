@@ -6,6 +6,7 @@ type Instance struct {
 	InstanceID       string `json:"instanceID"`
 	Summary          string `json:"summary"`
 	State            int    `json:"state"`
+	IconUrl          string `json:"iconUrl"`
 	Port             int    `json:"port"`
 	Name             string `json:"name"  gorm:"unique;not null"`
 	AppName          string `json:"appName"`
@@ -27,4 +28,15 @@ func UpdateInstance(instance *Instance) {
 		log.Println(err)
 		panic(err)
 	}
+}
+
+func GetInstance() []Instance {
+	var instances []Instance
+	err := GetDb().Find(&instances).Error
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+
+	return instances
 }
