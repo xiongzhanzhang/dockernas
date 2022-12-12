@@ -93,7 +93,7 @@
 import { newInstance } from "../api/instance";
 
 export default {
-  name: "createCard",
+  name: "createInstance",
   props: ["app"],
   data() {
     return {

@@ -17,16 +17,16 @@
         <div class="secondary_text">{{ app.category[0] }}</div>
       </div>
     </div>
-    <createCard ref="createCard" :app="app"></createCard>
+    <createInstance ref="createCard" :app="app"></createInstance>
   </div>
 </template>
 
 <script>
-import createCard from "../components/createApp.vue";
+import createInstance from "./createInstance.vue";
 export default {
   name: "appCard",
   components: {
-    createCard,
+    createInstance,
   },
   props: ["app"],
   data() {
