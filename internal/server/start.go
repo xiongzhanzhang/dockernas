@@ -1,9 +1,14 @@
 package server
 
-import "github.com/gin-gonic/gin"
+import (
+	"tinycloud/internal/middleware"
+
+	"github.com/gin-gonic/gin"
+)
 
 func StartServer() {
-	router := gin.Default()
+	router := gin.New()
+	router.Use(gin.Logger(), middleware.Recovery())
 
 	router.Static("/static", "./frontend/dist")
 	router.Static("/apps", "./apps")

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import storage from "@/utils/storage"
+import {ElMessage} from "element-plus"
 
 const http = axios.create({
     timeout: 1000 * 60
@@ -15,6 +16,14 @@ http.interceptors.request.use(config => {
 }, error => {
     return Promise.reject(error)
 })
+
+http.interceptors.response.use(response => {
+    return response
+  }, error => {
+    ElMessage.error(error.response.data.msg)
+    // console.log(error)
+    return Promise.reject(error)
+  })
 
 export default {
     get(url, data = {}) {
