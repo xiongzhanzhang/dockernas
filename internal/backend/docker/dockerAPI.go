@@ -2,6 +2,7 @@ package docker
 
 import (
 	"context"
+	"log"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
@@ -13,30 +14,34 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func Create(param models.InstanceParam) string {
+func Create(param models.InstanceParam) (string, error) {
+	containerConfig, hostConfig := buildConfig(param)
+
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
-		panic(err)
+		log.Println("create docker client error")
+		return "", err
 	}
 
 	_, err = cli.ImagePull(ctx, param.ImageUrl, types.ImagePullOptions{})
 	if err != nil {
-		panic(err)
+		log.Println("pull image error: " + param.ImageUrl)
+		return "", err
 	}
-
-	containerConfig, hostConfig := buildConfig(param)
 
 	resp, err := cli.ContainerCreate(ctx, &containerConfig, &hostConfig, nil, nil, param.Name)
 	if err != nil {
-		panic(err)
+		log.Println("create container error")
+		return "", err
 	}
 
 	if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-		panic(err)
+		log.Println("run container error")
+		return resp.ID, err
 	}
 
-	return resp.ID
+	return resp.ID, nil
 }
 
 func buildConfig(param models.InstanceParam) (container.Config, container.HostConfig) {

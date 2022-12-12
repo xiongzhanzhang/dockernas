@@ -2,6 +2,13 @@ package models
 
 import "log"
 
+const (
+	NEW_STATE    = 0
+	CREATE_ERROR = 1
+	RUN_ERROR    = 2
+	RUNNING      = 3
+)
+
 type Instance struct {
 	InstanceID       string `json:"instanceID"`
 	Summary          string `json:"summary"`
