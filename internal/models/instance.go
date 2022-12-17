@@ -7,6 +7,7 @@ const (
 	CREATE_ERROR = 1
 	RUN_ERROR    = 2
 	RUNNING      = 3
+	STOPPED      = 4
 )
 
 type Instance struct {
@@ -31,6 +32,14 @@ func AddInstance(instance *Instance) {
 
 func UpdateInstance(instance *Instance) {
 	err := GetDb().Model(&Instance{}).Where("name = ?", instance.Name).Updates(instance).Error
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+}
+
+func DeleteInstance(instance *Instance) {
+	err := GetDb().Where("name = ?", instance.Name).Delete(instance).Error
 	if err != nil {
 		log.Println(err)
 		panic(err)

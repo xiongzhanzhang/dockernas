@@ -30,3 +30,28 @@ func GetInstanceByName(c *gin.Context) {
 	instance := models.GetInstanceByName(name)
 	c.JSON(200, instance)
 }
+
+func PatchInstance(c *gin.Context) {
+	name := c.Param("name")
+	instance := models.GetInstanceByName(name)
+
+	patchMap := map[string]interface{}{}
+	c.BindJSON(&patchMap)
+
+	op, _ := patchMap["op"]
+	if op == "stop" {
+		service.StopInstance(instance)
+	}
+	if op == "start" {
+		service.StartInstance(instance)
+	}
+
+	c.JSON(200, gin.H{"msg": "ok"})
+}
+
+func DeleteInstance(c *gin.Context) {
+	name := c.Param("name")
+	instance := models.GetInstanceByName(name)
+	service.DeleteInstance(instance)
+	c.JSON(200, gin.H{"msg": "ok"})
+}

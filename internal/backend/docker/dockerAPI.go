@@ -3,6 +3,7 @@ package docker
 import (
 	"context"
 	"log"
+	"time"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
@@ -13,6 +14,59 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 )
+
+func Delete(containerID string) error {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		return err
+	}
+
+	err = cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{})
+	if err != nil {
+		log.Println("start docker error")
+		return err
+	}
+
+	return nil
+}
+
+func Stop(containerID string) error {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		return err
+	}
+
+	timeoutSecond := time.Second * 120
+	err = cli.ContainerStop(ctx, containerID, &timeoutSecond)
+
+	if err != nil {
+		log.Println("stop docker error")
+		return err
+	}
+
+	return nil
+}
+
+func Start(containerID string) error {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		return err
+	}
+
+	err = cli.ContainerStart(ctx, containerID, types.ContainerStartOptions{})
+	if err != nil {
+		log.Println("start docker error")
+		return err
+	}
+
+	return nil
+}
 
 func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)

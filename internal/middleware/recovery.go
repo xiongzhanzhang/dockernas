@@ -6,7 +6,7 @@ func defaultHandleRecovery(c *gin.Context, err any) {
 	if e, ok := err.(error); ok {
 		c.JSON(500, gin.H{"msg": e.Error()})
 	} else {
-		c.JSON(500, gin.H{"msg": "server error"})
+		c.JSON(500, gin.H{"msg": err})
 	}
 
 	c.Abort()

@@ -23,3 +23,15 @@ export const getAllInstance = () => {
 export const getInstance = (name) => {
     return http.get("/api/instance/"+name)
 }
+
+export const stopInstance = (name) => {
+    return http.patch("/api/instance/"+name,{"op":"stop"})
+}
+
+export const startInstance = (name) => {
+    return http.patch("/api/instance/"+name,{"op":"start"})
+}
+
+export const deleteInstance = (name) => {
+    return http.delete("/api/instance/"+name)
+}
