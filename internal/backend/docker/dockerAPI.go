@@ -14,7 +14,7 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func Create(param models.InstanceParam) (string, error) {
+func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)
 
 	ctx := context.Background()
@@ -44,23 +44,27 @@ func Create(param models.InstanceParam) (string, error) {
 	return resp.ID, nil
 }
 
-func buildConfig(param models.InstanceParam) (container.Config, container.HostConfig) {
+func buildConfig(param *models.InstanceParam) (container.Config, container.HostConfig) {
 	m := make([]mount.Mount, 0, len(param.DfsVolume)+len(param.LocalVolume))
 	for _, item := range param.DfsVolume {
 		m = append(m, mount.Mount{Type: mount.TypeBind, Source: item.Key, Target: item.Value})
 	}
 
 	var usedVolumeName []string
-	for _, item := range param.LocalVolume {
+	for index, item := range param.LocalVolume {
 		if item.Name == "" || utils.Contains(usedVolumeName, item.Name) {
 			panic("local volume name error:" + item.Name)
 		}
 		usedVolumeName = append(usedVolumeName, item.Name)
+
+		localDir := config.GetLocalVolumePath(param.Name, item.Name)
 		m = append(m, mount.Mount{
 			Type:   mount.TypeBind,
-			Source: config.GetLocalVolumePath(param.Name, item.Name),
+			Source: localDir,
 			Target: item.Key,
 		})
+
+		param.LocalVolume[index].Value = localDir
 	}
 
 	var envs []string

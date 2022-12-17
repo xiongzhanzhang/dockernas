@@ -21,7 +21,7 @@ func CreateInstance(param models.InstanceParam) {
 
 	models.AddInstance(&instance)
 
-	instance.InstanceID, err = docker.Create(param)
+	instance.InstanceID, err = docker.Create(&param)
 
 	if err != nil {
 		if instance.InstanceID == "" {
@@ -35,5 +35,6 @@ func CreateInstance(param models.InstanceParam) {
 	}
 
 	instance.State = models.RUNNING
+	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 	models.UpdateInstance(&instance)
 }
