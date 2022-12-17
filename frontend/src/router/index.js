@@ -23,6 +23,11 @@ const router = createRouter({
           path: 'setting',
           name: 'setting',
           component: () => import('../views/setting.vue')
+        },
+        {
+          path: 'instanceInfo/:name',
+          name: 'instanceInfo',
+          component: () => import('../views/instanceInfo.vue')
         }
       ]
     },

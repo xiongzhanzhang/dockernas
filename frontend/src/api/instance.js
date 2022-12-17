@@ -20,4 +20,6 @@ export const getAllInstance = () => {
     return http.get("/api/instance")
 }
 
-
+export const getInstance = (name) => {
+    return http.get("/api/instance/"+name)
+}

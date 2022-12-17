@@ -24,3 +24,9 @@ func GetInstance(c *gin.Context) {
 		"list": instances,
 	})
 }
+
+func GetInstanceByName(c *gin.Context) {
+	name := c.Param("name")
+	instance := models.GetInstanceByName(name)
+	c.JSON(200, instance)
+}

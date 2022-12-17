@@ -47,3 +47,14 @@ func GetInstance() []Instance {
 
 	return instances
 }
+
+func GetInstanceByName(name string) Instance {
+	var instance Instance
+	err := GetDb().First(&instance, "Name=?", name).Error
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+
+	return instance
+}

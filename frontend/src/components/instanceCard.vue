@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     clicked() {
-      this.$refs.createCard.showDialog();
+      this.$router.push("/index/instanceinfo/"+this.instance.name);
     },
   },
 };

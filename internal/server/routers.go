@@ -13,5 +13,6 @@ func registerRoutes(router *gin.Engine) {
 
 		apiv1.POST("instance", api.PostInstance)
 		apiv1.GET("instance", api.GetInstance)
+		apiv1.GET("instance/:name", api.GetInstanceByName)
 	}
 }
