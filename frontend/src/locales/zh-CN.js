@@ -1,5 +1,5 @@
 const common = {
-  yes:'确定'
+  yes: '确定'
 }
 
 
@@ -17,6 +17,7 @@ const store = {
   instanceApp: '实例化应用',
   appName: '应用名',
   instanceName: '实例名',
+  instanceSummary: '注备',
   appVersion: '版本'
 }
 

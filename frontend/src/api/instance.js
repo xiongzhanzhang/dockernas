@@ -1,10 +1,11 @@
 import http from '@/utils/request'
 
 export const newInstance = (
-    name, appName, imageUrl, version, portParams, envParams, localVolume, dfsVolume, iconUrl
+    name, summary, appName, imageUrl, version, portParams, envParams, localVolume, dfsVolume, iconUrl
 ) => {
     return http.post("/api/instance", {
         "name": name,
+        "summary":summary,
         "appName": appName,
         "imageUrl": imageUrl,
         "version": version,

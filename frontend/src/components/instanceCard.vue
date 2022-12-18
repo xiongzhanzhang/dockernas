@@ -9,7 +9,7 @@
       </div>
       <div class="text_div" style="padding-left: 6px">
         <div class="main_text">{{ instance.name }}</div>
-        <div class="secondary_text">{{ instance.appName }}</div>
+        <div class="secondary_text">{{ instance.summary }}</div>
       </div>
       <div style="flex-grow: 1"></div>
       <div style="height: 100%">

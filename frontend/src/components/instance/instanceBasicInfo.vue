@@ -7,7 +7,7 @@
       </div>
       <div class="input_div">
         <div class="first_input">注备</div>
-        <div>{{ instance.summury }}</div>
+        <div>{{ instance.summary }}</div>
       </div>
       <div class="input_div">
         <div class="first_input">状态</div>

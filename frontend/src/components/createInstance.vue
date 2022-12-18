@@ -19,6 +19,18 @@
           </div>
         </div>
         <div class="input_div">
+          <div class="first_input">{{ $t("store.instanceSummary") }}</div>
+          <div>
+            <el-input
+              v-model="summary"
+              class="w-50 m-2"
+              style="width: 400px"
+              size="large"
+            >
+            </el-input>
+          </div>
+        </div>
+        <div class="input_div">
           <div class="first_input">{{ $t("store.appName") }}</div>
           <div>{{ appName }}</div>
         </div>
@@ -98,6 +110,7 @@ export default {
   data() {
     return {
       instanceName: "",
+      summary: "",
       appName: "",
       appVersion: "",
       dialogTableVisible: false,
@@ -135,6 +148,7 @@ export default {
     createApp() {
       newInstance(
         this.instanceName,
+        this.summary,
         this.appName,
         this.imageUrl,
         this.selectVersion,
@@ -142,7 +156,7 @@ export default {
         this.envParams,
         this.localVolume,
         this.dfsVolume,
-        this.app.iconUrl,
+        this.app.iconUrl
       )
         .then((response) => {
           console.log(response);
