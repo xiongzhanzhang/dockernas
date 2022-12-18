@@ -9,19 +9,8 @@ import (
 	"tinycloud/internal/utils"
 )
 
-func CreateInstance(param models.InstanceParam) {
-	var instance models.Instance
+func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	var err error
-
-	instance.Summary = param.Summary
-	instance.Name = param.Name
-	instance.State = models.NEW_STATE
-	instance.AppName = param.AppName
-	instance.Version = param.Version
-	instance.IconUrl = param.IconUrl
-	instance.InstanceParamStr = utils.GetJsonFromObj(param)
-
-	models.AddInstance(&instance)
 
 	instance.InstanceID, err = docker.Create(&param)
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
@@ -39,6 +28,40 @@ func CreateInstance(param models.InstanceParam) {
 
 	instance.State = models.RUNNING
 	models.UpdateInstance(&instance)
+}
+
+func CreateInstance(param models.InstanceParam) {
+	var instance models.Instance
+
+	instance.Name = param.Name
+	instance.Summary = param.Summary
+	instance.State = models.NEW_STATE
+	instance.AppName = param.AppName
+	instance.Version = param.Version
+	instance.IconUrl = param.IconUrl
+	instance.InstanceParamStr = utils.GetJsonFromObj(param)
+
+	models.AddInstance(&instance)
+
+	runNewContainer(instance, param)
+}
+
+func EditInstance(instance models.Instance, param models.InstanceParam) {
+	err := docker.Delete(instance.InstanceID)
+	if err != nil {
+		panic(err)
+	}
+
+	instance.Summary = param.Summary
+	instance.State = models.NEW_STATE
+	instance.AppName = param.AppName
+	instance.Version = param.Version
+	instance.IconUrl = param.IconUrl
+	instance.InstanceParamStr = utils.GetJsonFromObj(param)
+
+	models.UpdateInstance(&instance)
+
+	runNewContainer(instance, param)
 }
 
 func StartInstance(instance models.Instance) {
@@ -64,7 +87,7 @@ func StopInstance(instance models.Instance) {
 func DeleteInstance(instance models.Instance) {
 	err := docker.Delete(instance.InstanceID)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 
 	models.DeleteInstance(&instance)

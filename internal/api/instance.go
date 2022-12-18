@@ -1,6 +1,8 @@
 package api
 
 import (
+	"encoding/json"
+	"log"
 	"tinycloud/internal/models"
 	"tinycloud/internal/service"
 
@@ -35,7 +37,7 @@ func PatchInstance(c *gin.Context) {
 	name := c.Param("name")
 	instance := models.GetInstanceByName(name)
 
-	patchMap := map[string]interface{}{}
+	patchMap := map[string]string{}
 	c.BindJSON(&patchMap)
 
 	op, _ := patchMap["op"]
@@ -44,6 +46,16 @@ func PatchInstance(c *gin.Context) {
 	}
 	if op == "start" {
 		service.StartInstance(instance)
+	}
+	if op == "edit" {
+		data, _ := patchMap["data"]
+		var param models.InstanceParam
+		err := json.Unmarshal([]byte(data), &param)
+		if err != nil {
+			log.Println(err)
+			panic(err)
+		}
+		service.EditInstance(instance, param)
 	}
 
 	c.JSON(200, gin.H{"msg": "ok"})

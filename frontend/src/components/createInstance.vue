@@ -55,7 +55,11 @@
           </div>
         </div>
 
-        <div class="input_div" v-for="param in instanceParam.portParams" :key="param.prompt">
+        <div
+          class="input_div"
+          v-for="param in instanceParam.portParams"
+          :key="param.prompt"
+        >
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -66,7 +70,11 @@
             ></el-input>
           </div>
         </div>
-        <div class="input_div" v-for="param in instanceParam.dfsVolume" :key="param.prompt">
+        <div
+          class="input_div"
+          v-for="param in instanceParam.dfsVolume"
+          :key="param.prompt"
+        >
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -77,7 +85,11 @@
             ></el-input>
           </div>
         </div>
-        <div class="input_div" v-for="param in instanceParam.envParams" :key="param.prompt">
+        <div
+          class="input_div"
+          v-for="param in instanceParam.envParams"
+          :key="param.prompt"
+        >
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -113,17 +125,17 @@ export default {
       app: {},
       editMode: false,
 
-      instanceParam:{
-        "name": "",
-        "summary":"",
-        "appName": "",
-        "imageUrl": "",
-        "version": "",
-        "portParams": "",
-        "envParams": "",
-        "localVolume": "",
-        "dfsVolume": "",
-        "iconUrl": ""
+      instanceParam: {
+        name: "",
+        summary: "",
+        appName: "",
+        imageUrl: "",
+        version: "",
+        portParams: "",
+        envParams: "",
+        localVolume: "",
+        dfsVolume: "",
+        iconUrl: "",
       },
 
       dialogTableVisible: false,
@@ -148,11 +160,12 @@ export default {
       this.instanceParam.dfsVolume = instanceParam.dfsVolume;
       this.instanceParam.envParams = instanceParam.envParams;
       this.instanceParam.localVolume = instanceParam.localVolume;
+      this.instanceParam.imageUrl = instanceParam.imageUrl;
     },
     setApp(app) {
       this.app = app;
-      this.instanceParam.iconUrl=app.iconUrl;
-      this.instanceParam.appName=app.name;
+      this.instanceParam.iconUrl = app.iconUrl;
+      this.instanceParam.appName = app.name;
     },
     setAppName(name) {
       getAppsByName(name).then((response) => {
@@ -167,25 +180,36 @@ export default {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.instanceParam.version) {
           this.instanceParam.imageUrl = d.imageUrl;
-          this.instanceParam.portParams = JSON.parse(JSON.stringify(d.portParams));
-          this.instanceParam.dfsVolume = JSON.parse(JSON.stringify(d.dfsVolume));
-          this.instanceParam.envParams = JSON.parse(JSON.stringify(d.envParams));
-          this.instanceParam.localVolume = JSON.parse(JSON.stringify(d.localVolume));
+          this.instanceParam.portParams = JSON.parse(
+            JSON.stringify(d.portParams)
+          );
+          this.instanceParam.dfsVolume = JSON.parse(
+            JSON.stringify(d.dfsVolume)
+          );
+          this.instanceParam.envParams = JSON.parse(
+            JSON.stringify(d.envParams)
+          );
+          this.instanceParam.localVolume = JSON.parse(
+            JSON.stringify(d.localVolume)
+          );
         }
       }
     },
     createApp() {
       if (this.editMode != true) {
-        newInstance(this.instanceParam)
-          .then((response) => {
-            console.log(response);
-            this.dialogTableVisible = false;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        newInstance(this.instanceParam).then((response) => {
+          console.log(response);
+          this.dialogTableVisible = false;
+        });
       } else {
-        editInstance(this.instanceName, JSON.stringify(this.instanceParam));
+        editInstance(
+          this.instanceParam.name,
+          JSON.stringify(this.instanceParam)
+        ).then((response) => {
+          console.log(response);
+          this.dialogTableVisible = false;
+          location.reload();
+        });
       }
     },
   },
