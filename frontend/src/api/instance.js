@@ -27,3 +27,7 @@ export const editInstance = (name, dataStr) => {
 export const deleteInstance = (name) => {
     return http.delete("/api/instance/" + name)
 }
+
+export const getInstanceLog = (name) => {
+    return http.get("/api/instance/" + name + "/log")
+}

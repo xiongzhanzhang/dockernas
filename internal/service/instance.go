@@ -93,3 +93,7 @@ func DeleteInstance(instance models.Instance) {
 	models.DeleteInstance(&instance)
 	os.RemoveAll(config.GetAppLocalPath(instance.Name))
 }
+
+func GetInstanceLog(instance models.Instance) string {
+	return docker.GetLog(instance.InstanceID)
+}

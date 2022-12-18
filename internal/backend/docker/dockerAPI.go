@@ -1,7 +1,9 @@
 package docker
 
 import (
+	"bytes"
 	"context"
+	"io"
 	"log"
 	"time"
 	"tinycloud/internal/config"
@@ -149,4 +151,25 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 	}
 
 	return containerConfig, hostConfig
+}
+
+func GetLog(containerID string) string {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	out, err := cli.ContainerLogs(ctx, containerID, types.ContainerLogsOptions{ShowStdout: true, ShowStderr: true})
+	if err != nil {
+		log.Println("get docker log error")
+		panic(err)
+	}
+	defer out.Close()
+
+	var writer bytes.Buffer
+	io.Copy(&writer, out)
+
+	return writer.String()
 }

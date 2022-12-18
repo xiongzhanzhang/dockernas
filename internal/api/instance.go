@@ -67,3 +67,10 @@ func DeleteInstance(c *gin.Context) {
 	service.DeleteInstance(instance)
 	c.JSON(200, gin.H{"msg": "ok"})
 }
+
+func GetInstanceLog(c *gin.Context) {
+	name := c.Param("name")
+	instance := models.GetInstanceByName(name)
+	log := service.GetInstanceLog(instance)
+	c.JSON(200, gin.H{"data": log})
+}
