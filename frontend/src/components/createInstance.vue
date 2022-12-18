@@ -10,7 +10,7 @@
           <div class="first_input">{{ $t("store.instanceName") }}</div>
           <div>
             <el-input
-              v-model="instanceName"
+              v-model="instanceParam.name"
               class="w-50 m-2"
               style="width: 400px"
               size="large"
@@ -23,7 +23,7 @@
           <div class="first_input">{{ $t("store.instanceSummary") }}</div>
           <div>
             <el-input
-              v-model="summary"
+              v-model="instanceParam.summary"
               class="w-50 m-2"
               style="width: 400px"
               size="large"
@@ -33,13 +33,13 @@
         </div>
         <div class="input_div">
           <div class="first_input">{{ $t("store.appName") }}</div>
-          <div>{{ appName }}</div>
+          <div>{{ instanceParam.appName }}</div>
         </div>
         <div class="input_div">
           <div class="first_input">{{ $t("store.appVersion") }}</div>
           <div>
             <el-select
-              v-model="selectVersion"
+              v-model="instanceParam.version"
               collapse-tags
               size="large"
               style="width: 400px"
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="input_div" v-for="param in portParams" :key="param.prompt">
+        <div class="input_div" v-for="param in instanceParam.portParams" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -66,7 +66,7 @@
             ></el-input>
           </div>
         </div>
-        <div class="input_div" v-for="param in dfsVolume" :key="param.prompt">
+        <div class="input_div" v-for="param in instanceParam.dfsVolume" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -77,7 +77,7 @@
             ></el-input>
           </div>
         </div>
-        <div class="input_div" v-for="param in envParams" :key="param.prompt">
+        <div class="input_div" v-for="param in instanceParam.envParams" :key="param.prompt">
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
@@ -113,50 +113,46 @@ export default {
       app: {},
       editMode: false,
 
-      instanceName: "",
-      summary: "",
-      appName: "",
-      // appVersion: "",
+      instanceParam:{
+        "name": "",
+        "summary":"",
+        "appName": "",
+        "imageUrl": "",
+        "version": "",
+        "portParams": "",
+        "envParams": "",
+        "localVolume": "",
+        "dfsVolume": "",
+        "iconUrl": ""
+      },
+
       dialogTableVisible: false,
       selectVersion: "",
       appVersions: [],
       title: this.$t("store.instanceApp"),
-
-      portParams: [],
-      dfsVolume: [],
-      envParams: [],
-      localVolume: [],
     };
   },
   methods: {
     showDialog() {
-      this.appName = this.app.name;
       this.appVersions = [];
       for (let d of this.app.dockerVersions) {
         this.appVersions.push(d.version);
       }
-
       this.dialogTableVisible = true;
     },
-    setParams(
-      name,
-      summary,
-      appVersion,
-      portParams,
-      dfsVolume,
-      envParams,
-      localVolume
-    ) {
-      this.instanceName = name;
-      this.summary = summary;
-      this.selectVersion = appVersion;
-      this.portParams = portParams;
-      this.dfsVolume = dfsVolume;
-      this.envParams = envParams;
-      this.localVolume = localVolume;
+    setParams(instanceParam) {
+      this.instanceParam.name = instanceParam.name;
+      this.instanceParam.summary = instanceParam.summary;
+      this.instanceParam.version = instanceParam.version;
+      this.instanceParam.portParams = instanceParam.portParams;
+      this.instanceParam.dfsVolume = instanceParam.dfsVolume;
+      this.instanceParam.envParams = instanceParam.envParams;
+      this.instanceParam.localVolume = instanceParam.localVolume;
     },
     setApp(app) {
       this.app = app;
+      this.instanceParam.iconUrl=app.iconUrl;
+      this.instanceParam.appName=app.name;
     },
     setAppName(name) {
       getAppsByName(name).then((response) => {
@@ -169,29 +165,18 @@ export default {
     },
     versionChange() {
       for (let d of this.app.dockerVersions) {
-        if (d.version == this.selectVersion) {
-          this.imageUrl = d.imageUrl;
-          this.portParams = JSON.parse(JSON.stringify(d.portParams));
-          this.dfsVolume = JSON.parse(JSON.stringify(d.dfsVolume));
-          this.envParams = JSON.parse(JSON.stringify(d.envParams));
-          this.localVolume = JSON.parse(JSON.stringify(d.localVolume));
+        if (d.version == this.instanceParam.version) {
+          this.instanceParam.imageUrl = d.imageUrl;
+          this.instanceParam.portParams = JSON.parse(JSON.stringify(d.portParams));
+          this.instanceParam.dfsVolume = JSON.parse(JSON.stringify(d.dfsVolume));
+          this.instanceParam.envParams = JSON.parse(JSON.stringify(d.envParams));
+          this.instanceParam.localVolume = JSON.parse(JSON.stringify(d.localVolume));
         }
       }
     },
     createApp() {
       if (this.editMode != true) {
-        newInstance(
-          this.instanceName,
-          this.summary,
-          this.appName,
-          this.imageUrl,
-          this.selectVersion,
-          this.portParams,
-          this.envParams,
-          this.localVolume,
-          this.dfsVolume,
-          this.app.iconUrl
-        )
+        newInstance(this.instanceParam)
           .then((response) => {
             console.log(response);
             this.dialogTableVisible = false;
@@ -200,7 +185,7 @@ export default {
             console.log(error);
           });
       } else {
-        editInstance(this.instanceName, "");
+        editInstance(this.instanceName, JSON.stringify(this.instanceParam));
       }
     },
   },

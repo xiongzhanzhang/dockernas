@@ -124,15 +124,7 @@ export default {
 
       this.$refs.createCard.setAppName(this.instance.appName);
       this.$refs.createCard.setEditMode();
-      this.$refs.createCard.setParams(
-        this.instanceParam.name,
-        this.instanceParam.summary,
-        this.instanceParam.version,
-        this.instanceParam.portParams,
-        this.instanceParam.dfsVolume,
-        this.instanceParam.envParams,
-        this.instanceParam.localVolume
-      );
+      this.$refs.createCard.setParams(this.instanceParam);
     },
     stop() {
       stopInstance(this.instance.name).then((response) => {
