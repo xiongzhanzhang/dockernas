@@ -14,6 +14,7 @@
               class="w-50 m-2"
               style="width: 400px"
               size="large"
+              :disabled="editMode == true"
             >
             </el-input>
           </div>
@@ -102,17 +103,20 @@
 </template>
 
 <script>
-import { newInstance } from "../api/instance";
+import { newInstance, editInstance } from "../api/instance";
+import { getAppsByName } from "../api/store";
 
 export default {
   name: "createInstance",
-  props: ["app"],
   data() {
     return {
+      app: {},
+      editMode: false,
+
       instanceName: "",
       summary: "",
       appName: "",
-      appVersion: "",
+      // appVersion: "",
       dialogTableVisible: false,
       selectVersion: "",
       appVersions: [],
@@ -134,6 +138,35 @@ export default {
 
       this.dialogTableVisible = true;
     },
+    setParams(
+      name,
+      summary,
+      appVersion,
+      portParams,
+      dfsVolume,
+      envParams,
+      localVolume
+    ) {
+      this.instanceName = name;
+      this.summary = summary;
+      this.selectVersion = appVersion;
+      this.portParams = portParams;
+      this.dfsVolume = dfsVolume;
+      this.envParams = envParams;
+      this.localVolume = localVolume;
+    },
+    setApp(app) {
+      this.app = app;
+    },
+    setAppName(name) {
+      getAppsByName(name).then((response) => {
+        this.setApp(response.data);
+      });
+    },
+    setEditMode() {
+      this.title = "编辑应用";
+      this.editMode = true;
+    },
     versionChange() {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.selectVersion) {
@@ -146,25 +179,29 @@ export default {
       }
     },
     createApp() {
-      newInstance(
-        this.instanceName,
-        this.summary,
-        this.appName,
-        this.imageUrl,
-        this.selectVersion,
-        this.portParams,
-        this.envParams,
-        this.localVolume,
-        this.dfsVolume,
-        this.app.iconUrl
-      )
-        .then((response) => {
-          console.log(response);
-          this.dialogTableVisible = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.editMode != true) {
+        newInstance(
+          this.instanceName,
+          this.summary,
+          this.appName,
+          this.imageUrl,
+          this.selectVersion,
+          this.portParams,
+          this.envParams,
+          this.localVolume,
+          this.dfsVolume,
+          this.app.iconUrl
+        )
+          .then((response) => {
+            console.log(response);
+            this.dialogTableVisible = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        editInstance(this.instanceName, "");
+      }
     },
   },
 };

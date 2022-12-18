@@ -12,3 +12,9 @@ func GetApps(c *gin.Context) {
 		"list": apps,
 	})
 }
+
+func GetAppByName(c *gin.Context) {
+	name := c.Param("name")
+	app := service.GetAppByName(name)
+	c.JSON(200, app)
+}

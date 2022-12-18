@@ -13,6 +13,17 @@ func GetApps() []models.App {
 	return getAppsFromPath("./apps")
 }
 
+func GetAppByName(name string) models.App {
+	var path = "./apps"
+	var app models.App
+	app.Name = name
+	app.IconUrl = strings.Replace(path, "./", "/", 1) + "/" + name + "/icon.jpg"
+	utils.GetObjFromJsonFile(path+"/"+name+"/introduction.json", &app)
+	app.DockerVersions = getDockerTemplates(path + "/" + name + "/docker")
+
+	return app
+}
+
 func getAppsFromPath(path string) []models.App {
 	dirs, err := ioutil.ReadDir(path)
 	if err != nil {
@@ -23,11 +34,7 @@ func getAppsFromPath(path string) []models.App {
 	apps := []models.App{}
 	for _, fi := range dirs {
 		if fi.IsDir() {
-			var app models.App
-			app.Name = fi.Name()
-			app.IconUrl = strings.Replace(path, "./", "/", 1) + "/" + fi.Name() + "/icon.jpg"
-			utils.GetObjFromJsonFile(path+"/"+fi.Name()+"/introduction.json", &app)
-			app.DockerVersions = getDockerTemplates(path + "/" + fi.Name() + "/docker")
+			app := GetAppByName(fi.Name())
 			apps = append(apps, app)
 		}
 	}

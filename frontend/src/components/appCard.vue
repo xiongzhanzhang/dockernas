@@ -17,7 +17,7 @@
         <div class="secondary_text">{{ app.category[0] }}</div>
       </div>
     </div>
-    <createInstance ref="createCard" :app="app"></createInstance>
+    <createInstance ref="createCard"></createInstance>
   </div>
 </template>
 
@@ -37,6 +37,9 @@ export default {
       this.$refs.createCard.showDialog();
     },
   },
+  mounted(){
+    this.$refs.createCard.setApp(this.app);
+  }
 };
 </script>
 

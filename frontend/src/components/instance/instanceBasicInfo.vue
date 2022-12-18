@@ -68,6 +68,7 @@
         type="primary"
         style="height: 40px; width: 200px"
         :disabled="instance.state == 3"
+        @click="edit"
         >配置</el-button
       >
       <el-button
@@ -92,14 +93,24 @@
         >删除</el-button
       >
     </div>
+
+    <createInstance ref="createCard"></createInstance>
   </div>
 </template>
 
 <script>
-import { stopInstance, startInstance, deleteInstance } from "../../api/instance";
+import createInstance from "../createInstance.vue";
+import {
+  stopInstance,
+  startInstance,
+  deleteInstance,
+} from "../../api/instance";
 
 export default {
   name: "instanceBasicInfo",
+  components: {
+    createInstance,
+  },
   data() {
     return {
       instanceParam: {},
@@ -110,6 +121,18 @@ export default {
     initData(instance) {
       this.instance = instance;
       this.instanceParam = JSON.parse(this.instance.instanceParamStr);
+
+      this.$refs.createCard.setAppName(this.instance.appName);
+      this.$refs.createCard.setEditMode();
+      this.$refs.createCard.setParams(
+        this.instanceParam.name,
+        this.instanceParam.summary,
+        this.instanceParam.version,
+        this.instanceParam.portParams,
+        this.instanceParam.dfsVolume,
+        this.instanceParam.envParams,
+        this.instanceParam.localVolume
+      );
     },
     stop() {
       stopInstance(this.instance.name).then((response) => {
@@ -121,11 +144,14 @@ export default {
         location.reload();
       });
     },
-    deleteInstancec(){
+    deleteInstancec() {
       deleteInstance(this.instance.name).then((response) => {
         this.$router.push("/index/instances");
       });
-    }
+    },
+    edit() {
+      this.$refs.createCard.showDialog();
+    },
   },
   mounted() {},
 };
