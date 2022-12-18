@@ -14,6 +14,9 @@
         </el-col>
       </el-row>
     </div>
+
+    <div v-show="instances.length==0" class="tip_div"><div>没有实例</div></div>
+
   </div>
 </template>
 
@@ -49,7 +52,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.tip_div{
+  color: rgb(94, 94, 94);
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
 </style>
 
   
