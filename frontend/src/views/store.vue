@@ -11,7 +11,7 @@
           collapse-tags
           placeholder="Select"
           size="large"
-          @change="filterChange"
+          @change="filterApps"
         >
           <el-option
             v-for="item in appTypes"
@@ -28,6 +28,7 @@
           style="width: 300px"
           placeholder="search"
           size="large"
+          @input="filterApps"
         >
           <template #prefix>
             <el-icon class="el-input__icon"><search /></el-icon>
@@ -43,7 +44,7 @@
           :sm="6"
           :md="4"
           :lg="4"
-          v-for="app in apps"
+          v-for="app in filtedApps"
           :key="app.name"
         >
           <appCard :app="app"></appCard>
@@ -66,13 +67,13 @@ export default {
   data() {
     return {
       apps: [],
+      filtedApps:[],
       selectTypes: [],
       searchStr: "",
       appTypes: [],
     };
   },
   methods: {
-    filterChange() {},
     flushApps() {
       getApps()
         .then((response) => {
@@ -87,11 +88,34 @@ export default {
           for (let category of new Set(categorys)) {
             this.appTypes.push(category);
           }
+
+          this.filterApps();
         })
         .catch((error) => {
           console.log(error);
         });
     },
+    filterApps(){
+      this.filtedApps=[];
+      console.log(this.searchStr);
+      console.log(this.selectTypes);
+
+      for(let app of this.apps){
+        console.log(app);
+        if(app.name.toLowerCase().indexOf(this.searchStr.toLowerCase())>=0 || this.searchStr.length==0){
+          if(this.selectTypes.length>0){
+            for(let category of app.category){
+              if(this.selectTypes.indexOf(category)>=0){
+                this.filtedApps.push(app);
+                break;
+              }
+            }
+          }else{
+            this.filtedApps.push(app);
+          }
+        }
+      }
+    }
   },
   mounted() {
     this.flushApps();
