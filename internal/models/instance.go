@@ -1,6 +1,8 @@
 package models
 
-import "log"
+import (
+	"log"
+)
 
 const (
 	NEW_STATE    = 0
@@ -11,7 +13,8 @@ const (
 )
 
 type Instance struct {
-	InstanceID       string `json:"instanceID"`
+	Id               int    `json:"id"  gorm:"primary_key;auto_increment"`
+	ContainerID      string `json:"containerID"`
 	Summary          string `json:"summary"`
 	State            int    `json:"state"`
 	IconUrl          string `json:"iconUrl"`
@@ -20,6 +23,7 @@ type Instance struct {
 	AppName          string `json:"appName"`
 	Version          string `json:"version"`
 	InstanceParamStr string `json:"instanceParamStr" gorm:"type:varchar(1024)"` //store json str
+	CreateTime       int64  `json:"createTime"`
 }
 
 func AddInstance(instance *Instance) {

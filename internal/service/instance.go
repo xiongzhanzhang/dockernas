@@ -3,6 +3,7 @@ package service
 import (
 	"log"
 	"os"
+	"time"
 	"tinycloud/internal/backend/docker"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
@@ -12,11 +13,11 @@ import (
 func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	var err error
 
-	instance.InstanceID, err = docker.Create(&param)
+	instance.ContainerID, err = docker.Create(&param)
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 
 	if err != nil {
-		if instance.InstanceID == "" {
+		if instance.ContainerID == "" {
 			instance.State = models.CREATE_ERROR
 		} else {
 			instance.State = models.RUN_ERROR
@@ -40,6 +41,7 @@ func CreateInstance(param models.InstanceParam) {
 	instance.Version = param.Version
 	instance.IconUrl = param.IconUrl
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
+	instance.CreateTime = time.Now().UnixMilli()
 
 	models.AddInstance(&instance)
 
@@ -47,7 +49,7 @@ func CreateInstance(param models.InstanceParam) {
 }
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {
-	err := docker.Delete(instance.InstanceID)
+	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		panic(err)
 	}
@@ -65,7 +67,7 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 }
 
 func StartInstance(instance models.Instance) {
-	err := docker.Start(instance.InstanceID)
+	err := docker.Start(instance.ContainerID)
 	if err != nil {
 		panic(err)
 	}
@@ -75,7 +77,7 @@ func StartInstance(instance models.Instance) {
 }
 
 func StopInstance(instance models.Instance) {
-	err := docker.Stop(instance.InstanceID)
+	err := docker.Stop(instance.ContainerID)
 	if err != nil {
 		panic(err)
 	}
@@ -85,7 +87,7 @@ func StopInstance(instance models.Instance) {
 }
 
 func DeleteInstance(instance models.Instance) {
-	err := docker.Delete(instance.InstanceID)
+	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		log.Println(err)
 	}
@@ -95,5 +97,5 @@ func DeleteInstance(instance models.Instance) {
 }
 
 func GetInstanceLog(instance models.Instance) string {
-	return docker.GetLog(instance.InstanceID)
+	return docker.GetLog(instance.ContainerID)
 }

@@ -6,6 +6,10 @@
         <div>{{ instance.name }}</div>
       </div>
       <div class="input_div">
+        <div class="first_input">创建时间</div>
+        <div>{{new Date(instance.createTime).toLocaleString()}}</div>
+      </div>
+      <div class="input_div">
         <div class="first_input">注备</div>
         <div>{{ instance.summary }}</div>
       </div>
