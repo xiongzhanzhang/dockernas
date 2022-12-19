@@ -1,0 +1,26 @@
+{
+    "imageUrl":"filebrowser/filebrowser:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"80",
+            "value":"8082",
+            "reg":""
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"管理的目录",
+            "key":"/srv",
+            "value":"",
+            "reg":"",
+            "name":"srv"
+        }
+    ]
+}
+
