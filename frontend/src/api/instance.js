@@ -31,3 +31,7 @@ export const deleteInstance = (name) => {
 export const getInstanceLog = (name) => {
     return http.get("/api/instance/" + name + "/log")
 }
+
+export const getInstanceEvent = (name) => {
+    return http.get("/api/instance/" + name + "/event")
+}
