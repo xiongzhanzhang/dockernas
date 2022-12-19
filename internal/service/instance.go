@@ -94,6 +94,14 @@ func StopInstance(instance models.Instance) {
 }
 
 func DeleteInstance(instance models.Instance) {
+	if instance.State == models.RUNNING {
+		err := docker.Stop(instance.ContainerID)
+		if err != nil {
+			models.AddEventLog(instance.Id, models.STOP_EVENT, err.Error())
+			log.Println(err)
+		}
+	}
+
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		models.AddEventLog(instance.Id, models.DELETE_EVENT, err.Error())
