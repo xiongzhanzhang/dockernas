@@ -74,3 +74,10 @@ func GetInstanceLog(c *gin.Context) {
 	log := service.GetInstanceLog(instance)
 	c.JSON(200, gin.H{"data": log})
 }
+
+func GetInstanceEvent(c *gin.Context) {
+	name := c.Param("name")
+	instance := models.GetInstanceByName(name)
+	events := models.GetEvents(instance.Id)
+	c.JSON(200, gin.H{"list": events})
+}

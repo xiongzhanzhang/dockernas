@@ -24,6 +24,7 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 		}
 		models.UpdateInstance(&instance)
 		log.Panicln(err)
+		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
 		panic(err)
 	}
 
@@ -51,6 +52,7 @@ func CreateInstance(param models.InstanceParam) {
 func EditInstance(instance models.Instance, param models.InstanceParam) {
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
+		models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
 		panic(err)
 	}
 
@@ -64,36 +66,43 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 	models.UpdateInstance(&instance)
 
 	runNewContainer(instance, param)
+	models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
 }
 
 func StartInstance(instance models.Instance) {
 	err := docker.Start(instance.ContainerID)
 	if err != nil {
+		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
 		panic(err)
 	}
 
 	instance.State = models.RUNNING
 	models.UpdateInstance(&instance)
+	models.AddEventLog(instance.Id, models.START_EVENT, "")
 }
 
 func StopInstance(instance models.Instance) {
 	err := docker.Stop(instance.ContainerID)
 	if err != nil {
+		models.AddEventLog(instance.Id, models.STOP_EVENT, err.Error())
 		panic(err)
 	}
 
 	instance.State = models.STOPPED
 	models.UpdateInstance(&instance)
+	models.AddEventLog(instance.Id, models.STOP_EVENT, "")
 }
 
 func DeleteInstance(instance models.Instance) {
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
+		models.AddEventLog(instance.Id, models.DELETE_EVENT, err.Error())
 		log.Println(err)
 	}
 
 	models.DeleteInstance(&instance)
 	os.RemoveAll(config.GetAppLocalPath(instance.Name))
+	models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
 }
 
 func GetInstanceLog(instance models.Instance) string {

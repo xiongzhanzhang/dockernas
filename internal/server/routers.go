@@ -19,5 +19,6 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.DELETE("instance/:name", api.DeleteInstance)
 
 		apiv1.GET("instance/:name/log", api.GetInstanceLog)
+		apiv1.GET("instance/:name/event", api.GetInstanceEvent)
 	}
 }

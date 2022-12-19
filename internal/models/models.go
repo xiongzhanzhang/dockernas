@@ -33,6 +33,8 @@ func GetDb() *gorm.DB {
 	_db.SingularTable(true)
 	_db.AutoMigrate(&ParamItem{})
 	_db.AutoMigrate(&Instance{})
+	_db.AutoMigrate(&EventLog{})
+	
 	_db.DB().SetMaxIdleConns(3)
 	_db.DB().SetMaxOpenConns(20)
 
