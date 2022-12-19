@@ -1,0 +1,33 @@
+{
+    "imageUrl":"cnk3x/xunlei:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"2345",
+            "value":"2345",
+            "reg":""
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置文件位置",
+            "key":"/xunlei/data",
+            "value":"",
+            "reg":"",
+            "name":"config"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"下载文件位置",
+            "key":"/xunlei/downloads",
+            "value":"",
+            "reg":"",
+            "name":"downloads"
+        }
+    ]
+}
+

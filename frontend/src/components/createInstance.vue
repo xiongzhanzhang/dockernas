@@ -139,6 +139,7 @@ export default {
         localVolume: "",
         dfsVolume: "",
         iconUrl: "",
+        privileged: false,
       },
 
       dialogTableVisible: false,
@@ -164,6 +165,7 @@ export default {
       this.instanceParam.envParams = instanceParam.envParams;
       this.instanceParam.localVolume = instanceParam.localVolume;
       this.instanceParam.imageUrl = instanceParam.imageUrl;
+      this.instanceParam.privileged = instanceParam.privileged;
     },
     setApp(app) {
       this.app = app;
@@ -183,6 +185,7 @@ export default {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.instanceParam.version) {
           this.instanceParam.imageUrl = d.imageUrl;
+          this.instanceParam.privileged = d.privileged;
           this.instanceParam.portParams = JSON.parse(
             JSON.stringify(d.portParams)
           );

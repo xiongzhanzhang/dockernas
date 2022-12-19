@@ -158,6 +158,10 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		RestartPolicy: container.RestartPolicy{Name: "always"},
 	}
 
+	if param.Privileged {
+		hostConfig.Privileged = true
+	}
+
 	return containerConfig, hostConfig
 }
 
