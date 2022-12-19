@@ -92,7 +92,6 @@
       <el-button
         type="danger"
         style="height: 40px; width: 200px"
-        :disabled="instance.state == 3"
         @click="deleteInstancec"
         >删除</el-button
       >
