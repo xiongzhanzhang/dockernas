@@ -1,0 +1,33 @@
+{
+    "imageUrl":"deluan/navidrome:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"4533",
+            "value":"4533",
+            "reg":""
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/data",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"音乐目录",
+            "key":"/music",
+            "value":"",
+            "reg":"",
+            "name":"music"
+        }
+    ]
+}
+
