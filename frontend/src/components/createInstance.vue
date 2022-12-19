@@ -58,6 +58,7 @@
         <div
           class="input_div"
           v-for="param in instanceParam.portParams"
+          v-show="param.hide == false"
           :key="param.prompt"
         >
           <div class="first_input">{{ param.prompt }}</div>
@@ -73,6 +74,7 @@
         <div
           class="input_div"
           v-for="param in instanceParam.dfsVolume"
+          v-show="param.hide == false"
           :key="param.prompt"
         >
           <div class="first_input">{{ param.prompt }}</div>
@@ -88,6 +90,7 @@
         <div
           class="input_div"
           v-for="param in instanceParam.envParams"
+          v-show="param.hide == false"
           :key="param.prompt"
         >
           <div class="first_input">{{ param.prompt }}</div>
@@ -226,7 +229,7 @@ export default {
   height: 50px;
 }
 .first_input {
-  width: 100px;
+  width: 200px;
   text-align: right;
   margin-right: 30px;
 }

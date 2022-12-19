@@ -103,7 +103,11 @@ func Create(param *models.InstanceParam) (string, error) {
 func buildConfig(param *models.InstanceParam) (container.Config, container.HostConfig) {
 	m := make([]mount.Mount, 0, len(param.DfsVolume)+len(param.LocalVolume))
 	for _, item := range param.DfsVolume {
-		m = append(m, mount.Mount{Type: mount.TypeBind, Source: item.Key, Target: item.Value})
+		m = append(m, mount.Mount{
+			Type:   mount.TypeBind,
+			Source: config.GetFullDfsPath(item.Value),
+			Target: item.Key,
+		})
 	}
 
 	var usedVolumeName []string
@@ -132,7 +136,11 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 	netPort := make(nat.PortMap)
 
 	for _, item := range param.PortParams {
-		natPort, _ := nat.NewPort("tcp", item.Key)
+		proto := "tcp"
+		if item.Meta == "udp" {
+			proto = "udp"
+		}
+		natPort, _ := nat.NewPort(proto, item.Key)
 		exports[natPort] = struct{}{}
 		portList := make([]nat.PortBinding, 0, 1)
 		portList = append(portList, nat.PortBinding{HostIP: "0.0.0.0", HostPort: item.Value})

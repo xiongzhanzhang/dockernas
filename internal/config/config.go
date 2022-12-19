@@ -15,6 +15,14 @@ func GetBasePath() string {
 	return basePath
 }
 
+func GetFullDfsPath(path string) string {
+	basePath := GetBasePath()
+	basePath = filepath.Join(basePath, "dfs", path)
+	utils.CheckCreateDir(basePath)
+
+	return basePath
+}
+
 func GetDBFilePath() string {
 	basePath := GetBasePath()
 	basePath = filepath.Join(basePath, "meta")

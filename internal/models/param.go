@@ -6,6 +6,8 @@ type ParamItem struct {
 	Key    string `json:"key"`   // resource in contariner
 	Value  string `json:"value"` // resource in host
 	Reg    string `json:"reg"`   // Regular for input
+	Hide   bool   `json:"hide"`  // is show on frontend
+	Meta   string `json:"meta"`  // meta data
 }
 
 type DockerTemplate struct {
