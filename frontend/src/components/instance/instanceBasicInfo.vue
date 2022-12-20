@@ -92,12 +92,20 @@
       <el-button
         type="danger"
         style="height: 40px; width: 200px"
-        @click="deleteInstancec"
+        @click="showDelete"
         >删除</el-button
       >
     </div>
 
     <createInstance ref="createCard"></createInstance>
+
+    <el-dialog v-model="showDeleteDialog" title="确定删除?">
+      <div class="center_div">
+        <el-button type="primary" style="height: 40px; width: 200px" @click="showDeleteDialog = false">取消</el-button>
+        <el-button type="danger" style="height: 40px; width: 200px" @click="requestDeleteInstance">确认</el-button>
+      </div>
+  </el-dialog>
+
   </div>
 </template>
 
@@ -118,6 +126,7 @@ export default {
     return {
       instanceParam: {},
       instance: {},
+      showDeleteDialog: false,
     };
   },
   methods: {
@@ -139,7 +148,11 @@ export default {
         location.reload();
       });
     },
-    deleteInstancec() {
+    showDelete(){
+      this.showDeleteDialog=true;
+    },
+    requestDeleteInstance() {
+      this.showDeleteDialog=false;
       deleteInstance(this.instance.name).then((response) => {
         this.$router.push("/index/instances");
       });
