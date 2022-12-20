@@ -107,6 +107,7 @@
         <div class="center_div" style="margin-top: 50px">
           <el-button
             type="primary"
+            :loading="btnLoading"
             style="height: 40px; width: 200px"
             @click="createApp"
             >{{ $t("common.yes") }}</el-button
@@ -125,6 +126,8 @@ export default {
   name: "createInstance",
   data() {
     return {
+      btnLoading:false,
+
       app: {},
       editMode: false,
 
@@ -202,10 +205,12 @@ export default {
       }
     },
     createApp() {
+      this.btnLoading=true;
       if (this.editMode != true) {
         newInstance(this.instanceParam).then((response) => {
           console.log(response);
           this.dialogTableVisible = false;
+          this.btnLoading=false;
         });
       } else {
         editInstance(
@@ -214,6 +219,7 @@ export default {
         ).then((response) => {
           console.log(response);
           this.dialogTableVisible = false;
+          this.btnLoading=false;
           location.reload();
         });
       }
