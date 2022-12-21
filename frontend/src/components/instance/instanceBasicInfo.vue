@@ -7,7 +7,7 @@
       </div>
       <div class="input_div">
         <div class="first_input">创建时间</div>
-        <div>{{new Date(instance.createTime).toLocaleString()}}</div>
+        <div>{{ new Date(instance.createTime).toLocaleString() }}</div>
       </div>
       <div class="input_div">
         <div class="first_input">注备</div>
@@ -101,11 +101,22 @@
 
     <el-dialog v-model="showDeleteDialog" title="确定删除?">
       <div class="center_div">
-        <el-button type="primary" style="height: 40px; width: 200px" @click="showDeleteDialog = false">取消</el-button>
-        <el-button type="danger" style="height: 40px; width: 200px" @click="requestDeleteInstance">确认</el-button>
+        <el-button
+          type="primary"
+          style="height: 40px; width: 200px"
+          :disabled="cancelBtnDisable"
+          @click="showDeleteDialog = false"
+          >取消</el-button
+        >
+        <el-button
+          type="danger"
+          style="height: 40px; width: 200px"
+          :loading="delBtnLoading"
+          @click="requestDeleteInstance"
+          >确认</el-button
+        >
       </div>
-  </el-dialog>
-
+    </el-dialog>
   </div>
 </template>
 
@@ -127,6 +138,9 @@ export default {
       instanceParam: {},
       instance: {},
       showDeleteDialog: false,
+
+      delBtnLoading: false,
+      cancelBtnDisable: false,
     };
   },
   methods: {
@@ -148,13 +162,17 @@ export default {
         location.reload();
       });
     },
-    showDelete(){
-      this.showDeleteDialog=true;
+    showDelete() {
+      this.showDeleteDialog = true;
     },
     requestDeleteInstance() {
-      this.showDeleteDialog=false;
+      this.delBtnLoading= true,
+      this.cancelBtnDisable= true,
       deleteInstance(this.instance.name).then((response) => {
         this.$router.push("/index/instances");
+      }).catch((error) => {
+        this.delBtnLoading= false;
+        this.cancelBtnDisable= false;
       });
     },
     edit() {
