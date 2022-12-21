@@ -152,7 +152,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 
 	for _, item := range param.PortParams {
 		proto := "tcp"
-		if item.Meta == "udp" {
+		if item.Protocol == "udp" {
 			proto = "udp"
 		}
 		natPort, _ := nat.NewPort(proto, item.Key)

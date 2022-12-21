@@ -7,7 +7,7 @@ type ParamItem struct {
 	Value  string `json:"value"` // resource in host
 	Reg    string `json:"reg"`   // Regular for input
 	Hide   bool   `json:"hide"`  // is show on frontend
-	Meta   string `json:"meta"`  // meta data
+	Protocol   string `json:"protocol"`  // network protocol, used by port param
 }
 
 type DockerTemplate struct {

@@ -5,7 +5,8 @@
             "prompt":"数据库端口",
             "key":"3306",
             "value":"3306",
-            "reg":""
+            "reg":"",
+            "protocol":"tcp"
         }
     ],
     "envParams":[

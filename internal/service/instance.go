@@ -31,10 +31,12 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 
 	instance.State = models.RUNNING
 	models.UpdateInstance(&instance)
+	SavePortUsed(instance, param)
 }
 
 func CreateInstance(param models.InstanceParam) {
 	docker.PullImage(param.ImageUrl) //if pull image error, break exec here
+	CheckIsPortUsed(param)
 
 	var instance models.Instance
 
@@ -53,6 +55,8 @@ func CreateInstance(param models.InstanceParam) {
 }
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {
+	DelInstancePorts(instance)
+	CheckIsPortUsed(param)
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
@@ -113,6 +117,8 @@ func DeleteInstance(instance models.Instance) {
 			log.Println(err)
 		}
 	}
+
+	DelInstancePorts(instance)
 
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {

@@ -6,7 +6,8 @@
             "prompt":"web访问端口",
             "key":"4533",
             "value":"4533",
-            "reg":""
+            "reg":"",
+            "protocol":"http"
         }
     ],
     "envParams":[

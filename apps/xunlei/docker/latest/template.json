@@ -6,7 +6,8 @@
             "prompt":"web访问端口",
             "key":"2345",
             "value":"2345",
-            "reg":""
+            "reg":"",
+            "protocol":"http"
         }
     ],
     "envParams":[

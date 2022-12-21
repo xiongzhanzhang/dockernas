@@ -5,20 +5,22 @@
             "prompt":"web访问端口",
             "key":"8080",
             "value":"8080",
-            "reg":""
+            "reg":"",
+            "protocol":"http"
         },
         {
             "prompt":"BT下载监听端口",
             "key":"6881",
             "value":"6881",
-            "reg":""
+            "reg":"",
+            "protocol":"tcp"
         },
         {
             "prompt":"BT下载DHT监听端口",
             "key":"6881",
             "value":"6881",
             "reg":"",
-            "meta":"udp"
+            "protocol":"udp"
         }
     ],
     "envParams":[

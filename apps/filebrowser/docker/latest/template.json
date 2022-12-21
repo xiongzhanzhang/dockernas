@@ -6,7 +6,8 @@
             "prompt":"web访问端口",
             "key":"80",
             "value":"8082",
-            "reg":""
+            "reg":"",
+            "protocol":"http"
         }
     ],
     "envParams":[
