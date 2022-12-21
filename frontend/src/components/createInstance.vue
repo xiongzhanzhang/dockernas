@@ -211,6 +211,8 @@ export default {
           console.log(response);
           this.dialogTableVisible = false;
           this.btnLoading=false;
+        }).catch((error) => {
+          this.btnLoading=false;
         });
       } else {
         editInstance(
@@ -221,6 +223,8 @@ export default {
           this.dialogTableVisible = false;
           this.btnLoading=false;
           location.reload();
+        }).catch((error) => {
+          this.btnLoading=false;
         });
       }
     },

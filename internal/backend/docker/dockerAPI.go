@@ -70,6 +70,21 @@ func Start(containerID string) error {
 	return nil
 }
 
+func PullImage(imageUrl string) {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	_, err = cli.ImagePull(ctx, imageUrl, types.ImagePullOptions{})
+	if err != nil {
+		log.Println("pull image error: " + imageUrl)
+		panic(err)
+	}
+}
+
 func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)
 
@@ -80,11 +95,11 @@ func Create(param *models.InstanceParam) (string, error) {
 		return "", err
 	}
 
-	_, err = cli.ImagePull(ctx, param.ImageUrl, types.ImagePullOptions{})
-	if err != nil {
-		log.Println("pull image error: " + param.ImageUrl)
-		return "", err
-	}
+	// _, err = cli.ImagePull(ctx, param.ImageUrl, types.ImagePullOptions{})
+	// if err != nil {
+	// 	log.Println("pull image error: " + param.ImageUrl)
+	// 	return "", err
+	// }
 
 	resp, err := cli.ContainerCreate(ctx, &containerConfig, &hostConfig, nil, nil, param.Name)
 	if err != nil {

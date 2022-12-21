@@ -39,6 +39,7 @@ export default {
       return "未知事件";
     },
     initData(instance) {
+      this.events=[]
       getInstanceEvent(instance.name).then((response) => {
         for (var d of response.data.list) {
           this.events.push({

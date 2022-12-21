@@ -96,6 +96,8 @@ export default {
       this.divShow[2] = false;
       this.divShow[3] = false;
       this.divShow[index] = true;
+
+      this.flushInstance();
     },
   },
   created(){

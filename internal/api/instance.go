@@ -71,7 +71,12 @@ func DeleteInstance(c *gin.Context) {
 func GetInstanceLog(c *gin.Context) {
 	name := c.Param("name")
 	instance := models.GetInstanceByName(name)
-	log := service.GetInstanceLog(instance)
+
+	log := ""
+	if instance.ContainerID != "" && instance.State == models.RUNNING {
+		log = service.GetInstanceLog(instance)
+	}
+
 	c.JSON(200, gin.H{"data": log})
 }
 

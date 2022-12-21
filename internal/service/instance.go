@@ -1,6 +1,7 @@
 package service
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 	"time"
@@ -23,7 +24,7 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 			instance.State = models.RUN_ERROR
 		}
 		models.UpdateInstance(&instance)
-		log.Panicln(err)
+		log.Println(err)
 		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
 		panic(err)
 	}
@@ -33,6 +34,8 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 }
 
 func CreateInstance(param models.InstanceParam) {
+	docker.PullImage(param.ImageUrl) //if pull image error, break exec here
+
 	var instance models.Instance
 
 	instance.Name = param.Name
@@ -70,15 +73,24 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 }
 
 func StartInstance(instance models.Instance) {
-	err := docker.Start(instance.ContainerID)
-	if err != nil {
-		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
-		panic(err)
+	if instance.ContainerID == "" {
+		var param models.InstanceParam
+		err := json.Unmarshal([]byte(instance.InstanceParamStr), &param)
+		if err != nil {
+			log.Println(err)
+			panic(err)
+		}
+		runNewContainer(instance, param)
+	} else {
+		err := docker.Start(instance.ContainerID)
+		if err != nil {
+			models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
+			panic(err)
+		}
+		instance.State = models.RUNNING
+		models.UpdateInstance(&instance)
+		models.AddEventLog(instance.Id, models.START_EVENT, "")
 	}
-
-	instance.State = models.RUNNING
-	models.UpdateInstance(&instance)
-	models.AddEventLog(instance.Id, models.START_EVENT, "")
 }
 
 func StopInstance(instance models.Instance) {
