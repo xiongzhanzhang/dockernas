@@ -33,7 +33,16 @@
         </div>
         <div class="input_div">
           <div class="first_input">{{ $t("store.appName") }}</div>
-          <div>{{ instanceParam.appName }}</div>
+          <div>
+            {{ instanceParam.appName }}
+            <el-tooltip
+              effect="dark"
+              placement="bottom"
+            >
+              <el-icon><InfoFilled /></el-icon>
+              <template #content><div style="width: 300px;">{{ app.summary }}</div></template>
+            </el-tooltip>
+          </div>
         </div>
         <div class="input_div">
           <div class="first_input">{{ $t("store.appVersion") }}</div>
@@ -126,7 +135,7 @@ export default {
   name: "createInstance",
   data() {
     return {
-      btnLoading:false,
+      btnLoading: false,
 
       app: {},
       editMode: false,
@@ -205,27 +214,31 @@ export default {
       }
     },
     createApp() {
-      this.btnLoading=true;
+      this.btnLoading = true;
       if (this.editMode != true) {
-        newInstance(this.instanceParam).then((response) => {
-          console.log(response);
-          this.dialogTableVisible = false;
-          this.btnLoading=false;
-        }).catch((error) => {
-          this.btnLoading=false;
-        });
+        newInstance(this.instanceParam)
+          .then((response) => {
+            console.log(response);
+            this.dialogTableVisible = false;
+            this.btnLoading = false;
+          })
+          .catch((error) => {
+            this.btnLoading = false;
+          });
       } else {
         editInstance(
           this.instanceParam.name,
           JSON.stringify(this.instanceParam)
-        ).then((response) => {
-          console.log(response);
-          this.dialogTableVisible = false;
-          this.btnLoading=false;
-          location.reload();
-        }).catch((error) => {
-          this.btnLoading=false;
-        });
+        )
+          .then((response) => {
+            console.log(response);
+            this.dialogTableVisible = false;
+            this.btnLoading = false;
+            location.reload();
+          })
+          .catch((error) => {
+            this.btnLoading = false;
+          });
       }
     },
   },
