@@ -35,12 +35,11 @@
           <div class="first_input">{{ $t("store.appName") }}</div>
           <div>
             {{ instanceParam.appName }}
-            <el-tooltip
-              effect="dark"
-              placement="bottom"
-            >
+            <el-tooltip effect="dark" placement="bottom">
               <el-icon><InfoFilled /></el-icon>
-              <template #content><div style="width: 300px;">{{ app.summary }}</div></template>
+              <template #content
+                ><div style="width: 300px">{{ app.summary }}</div></template
+              >
             </el-tooltip>
           </div>
         </div>
@@ -87,14 +86,25 @@
           :key="param.prompt"
         >
           <div class="first_input">{{ param.prompt }}</div>
-          <div>
+          <!-- <div>
             <el-input
               v-model="param.value"
               class="w-50 m-2"
               style="width: 400px"
               size="large"
             ></el-input>
-          </div>
+          </div> -->
+          <el-tree-select
+            class="w-50 m-2"
+            style="width: 400px"
+            size="large"
+            v-model="param.value"
+            check-strictly
+            lazy
+            :load="loadNode"
+          >
+            <template #default="{ data: { name } }">{{ name }}</template>
+          </el-tree-select>
         </div>
         <div
           class="input_div"
@@ -130,6 +140,7 @@
 <script>
 import { newInstance, editInstance } from "../api/instance";
 import { getAppsByName } from "../api/store";
+import { getDfsDirs } from "../api/filesystem";
 
 export default {
   name: "createInstance",
@@ -161,6 +172,18 @@ export default {
     };
   },
   methods: {
+    loadNode(node, resolve) {
+      console.log(node.data);
+      if (node.isLeaf) return resolve([]);
+      var curPath = node.data.value;
+      if (curPath == null) {
+        curPath = "/";
+      }
+      getDfsDirs(curPath).then((response) => {
+        console.log(response.data);
+        resolve(response.data.list);
+      });
+    },
     showDialog() {
       this.appVersions = [];
       for (let d of this.app.dockerVersions) {

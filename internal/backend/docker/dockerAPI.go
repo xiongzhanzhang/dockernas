@@ -118,9 +118,11 @@ func Create(param *models.InstanceParam) (string, error) {
 func buildConfig(param *models.InstanceParam) (container.Config, container.HostConfig) {
 	m := make([]mount.Mount, 0, len(param.DfsVolume)+len(param.LocalVolume))
 	for _, item := range param.DfsVolume {
+		dfsPath := config.GetFullDfsPath(item.Value)
+		utils.CheckCreateDir(dfsPath)
 		m = append(m, mount.Mount{
 			Type:   mount.TypeBind,
-			Source: config.GetFullDfsPath(item.Value),
+			Source: dfsPath,
 			Target: item.Key,
 		})
 	}

@@ -58,14 +58,14 @@
         <div>{{ param.value }}</div>
       </div>
 
-      <div
+      <!-- <div
         class="input_div"
         v-for="param in instanceParam.localVolume"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
         <div>{{ param.value }}</div>
-      </div>
+      </div> -->
     </div>
 
     <div class="center_div" style="margin-top: 100px">
