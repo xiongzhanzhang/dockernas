@@ -46,6 +46,7 @@ func CreateInstance(param models.InstanceParam) {
 	instance.AppName = param.AppName
 	instance.Version = param.Version
 	instance.IconUrl = param.IconUrl
+	instance.Port = getFirstHttpPort(param)
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 	instance.CreateTime = time.Now().UnixMilli()
 
@@ -68,6 +69,7 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 	instance.AppName = param.AppName
 	instance.Version = param.Version
 	instance.IconUrl = param.IconUrl
+	instance.Port = getFirstHttpPort(param)
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 
 	models.UpdateInstance(&instance)

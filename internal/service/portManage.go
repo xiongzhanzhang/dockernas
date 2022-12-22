@@ -1,6 +1,8 @@
 package service
 
 import (
+	"log"
+	"strconv"
 	"tinycloud/internal/models"
 )
 
@@ -32,4 +34,18 @@ func SavePortUsed(instance models.Instance, param models.InstanceParam) {
 			item.Value,
 		)
 	}
+}
+
+func getFirstHttpPort(param models.InstanceParam) int {
+	for _, item := range param.PortParams {
+		if item.Protocol == "http" {
+			port, err := strconv.Atoi(item.Value)
+			if err != nil {
+				log.Println(err)
+			}
+			return port
+		}
+	}
+
+	return 0
 }

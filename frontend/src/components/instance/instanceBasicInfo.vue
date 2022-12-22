@@ -36,7 +36,8 @@
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
-        <div>{{ param.value }}</div>
+        <div v-if="param.protocol == 'http'"><a  target="_blank" :href="getInstanceWebUrl(instance.name, param.value)">{{ param.value }}</a></div>
+        <div v-if="param.protocol != 'http'">{{ param.value }}</div>
       </div>
 
       <div
@@ -121,6 +122,7 @@
 </template>
 
 <script>
+import {getInstanceWebUrl} from "../../utils/url"
 import createInstance from "../createInstance.vue";
 import {
   stopInstance,
@@ -144,6 +146,7 @@ export default {
     };
   },
   methods: {
+    getInstanceWebUrl,
     initData(instance) {
       this.instance = instance;
       this.instanceParam = JSON.parse(this.instance.instanceParamStr);

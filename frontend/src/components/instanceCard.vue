@@ -8,7 +8,7 @@
         />
       </div>
       <div class="text_div" style="padding-left: 6px">
-        <div class="main_text">{{ instance.name }}</div>
+        <div :class='[url==null ?"":"click_able","main_text"]' @click="tryOpen" >{{ instance.name }}</div>
         <div class="secondary_text">{{ instance.summary }}</div>
       </div>
       <div style="flex-grow: 1"></div>
@@ -25,6 +25,8 @@
   
   <script>
 import createInstance from "./createInstance.vue";
+import {getInstanceWebUrl} from "../utils/url"
+
 export default {
   name: "instanceCard",
   components: {
@@ -32,13 +34,24 @@ export default {
   },
   props: ["instance"],
   data() {
-    return {};
+    return {
+      url:null
+    };
   },
   methods: {
     clicked() {
       this.$router.push("/index/instanceinfo/"+this.instance.name);
     },
+    tryOpen(event){
+      if(this.url!=null){
+        event.stopPropagation();
+        window.open(this.url);
+      }
+    }
   },
+  mounted(){
+    this.url=getInstanceWebUrl(this.instance.name, this.instance.port);
+  }
 };
 </script>
   

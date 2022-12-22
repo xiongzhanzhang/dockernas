@@ -51,5 +51,7 @@
     margin-top:8px
 }
 
-
+.click_able{
+    cursor: pointer;
+}
 
