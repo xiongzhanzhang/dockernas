@@ -2,12 +2,13 @@ package server
 
 import (
 	"tinycloud/internal/api"
+	"tinycloud/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 func registerRoutes(router *gin.Engine) {
-	apiv1 := router.Group("/api")
+	apiv1 := router.Group("/api", middleware.Authentication())
 	{
 		apiv1.GET("app", api.GetApps)
 		apiv1.GET("app/:name", api.GetAppByName)
@@ -22,5 +23,7 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.GET("instance/:name/event", api.GetInstanceEvent)
 
 		apiv1.GET("filesystem", api.GetDfsDir)
+
+		apiv1.POST("login", api.Login)
 	}
 }

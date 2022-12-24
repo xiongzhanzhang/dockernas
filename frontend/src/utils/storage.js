@@ -1,6 +1,6 @@
 const storage = {
     set: (name, content, maxAge = null) => {
-        if (!global.window || !name) {
+        if (!window || !name) {
             return
         }
 
@@ -8,7 +8,7 @@ const storage = {
             content = JSON.stringify(content)
         }
 
-        const storage = global.window.localStorage
+        const storage = window.localStorage
 
         storage.setItem(name, content)
         if (maxAge && !isNaN(parseInt(maxAge))) {
@@ -19,10 +19,10 @@ const storage = {
 
     get: (name, defValue) => {
         defValue = defValue === undefined ? null : defValue
-        if (!global.window || !name) {
+        if (!window || !name) {
             return defValue
         }
-        const content = window.localStorage.getItem(name)
+        const content = localStorage.getItem(name)
 
         if (!content) return defValue
 
@@ -41,14 +41,14 @@ const storage = {
     },
 
     rm: (name) => {
-        if (!global.window || !name) {
+        if (!window || !name) {
             return
         }
         window.localStorage.removeItem(name)
         window.localStorage.removeItem(`${name}_EXPIRE`)
     },
     clear: () => {
-        if (!global.window || !name) {
+        if (!window || !name) {
             return
         }
         window.localStorage.clear()

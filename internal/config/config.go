@@ -40,3 +40,7 @@ func GetLocalVolumePath(instanceName string, volumeName string) string {
 	utils.CheckCreateDir(basePath)
 	return basePath
 }
+
+func GetUserInfo() (string, string) {
+	return "admin", "admin"
+}
