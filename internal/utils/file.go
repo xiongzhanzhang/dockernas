@@ -26,7 +26,7 @@ func IsFileExist(path string) bool {
 }
 
 func WriteFile(filePath string, data string) {
-	f, err := os.OpenFile(filePath, os.O_RDONLY|os.O_CREATE|os.O_APPEND, 0666)
+	f, err := os.OpenFile(filePath, os.O_RDONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		log.Println("open file error :", err)
 		panic(err)

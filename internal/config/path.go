@@ -1,18 +1,34 @@
 package config
 
 import (
-	"os"
 	"path/filepath"
 	"tinycloud/internal/utils"
 )
 
+// func GetBasePath() string {
+// 	basePath, err := os.Getwd()
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	basePath = filepath.Join(basePath, "data")
+// 	return basePath
+// }
+
 func GetBasePath() string {
-	basePath, err := os.Getwd()
-	if err != nil {
-		panic(err)
+	basePath := GetConfig("basePath", "")
+	if basePath == "" {
+		panic("base data path is not set")
 	}
-	basePath = filepath.Join(basePath, "data")
 	return basePath
+}
+
+func IsBasePathSet() bool {
+	return GetConfig("basePath", "") != ""
+}
+
+func SetBasePath(path string) {
+	SetConfig("basePath", path)
+	SaveConfig()
 }
 
 func GetFullDfsPath(path string) string {

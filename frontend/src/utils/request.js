@@ -25,6 +25,8 @@ http.interceptors.response.use(response => {
     if (error.response.status == 555) {
         storage.rm("token");
         router.replace({ path: "/login" });
+    }else if(error.response.status == 556){
+        router.replace({ path: "/basepath" });
     } else {
         var msg=error.response.data.msg;
         if(msg==null||msg==""){

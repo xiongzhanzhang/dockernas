@@ -8,7 +8,7 @@ import (
 )
 
 func registerRoutes(router *gin.Engine) {
-	apiv1 := router.Group("/api", middleware.Authentication())
+	apiv1 := router.Group("/api", middleware.Authentication(), middleware.PathCheck())
 	{
 		apiv1.GET("app", api.GetApps)
 		apiv1.GET("app/:name", api.GetAppByName)
@@ -22,7 +22,9 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.GET("instance/:name/log", api.GetInstanceLog)
 		apiv1.GET("instance/:name/event", api.GetInstanceEvent)
 
-		apiv1.GET("filesystem", api.GetDfsDir)
+		apiv1.GET("dfsdir", api.GetDfsDir)
+		apiv1.GET("systemdir", api.GetSystemDir)
+		apiv1.POST("basepath", api.SetBasePath)
 
 		apiv1.POST("login", api.Login)
 	}
