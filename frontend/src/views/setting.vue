@@ -22,20 +22,34 @@
           </el-menu>
         </div>
       </el-aside>
-      <el-main class="card" style="min-height: 100px">Main</el-main>
+      <el-main style="padding:0px; margin:6px">
+        <div v-show="divShow[0]">
+          <host ref="host"></host>
+        </div>
+      </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
+import host from "../components/setting/host.vue";
+
 export default {
   name: "setting",
+  components: {
+    host
+  },
   data() {
-    return {}
+    return {
+      divShow: [true, false, false],
+    }
   },
   methods:{
     clicked(index){
-
+      this.divShow[0] = false;
+      this.divShow[1] = false;
+      this.divShow[2] = false;
+      this.divShow[index] = true;
     }
   }
 }

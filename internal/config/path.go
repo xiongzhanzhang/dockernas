@@ -27,6 +27,9 @@ func IsBasePathSet() bool {
 }
 
 func SetBasePath(path string) {
+	if IsBasePathSet() {
+		panic("base data path has set")
+	}
 	SetConfig("basePath", path)
 	SaveConfig()
 }

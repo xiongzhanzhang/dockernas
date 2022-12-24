@@ -26,6 +26,8 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.GET("systemdir", api.GetSystemDir)
 		apiv1.POST("basepath", api.SetBasePath)
 
+		apiv1.GET("host", api.GetHostInfo)
+
 		apiv1.POST("login", api.Login)
 	}
 }
