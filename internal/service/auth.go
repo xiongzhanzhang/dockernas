@@ -1,7 +1,6 @@
 package service
 
 import (
-	"log"
 	"tinycloud/internal/config"
 
 	"github.com/google/uuid"
@@ -10,7 +9,7 @@ import (
 var userToken string
 
 func IsTokenValid(token string) bool {
-	log.Println(userToken)
+	// log.Println(userToken)
 	return token != "" && userToken == token
 }
 

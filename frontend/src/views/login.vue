@@ -52,6 +52,11 @@ export default {
         });
     },
   },
+  mounted(){
+    if(storage.get("token","")!=""){
+      this.$router.push("/index/store");
+    }
+  }
 };
 </script>
 

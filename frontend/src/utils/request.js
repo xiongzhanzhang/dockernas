@@ -23,6 +23,7 @@ http.interceptors.response.use(response => {
 }, error => {
     console.log(error);
     if (error.response.status == 555) {
+        storage.rm("token");
         router.replace({ path: "/login" });
     } else {
         var msg=error.response.data.msg;
