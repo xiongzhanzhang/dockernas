@@ -1,46 +1,35 @@
 package config
 
-import (
-	"os"
-	"path/filepath"
-	"tinycloud/internal/utils"
-)
+import "tinycloud/internal/utils"
 
-func GetBasePath() string {
-	basePath, err := os.Getwd()
-	if err != nil {
-		panic(err)
+const configFilePath = "./config.json"
+
+var configMap map[string]string = map[string]string{}
+
+func InitConfig() {
+	if utils.IsFileExist(configFilePath) {
+		utils.GetObjFromJsonFile(configFilePath, &configMap)
+	} else {
+		SetConfig("user", "admin")
+		SetConfig("passwd", utils.GenPasswd())
+		SaveConfig()
 	}
-	basePath = filepath.Join(basePath, "data")
-	return basePath
 }
 
-func GetFullDfsPath(path string) string {
-	basePath := GetBasePath()
-	basePath = filepath.Join(basePath, "dfs", path)
-	return basePath
+func GetConfig(key string, defualt string) string {
+	value, ok := configMap[key]
+	if ok {
+		return value
+	}
+
+	return defualt
 }
 
-func GetDBFilePath() string {
-	basePath := GetBasePath()
-	basePath = filepath.Join(basePath, "meta")
-	utils.CheckCreateDir(basePath)
-	return filepath.Join(basePath, "data.db3")
+func SetConfig(key string, value string) {
+	configMap[key] = value
+
 }
 
-func GetAppLocalPath(instanceName string) string {
-	basePath := GetBasePath()
-	basePath = filepath.Join(basePath, "local", instanceName)
-	return basePath
-}
-
-func GetLocalVolumePath(instanceName string, volumeName string) string {
-	basePath := GetBasePath()
-	basePath = filepath.Join(basePath, "local", instanceName, volumeName)
-	utils.CheckCreateDir(basePath)
-	return basePath
-}
-
-func GetUserInfo() (string, string) {
-	return "admin", "admin"
+func SaveConfig() {
+	utils.WriteFile(configFilePath, utils.GetJsonFromObj(configMap))
 }

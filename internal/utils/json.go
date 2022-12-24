@@ -25,7 +25,7 @@ func GetObjFromJsonFile(filePath string, obj any) any {
 }
 
 func GetJsonFromObj(obj any) string {
-	json_str, err := json.Marshal(obj)
+	json_str, err := json.MarshalIndent(obj, "", "    ")
 	if err != nil {
 		log.Panicln(err)
 		panic(err)

@@ -24,3 +24,18 @@ func IsFileExist(path string) bool {
 	}
 	return true
 }
+
+func WriteFile(filePath string, data string) {
+	f, err := os.OpenFile(filePath, os.O_RDONLY|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Println("open file error :", err)
+		panic(err)
+	}
+
+	defer f.Close()
+	_, err = f.WriteString(data)
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+}
