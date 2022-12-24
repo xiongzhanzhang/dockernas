@@ -177,12 +177,17 @@ export default {
       if (node.isLeaf) return resolve([]);
       var curPath = node.data.value;
       if (curPath == null) {
-        curPath = "/";
+        resolve([{
+          name:"/",
+          value:"/",
+          label:"/",
+        }])
+      } else {
+        getDfsDirs(curPath).then((response) => {
+          console.log(response.data);
+          resolve(response.data.list);
+        });
       }
-      getDfsDirs(curPath).then((response) => {
-        console.log(response.data);
-        resolve(response.data.list);
-      });
     },
     showDialog() {
       this.appVersions = [];
