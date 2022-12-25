@@ -1,0 +1,27 @@
+{
+    "imageUrl":"nyanmisaka/jellyfin:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"8096",
+            "value":"8096",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"媒体目录",
+            "key":"/media",
+            "value":"",
+            "reg":"",
+            "name":"media"
+        }
+    ]
+}
+
