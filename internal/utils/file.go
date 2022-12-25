@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"os"
+	"path/filepath"
 )
 
 func CheckCreateDir(path string) {
@@ -38,4 +39,15 @@ func WriteFile(filePath string, data string) {
 		log.Println(err)
 		panic(err)
 	}
+}
+
+func GetDirectorySize(path string) (int64, error) {
+	var size int64
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return err
+	})
+	return size, err
 }

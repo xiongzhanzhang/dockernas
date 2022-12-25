@@ -44,7 +44,10 @@ func GetDfsDirInfo(path string) []models.DirInfo {
 func GetSystemDirInfo(path string) []models.DirInfo {
 	if path == "" {
 		dirInfoList := []models.DirInfo{}
-		infos, _ := disk.Partitions(false)
+		infos, err := disk.Partitions(false)
+		if err != nil {
+			panic(err)
+		}
 		for _, info := range infos {
 			var dirInfo models.DirInfo
 			dirInfo.Name = info.Mountpoint

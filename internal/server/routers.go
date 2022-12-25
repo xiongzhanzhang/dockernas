@@ -30,6 +30,7 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.POST("basepath", api.SetBasePath)
 
 		apiv1.GET("host", api.GetHostInfo)
+		apiv1.GET("storage", api.GetStorageInfo)
 
 		apiv1.POST("login", api.Login)
 	}

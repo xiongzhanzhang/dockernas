@@ -26,6 +26,9 @@
         <div v-show="divShow[0]">
           <host ref="host"></host>
         </div>
+        <div v-show="divShow[1]">
+          <storage ref="storage"></storage>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -33,11 +36,12 @@
 
 <script>
 import host from "../components/setting/host.vue";
+import storage from "../components/setting/storage.vue";
 
 export default {
   name: "setting",
   components: {
-    host
+    host,storage
   },
   data() {
     return {
@@ -50,6 +54,8 @@ export default {
       this.divShow[1] = false;
       this.divShow[2] = false;
       this.divShow[index] = true;
+
+      this.$refs.storage.flush();
     }
   }
 }
