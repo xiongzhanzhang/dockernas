@@ -121,6 +121,7 @@ func DeleteInstance(instance models.Instance) {
 	}
 
 	DelInstancePorts(instance)
+	models.DelInstanceStatData(instance.Name)
 
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {

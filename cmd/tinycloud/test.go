@@ -1,10 +1,9 @@
 package main
 
 import (
-	"errors"
-	"log"
+	"tinycloud/internal/daemon"
 )
 
 func main() {
-	log.Println("test", errors.New("saas"))
+	daemon.StartBackgroundTask()
 }

@@ -35,6 +35,7 @@ func GetDb() *gorm.DB {
 	_db.AutoMigrate(&Instance{})
 	_db.AutoMigrate(&EventLog{})
 	_db.AutoMigrate(&InstancePort{})
+	_db.AutoMigrate(&ContainerStat{})
 
 	_db.DB().SetMaxIdleConns(3)
 	_db.DB().SetMaxOpenConns(20)
