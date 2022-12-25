@@ -101,7 +101,7 @@ export default {
       console.log(this.selectTypes);
 
       for(let app of this.apps){
-        console.log(app);
+        // console.log(app);
         if(app.name.toLowerCase().indexOf(this.searchStr.toLowerCase())>=0 || this.searchStr.length==0){
           if(this.selectTypes.length>0){
             for(let category of app.category){

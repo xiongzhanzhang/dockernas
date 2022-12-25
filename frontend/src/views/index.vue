@@ -10,7 +10,7 @@
             text-color="#fff"
             class="el-menu-demo"
             mode="horizontal"
-            default-active="apps"
+            :default-active="$router.currentRoute.value.path"
             router
             style="height:100%"
           >
@@ -28,6 +28,19 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "index",
+  data() {
+    return {
+    };
+  },
+  mounted(){
+    console.log(this.$router);
+  }
+}
+</script>
 
 <style>
 @import "../css/common.css";
