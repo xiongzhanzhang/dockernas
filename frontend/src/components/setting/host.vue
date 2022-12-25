@@ -22,14 +22,21 @@
         <div>{{ new Date(hostData.bootTime).toLocaleString() }}</div>
       </div>
     </div>
+    <div>
+      <instanceMonitor></instanceMonitor>
+    </div>
   </div>
 </template>
 
 <script>
+import instanceMonitor from "../instance/instanceMonitor.vue";
 import { getHostInfo } from "../../api/host";
 
 export default {
   name: "host",
+  components:{
+    instanceMonitor
+  },
   data() {
     return {
       hostData: {},

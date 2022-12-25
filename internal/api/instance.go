@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"log"
+	"strconv"
 	"tinycloud/internal/models"
 	"tinycloud/internal/service"
 
@@ -85,4 +86,33 @@ func GetInstanceEvent(c *gin.Context) {
 	instance := models.GetInstanceByName(name)
 	events := models.GetEvents(instance.Id)
 	c.JSON(200, gin.H{"list": events})
+}
+
+func GetAllInstanceStats(c *gin.Context) {
+	start, err1 := strconv.ParseInt(c.Query("start"), 10, 64)
+	end, err2 := strconv.ParseInt(c.Query("end"), 10, 64)
+
+	if err1 != nil {
+		panic(err1)
+	}
+	if err2 != nil {
+		panic(err2)
+	}
+
+	c.JSON(200, gin.H{"list": models.GetStatDataByTime(start, end)})
+}
+
+func GetInstanceStatsByName(c *gin.Context) {
+	start, err1 := strconv.ParseInt(c.Query("start"), 10, 64)
+	end, err2 := strconv.ParseInt(c.Query("end"), 10, 64)
+	name := c.Param("name")
+
+	if err1 != nil {
+		panic(err1)
+	}
+	if err2 != nil {
+		panic(err2)
+	}
+
+	c.JSON(200, gin.H{"list": models.GetStatDataByName(name, start, end)})
 }

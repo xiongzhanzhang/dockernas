@@ -40,7 +40,9 @@
         <div v-show="divShow[2]">
           <instanceLog ref="instanceLog"></instanceLog>
         </div>
-        <div v-show="divShow[3]">monitorDiv</div>
+        <div v-show="divShow[3]">
+          <instanceMonitor ref="instanceMonitor" :instance="name"></instanceMonitor>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -51,11 +53,12 @@ import { getInstance } from "../api/instance";
 import instanceBasicInfo from "../components/instance/instanceBasicInfo.vue";
 import instanceLog from "../components/instance/instanceLog.vue";
 import instanceEvent from "../components/instance/instanceEvent.vue";
+import instanceMonitor from "../components/instance/instanceMonitor.vue";
 
 export default {
   name: "instanceInfo",
   components: {
-    instanceBasicInfo,instanceLog,instanceEvent
+    instanceBasicInfo,instanceLog,instanceEvent,instanceMonitor
   },
   data() {
     return {
@@ -85,6 +88,7 @@ export default {
           this.$refs.instanceBasicInfo.initData(this.instanceData);
           this.$refs.instanceLog.initData(this.instanceData);
           this.$refs.instanceEvent.initData(this.instanceData);
+          this.$refs.instanceMonitor.flush();
         })
         .catch((error) => {
           console.log(error);

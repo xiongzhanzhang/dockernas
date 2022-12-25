@@ -35,3 +35,11 @@ export const getInstanceLog = (name) => {
 export const getInstanceEvent = (name) => {
     return http.get("/api/instance/" + name + "/event")
 }
+
+export const getInstanceStats = (start, end) => {
+    return http.get("/api/instancestats?start="+start+"&end="+end)
+}
+
+export const getInstanceStatsByName = (name, start, end) => {
+    return http.get("/api/instancestats/"+name+"?start="+start+"&end="+end)
+}

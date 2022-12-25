@@ -18,6 +18,8 @@ func monitorContainer() {
 	var statsBySpeed []models.ContainerStat
 	var newStatMap map[string]models.ContainerStat = map[string]models.ContainerStat{}
 	containerStats := docker.GetContainerStatus()
+	curTime := time.Now().UnixMilli()
+
 	for _, stat := range containerStats {
 		newStatMap[stat.ContainerID] = stat
 		oldStat, ok := historyStatMap[stat.ContainerID]
@@ -32,6 +34,7 @@ func monitorContainer() {
 		newStat.NetworkTx = (stat.NetworkTx - oldStat.NetworkTx) / timeGap
 		newStat.BlockRead = (stat.BlockRead - oldStat.BlockRead) / timeGap
 		newStat.BlockWrite = (stat.BlockWrite - oldStat.BlockWrite) / timeGap
+		newStat.CreateTime = curTime //reset time make chart on frontend looks good
 
 		log.Println(newStat)
 		statsBySpeed = append(statsBySpeed, newStat)

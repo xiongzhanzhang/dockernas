@@ -36,3 +36,25 @@ func DelStatDataByTime(time int64) {
 		log.Println(err)
 	}
 }
+
+func GetStatDataByTime(start int64, end int64) []ContainerStat {
+	var stats []ContainerStat
+	err := GetDb().Where("create_time >= ? and create_time <= ?", start, end).Find(&stats).Error
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+
+	return stats
+}
+
+func GetStatDataByName(name string, start int64, end int64) []ContainerStat {
+	var stats []ContainerStat
+	err := GetDb().Where("create_time >= ? and create_time <= ? and name=?", start, end, name).Find(&stats).Error
+	if err != nil {
+		log.Println(err)
+		panic(err)
+	}
+
+	return stats
+}

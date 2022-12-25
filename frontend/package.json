@@ -10,6 +10,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^1.2.1",
+    "echarts": "^5.4.1",
     "element-plus": "^2.2.26",
     "vue": "^3.2.45",
     "vue-i18n": "^9.2.2",
