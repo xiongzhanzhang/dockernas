@@ -1,7 +1,6 @@
 <template>
   <div class="card">
     <div style="padding: 16px; display: flex">
-      <div style="flex-grow: 1000"></div>
       <el-date-picker
         v-model="time"
         type="datetimerange"
@@ -12,6 +11,10 @@
         end-placeholder="End date"
         @change="setTime"
       />
+      <div style="flex-grow: 1000"></div>
+      <div class="click_able" @click="flush">
+        <el-icon size="20"><Refresh /></el-icon>
+      </div>
     </div>
     <el-row>
       <el-col :xs="12" :sm="12" :md="12" :lg="12">
@@ -45,6 +48,7 @@ export default {
   props: ["instance"],
   data() {
     return {
+      isTimeSeted: false,
       time: [new Date(new Date().getTime() - 3 * 60 * 60 * 1000), new Date()],
     };
   },
@@ -74,6 +78,7 @@ export default {
       this.diskOutChart = diskOutChart;
     },
     setTime() {
+      this.isTimeSeted = true;
       this.flush();
     },
     computeOption(dataList, title, field, factor, precision) {
@@ -145,23 +150,36 @@ export default {
       return option;
     },
     setData(data) {
+      this.cpuChart.clear();
+      this.memChart.clear();
+      this.networkInChart.clear();
+      this.networkOutChart.clear();
+      this.diskInChart.clear();
+      this.diskOutChart.clear();
+
       this.cpuChart.setOption(
-        this.computeOption(data, "cpu使用百分百", "CPUPercentage", 1, 2), true
+        this.computeOption(data, "cpu使用百分百", "CPUPercentage", 1, 2),
+        true
       );
       this.memChart.setOption(
-        this.computeOption(data, "内存使用(MB)", "memory", 1024 * 1024, 0), true
+        this.computeOption(data, "内存使用(MB)", "memory", 1024 * 1024, 0),
+        true
       );
       this.networkInChart.setOption(
-        this.computeOption(data, "网络下行速度(KB/s)", "networkRx", 1024, 0), true
+        this.computeOption(data, "网络下行速度(KB/s)", "networkRx", 1024, 0),
+        true
       );
       this.networkOutChart.setOption(
-        this.computeOption(data, "网络上行速度(KB/s)", "networkTx", 1024, 0), true
+        this.computeOption(data, "网络上行速度(KB/s)", "networkTx", 1024, 0),
+        true
       );
       this.diskInChart.setOption(
-        this.computeOption(data, "磁盘写速度(KB/s)", "blockWrite", 1024, 0), true
+        this.computeOption(data, "磁盘写速度(KB/s)", "blockWrite", 1024, 0),
+        true
       );
       this.diskOutChart.setOption(
-        this.computeOption(data, "磁盘读速度(KB/s)", "blockRead", 1024, 0), true
+        this.computeOption(data, "磁盘读速度(KB/s)", "blockRead", 1024, 0),
+        true
       );
 
       this.cpuChart.resize();
@@ -172,6 +190,9 @@ export default {
       this.diskOutChart.resize();
     },
     flush() {
+      if (this.isTimeSeted == false) {
+        this.time[1] = new Date();
+      }
       if (this.instance == null || this.instance == "") {
         getInstanceStats(this.time[0].getTime(), this.time[1].getTime()).then(
           (response) => {
