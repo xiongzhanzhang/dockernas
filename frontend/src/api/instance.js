@@ -43,3 +43,7 @@ export const getInstanceStats = (start, end) => {
 export const getInstanceStatsByName = (name, start, end) => {
     return http.get("/api/instancestats/"+name+"?start="+start+"&end="+end)
 }
+
+export const getInstanceHttpPort = () => {
+    return http.get("/api/instancehttpport")
+}

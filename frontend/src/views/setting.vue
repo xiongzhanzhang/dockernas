@@ -29,6 +29,9 @@
         <div v-show="divShow[1]">
           <storage ref="storage"></storage>
         </div>
+        <div v-show="divShow[2]">
+          <network ref="network"></network>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -37,11 +40,12 @@
 <script>
 import host from "../components/setting/host.vue";
 import storage from "../components/setting/storage.vue";
+import network from "../components/setting/network.vue";
 
 export default {
   name: "setting",
   components: {
-    host,storage
+    host,storage,network
   },
   data() {
     return {

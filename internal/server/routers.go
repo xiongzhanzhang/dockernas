@@ -24,6 +24,7 @@ func registerRoutes(router *gin.Engine) {
 
 		apiv1.GET("instancestats", api.GetAllInstanceStats)
 		apiv1.GET("instancestats/:name", api.GetInstanceStatsByName)
+		apiv1.GET("instancehttpport", api.GetInstanceHttpPorts)
 
 		apiv1.GET("dfsdir", api.GetDfsDir)
 		apiv1.GET("systemdir", api.GetSystemDir)
@@ -31,6 +32,10 @@ func registerRoutes(router *gin.Engine) {
 
 		apiv1.GET("host", api.GetHostInfo)
 		apiv1.GET("storage", api.GetStorageInfo)
+		apiv1.GET("network", api.GetNetworkInfo)
+		apiv1.GET("httpproxyconfig", api.GetHttpProxyConfig)
+		apiv1.POST("httpproxyconfig", api.CreateHttpProxyConfig)
+		apiv1.DELETE("httpproxyconfig/:hostname", api.DelHttpProxyConfig)
 
 		apiv1.POST("login", api.Login)
 	}

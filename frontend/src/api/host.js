@@ -7,3 +7,24 @@ export const getHostInfo = () => {
 export const getStorageInfo = () => {
     return http.get("/api/storage")
 }
+
+
+export const getNetworkInfo = () => {
+    return http.get("/api/network")
+}
+
+export const getHttpProxyConfig = () => {
+    return http.get("/api/httpproxyconfig")
+}
+
+export const delHttpProxyConfig = (hostName) => {
+    return http.delete("/api/httpproxyconfig/"+hostName)
+}
+
+export const postHttpProxyConfig = (hostName, instanceName, port) => {
+    return http.post("/api/httpproxyconfig",{
+        "hostName":hostName,
+        "instanceName":instanceName,
+        "port":port
+    })
+}
