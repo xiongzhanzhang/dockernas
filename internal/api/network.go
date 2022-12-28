@@ -32,7 +32,7 @@ func CreateHttpProxyConfig(c *gin.Context) {
 
 func DelHttpProxyConfig(c *gin.Context) {
 	hostName := c.Param("hostname")
-	config :=models.GetHttpProxyConfigByHostName(hostName)
+	config := models.GetHttpProxyConfigByHostName(hostName)
 
 	service.DelHttpProxyConfig(config)
 
@@ -44,5 +44,20 @@ func DelHttpProxyConfig(c *gin.Context) {
 func GetHttpProxyConfig(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"list": models.GetHttpProxyConfig(),
+	})
+}
+
+func EditDomain(c *gin.Context) {
+	postMap := map[string]string{}
+	c.BindJSON(&postMap)
+	domain, ok := postMap["domain"]
+	if ok == false {
+		panic("EditDomain without a param")
+	}
+
+	service.SetDomain(domain)
+
+	c.JSON(200, gin.H{
+		"state": "ok",
 	})
 }

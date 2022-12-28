@@ -28,3 +28,9 @@ export const postHttpProxyConfig = (hostName, instanceName, port) => {
         "port":port
     })
 }
+
+export const postDomain = (domain) => {
+    return http.post("/api/domain",{
+        "domain":domain
+    })
+}

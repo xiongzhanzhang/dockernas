@@ -8,7 +8,10 @@
       <div class="input_div">
         <div class="first_input">域名</div>
         <div>
-          {{ networkData.domain }}<el-icon><EditPen /></el-icon>
+          {{ networkData.domain }}
+          <el-icon class="click_able" @click="showSetDomain"
+            ><EditPen
+          /></el-icon>
         </div>
       </div>
       <div class="input_div">
@@ -67,7 +70,9 @@
         :cell-style="{ padding: '0px' }"
       >
         <el-table-column prop="hostName" label="主机名" min-width="20%" />
-        <el-table-column prop="url" label="访问链接" min-width="40%" />
+        <el-table-column label="访问链接" min-width="40%" #default="scope">
+          <a target="_blank" :href="'http://'+scope.row.url">{{ scope.row.url }}</a>
+        </el-table-column>
         <el-table-column prop="instanceName" label="代理实例" min-width="20%" />
         <el-table-column prop="port" label="代理端口" min-width="10%" />
         <el-table-column label="操作" min-width="10%" #default="scope">
@@ -88,7 +93,7 @@
     >
       <div class="center_div">
         <div>
-          <div class="input_div">
+          <div class="input_div2">
             <div class="first_input">主机名</div>
             <div>
               <el-input
@@ -100,7 +105,7 @@
               </el-input>
             </div>
           </div>
-          <div class="input_div">
+          <div class="input_div2">
             <div class="first_input">实例</div>
             <div>
               <el-select
@@ -119,7 +124,7 @@
               </el-select>
             </div>
           </div>
-          <div class="input_div">
+          <div class="input_div2">
             <div class="first_input">端口</div>
             <div>
               <el-select
@@ -148,6 +153,36 @@
         </div>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-model="setDomainVisiable"
+      title="设置域名"
+      style="min-height: 300px; width: 600px"
+    >
+      <div class="center_div">
+        <div>
+          <div class="input_div2">
+            <div>
+              <el-input
+                class="w-50 m-2"
+                style="width: 350px"
+                size="large"
+                v-model="curDomain"
+              >
+              </el-input>
+            </div>
+          </div>
+          <div class="center_div" style="margin-top: 50px">
+            <el-button
+              type="primary"
+              style="height: 40px; width: 200px"
+              @click="editDomain"
+              >{{ $t("common.yes") }}</el-button
+            >
+          </div>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -157,6 +192,7 @@ import {
   getHttpProxyConfig,
   postHttpProxyConfig,
   delHttpProxyConfig,
+  postDomain,
 } from "../../api/host";
 import { getInstanceHttpPort } from "../../api/instance";
 
@@ -173,11 +209,24 @@ export default {
       curInstanceName: "",
       curSelectPort: "",
       curHostName: "",
+
+      setDomainVisiable: false,
+      curDomain: "",
     };
   },
   methods: {
+    showSetDomain() {
+      this.curDomain=this.networkData.domain;
+      this.setDomainVisiable = true;
+    },
     showCreateProxy() {
       this.createProxyVisible = true;
+    },
+    editDomain() {
+      postDomain(this.curDomain).then((response) => {
+        this.setDomainVisiable = false;
+        this.flush();
+      });
     },
     versionChange() {
       for (var instancePort of this.instancesPorts) {
@@ -196,7 +245,7 @@ export default {
         this.flush();
       });
     },
-    delHttpProxyConfig(row){
+    delHttpProxyConfig(row) {
       delHttpProxyConfig(row.hostName).then((response) => {
         this.flush();
       });
@@ -205,16 +254,16 @@ export default {
       getNetworkInfo().then((response) => {
         this.networkData = response.data;
         console.log(this.networkData);
+        getHttpProxyConfig().then((response) => {
+          this.httpProxyConfigs = response.data.list;
+          for (var config of this.httpProxyConfigs) {
+            config.url = config.hostName + "." + this.networkData.domain;
+          }
+          console.log(this.instancesPort);
+        });
       });
       getInstanceHttpPort().then((response) => {
         this.instancesPorts = response.data.list;
-        console.log(this.instancesPort);
-      });
-      getHttpProxyConfig().then((response) => {
-        this.httpProxyConfigs = response.data.list;
-        for(var config of this.httpProxyConfigs){
-          config.url=config.hostName+".example.com";
-        }
         console.log(this.instancesPort);
       });
     },
@@ -246,5 +295,13 @@ export default {
   padding-left: 30px;
   /* text-align: right; */
   margin-right: 80px;
+}
+
+.input_div2 {
+  display: flex;
+  color: black !important;
+  font-size: 18px;
+  align-items: center;
+  height: 80px;
 }
 </style>

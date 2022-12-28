@@ -5,12 +5,14 @@ import (
 	"log"
 	"net"
 	"time"
+	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 )
 
 func GetNetworkInfo() models.NetworkInfo {
 	var networkInfo models.NetworkInfo
 	networkInfo.IP = getLocalAddress()
+	networkInfo.Domain = config.GetDomain()
 
 	return networkInfo
 }
@@ -60,4 +62,8 @@ func CreateHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 
 func DelHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 	models.DelHttpProxyConfig(&proxyConfig)
+}
+
+func SetDomain(domain string) {
+	config.SetDomain(domain)
 }
