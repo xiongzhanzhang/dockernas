@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"path/filepath"
 	"tinycloud/internal/utils"
 )
@@ -53,9 +54,21 @@ func GetAppLocalPath(instanceName string) string {
 	return basePath
 }
 
+func GetAppLocalFilePath(instanceName string, fileName string) string {
+	return filepath.Join(GetAppLocalPath(instanceName), fileName)
+}
+
 func GetLocalVolumePath(instanceName string, volumeName string) string {
 	basePath := GetBasePath()
 	basePath = filepath.Join(basePath, "local", instanceName, volumeName)
 	utils.CheckCreateDir(basePath)
 	return basePath
+}
+
+func GetAppMountFilePath(appName string, version string, fileName string) string {
+	pwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	return filepath.Join(pwd, "apps", appName, "docker", version, fileName)
 }

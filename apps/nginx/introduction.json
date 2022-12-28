@@ -1,0 +1,8 @@
+{
+  "name": "nginx",
+  "category": [
+    "网络",
+    "编程开发"
+  ],
+  "summary": "Nginx是一个高性能的HTTP和反向代理web服务器"
+}

@@ -134,14 +134,29 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		}
 		usedVolumeName = append(usedVolumeName, item.Name)
 
-		localDir := config.GetLocalVolumePath(param.Name, item.Name)
-		m = append(m, mount.Mount{
-			Type:   mount.TypeBind,
-			Source: localDir,
-			Target: item.Key,
-		})
-
-		param.LocalVolume[index].Value = localDir
+		if item.MountFile {
+			config.GetLocalVolumePath(param.Name, "")  // create dir if not exit
+			templateFilePath := config.GetAppMountFilePath(param.AppName, param.Version, item.Name)
+			instanceLocalPath := config.GetAppLocalFilePath(param.Name, item.Name)
+			_, err := utils.CopyFile(templateFilePath, instanceLocalPath)
+			if err != nil {
+				panic(err)
+			}
+			param.LocalVolume[index].Value = instanceLocalPath
+			m = append(m, mount.Mount{
+				Type:   mount.TypeBind,
+				Source: instanceLocalPath,
+				Target: item.Key,
+			})
+		} else {
+			localDir := config.GetLocalVolumePath(param.Name, item.Name)
+			param.LocalVolume[index].Value = localDir
+			m = append(m, mount.Mount{
+				Type:   mount.TypeBind,
+				Source: localDir,
+				Target: item.Key,
+			})
+		}
 	}
 
 	var envs []string
