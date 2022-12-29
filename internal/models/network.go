@@ -3,13 +3,12 @@ package models
 import "log"
 
 type NetworkInfo struct {
-	IP                 string            `json:"ip"`
-	Domain             string            `json:"domain"`
-	DNSServerEnable    bool              `json:"DNSServerEnable"`
-	DNSServerLoading   bool              `json:"DNSServerLoading"`
-	HttpGatewayEnable  bool              `json:"httpGatewayEnable"`
-	HttpGatewayLoading bool              `json:"httpGatewayLoading"`
-	HttpProxyConfigs   []HttpProxyConfig `json:"httpProxyConfigs"`
+	IP                 string `json:"ip"`
+	Domain             string `json:"domain"`
+	HttpGatewayEnable  bool   `json:"httpGatewayEnable"`
+	HttpGatewayLoading bool   `json:"httpGatewayLoading"`
+	HttpsEnable        bool   `json:"httpsEnable"`
+	SslCertificatePath string `json:"sslCertificatePath"`
 }
 
 type HttpProxyConfig struct {

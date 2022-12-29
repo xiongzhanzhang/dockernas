@@ -15,34 +15,18 @@
         </div>
       </div>
       <div class="input_div">
-        <div class="first_input">DNS服务</div>
-        <div><el-switch v-model="networkData.DNSServerEnable" /></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top: 16px">
-      <div class="input_div">
         <div class="first_input">HTTP网关</div>
         <div><el-switch v-model="networkData.httpGatewayEnable" /></div>
       </div>
       <div class="input_div">
         <div class="first_input">开启HTTPS</div>
-        <div><el-switch v-model="networkData.httpGatewayEnable" /></div>
+        <div><el-switch v-model="networkData.httpsEnable" /></div>
       </div>
       <div class="input_div">
-        <div class="first_input">自动生成证书</div>
-        <div><el-switch v-model="networkData.httpGatewayEnable" /></div>
-      </div>
-      <div class="input_div">
-        <div class="first_input">ssl证书</div>
+        <div class="first_input">ssl证书路径</div>
         <div>
-          <el-icon><UploadFilled /></el-icon>
-        </div>
-      </div>
-      <div class="input_div">
-        <div class="first_input">ssl私钥</div>
-        <div>
-          <el-icon><UploadFilled /></el-icon>
+          {{ networkData.sslCertificatePath }}
+          <el-icon><EditPen /></el-icon>
         </div>
       </div>
 
@@ -61,7 +45,7 @@
       </div>
     </div>
 
-    <div class="card" style="margin-top: 16px">
+    <div class="card" style="margin-top: 16px; min-height: 200px;">
       <el-table
         :data="httpProxyConfigs"
         stripe
