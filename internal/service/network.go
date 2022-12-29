@@ -4,15 +4,21 @@ import (
 	"encoding/json"
 	"log"
 	"net"
+	"strings"
 	"time"
+	"tinycloud/internal/backend/docker"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
+	"tinycloud/internal/utils"
 )
 
 func GetNetworkInfo() models.NetworkInfo {
+	gateway := getGatewayInstance()
+
 	var networkInfo models.NetworkInfo
 	networkInfo.IP = getLocalAddress()
 	networkInfo.Domain = config.GetDomain()
+	networkInfo.HttpGatewayEnable = gateway != nil
 
 	return networkInfo
 }
@@ -58,12 +64,80 @@ func GetInstanceHttpPorts() []models.InstanceHttpPorts {
 func CreateHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 	proxyConfig.CreateTime = time.Now().UnixMilli()
 	models.AddHttpProxyConfig(&proxyConfig)
+	tryFlushGatewayConfig()
 }
 
 func DelHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 	models.DelHttpProxyConfig(&proxyConfig)
+	tryFlushGatewayConfig()
 }
 
 func SetDomain(domain string) {
 	config.SetDomain(domain)
+	tryFlushGatewayConfig()
+}
+
+func getGatewayInstance() *models.Instance {
+	return models.GetInstanceByName(config.GetGateWayInstanceName())
+}
+
+func EnableHttpGateway() {
+	if config.GetDomain() == "" {
+		panic("domain is not set")
+	}
+
+	gateWayInstance := models.GetInstanceByName(config.GetGateWayInstanceName())
+	if gateWayInstance == nil {
+		app := GetAppByName("nginx")
+		var param models.InstanceParam
+		param.Name = config.GetGateWayInstanceName()
+		param.Summary = "http gateway"
+		param.AppName = app.Name
+		param.IconUrl = app.IconUrl
+		param.ImageUrl = app.DockerVersions[0].ImageUrl
+		param.Version = app.DockerVersions[0].Version
+		param.DfsVolume = app.DockerVersions[0].DfsVolume
+		param.LocalVolume = app.DockerVersions[0].LocalVolume
+		param.EnvParams = app.DockerVersions[0].EnvParams
+		param.PortParams = app.DockerVersions[0].PortParams
+		gateWayInstance = CreateInstance(param)
+	}
+
+	flushGatewayConfig(*gateWayInstance)
+}
+
+func tryFlushGatewayConfig() {
+	gateway := getGatewayInstance()
+	if gateway != nil {
+		flushGatewayConfig(*gateway)
+	}
+}
+
+func flushGatewayConfig(instance models.Instance) {
+	updateNginxConfig(instance)
+	docker.Restart(instance.ContainerID)
+}
+
+func updateNginxConfig(instance models.Instance) {
+	templateFilePath := config.GetAppMountFilePath(instance.AppName, instance.Version, "nginx.conf")
+	instanceLocalPath := config.GetAppLocalFilePath(instance.Name, "nginx.conf")
+
+	templateData := utils.ReadFile(templateFilePath)
+
+	proxyConfigs := models.GetHttpProxyConfig()
+	configStr := ""
+	for _, proxyConfig := range proxyConfigs {
+		configStr += `
+		server {
+			listen       80;
+			server_name  ` + proxyConfig.HostName + "." + config.GetDomain() + `;
+	
+			location / {
+			   proxy_pass  http://host.docker.internal:` + proxyConfig.Port + `;
+			}
+		}
+		`
+	}
+
+	utils.WriteFile(instanceLocalPath, strings.Replace(templateData, "#####PLACEHOLDER", configStr, 1))
 }

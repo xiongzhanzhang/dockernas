@@ -61,3 +61,10 @@ func EditDomain(c *gin.Context) {
 		"state": "ok",
 	})
 }
+
+func EnableHttpGateway(c *gin.Context) {
+	service.EnableHttpGateway()
+	c.JSON(200, gin.H{
+		"state": "ok",
+	})
+}

@@ -43,10 +43,10 @@ func PatchInstance(c *gin.Context) {
 
 	op, _ := patchMap["op"]
 	if op == "stop" {
-		service.StopInstance(instance)
+		service.StopInstance(*instance)
 	}
 	if op == "start" {
-		service.StartInstance(instance)
+		service.StartInstance(*instance)
 	}
 	if op == "edit" {
 		data, _ := patchMap["data"]
@@ -56,7 +56,7 @@ func PatchInstance(c *gin.Context) {
 			log.Println(err)
 			panic(err)
 		}
-		service.EditInstance(instance, param)
+		service.EditInstance(*instance, param)
 	}
 
 	c.JSON(200, gin.H{"msg": "ok"})
@@ -65,7 +65,7 @@ func PatchInstance(c *gin.Context) {
 func DeleteInstance(c *gin.Context) {
 	name := c.Param("name")
 	instance := models.GetInstanceByName(name)
-	service.DeleteInstance(instance)
+	service.DeleteInstance(*instance)
 	c.JSON(200, gin.H{"msg": "ok"})
 }
 
@@ -75,7 +75,7 @@ func GetInstanceLog(c *gin.Context) {
 
 	log := ""
 	if instance.ContainerID != "" && instance.State == models.RUNNING {
-		log = service.GetInstanceLog(instance)
+		log = service.GetInstanceLog(*instance)
 	}
 
 	c.JSON(200, gin.H{"data": log})

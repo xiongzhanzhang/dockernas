@@ -16,7 +16,13 @@
       </div>
       <div class="input_div">
         <div class="first_input">HTTP网关</div>
-        <div><el-switch v-model="networkData.httpGatewayEnable" /></div>
+        <div>
+          <el-switch
+            v-model="networkData.httpGatewayEnable"
+            :loading="networkData.HttpGatewayLoading"
+            @change="changeGatewayState"
+          />
+        </div>
       </div>
       <div class="input_div">
         <div class="first_input">开启HTTPS</div>
@@ -45,7 +51,7 @@
       </div>
     </div>
 
-    <div class="card" style="margin-top: 16px; min-height: 200px;">
+    <div class="card" style="margin-top: 16px; min-height: 200px">
       <el-table
         :data="httpProxyConfigs"
         stripe
@@ -55,7 +61,9 @@
       >
         <el-table-column prop="hostName" label="主机名" min-width="20%" />
         <el-table-column label="访问链接" min-width="40%" #default="scope">
-          <a target="_blank" :href="'http://'+scope.row.url">{{ scope.row.url }}</a>
+          <a target="_blank" :href="'http://' + scope.row.url">{{
+            scope.row.url
+          }}</a>
         </el-table-column>
         <el-table-column prop="instanceName" label="代理实例" min-width="20%" />
         <el-table-column prop="port" label="代理端口" min-width="10%" />
@@ -177,6 +185,7 @@ import {
   postHttpProxyConfig,
   delHttpProxyConfig,
   postDomain,
+  startHttpGateway,
 } from "../../api/host";
 import { getInstanceHttpPort } from "../../api/instance";
 
@@ -199,8 +208,17 @@ export default {
     };
   },
   methods: {
+    changeGatewayState() {
+      console.log("changeGatewayState");
+      if (this.networkData.httpGatewayEnable == true) {
+        this.networkData.HttpGatewayLoading=true;
+        startHttpGateway().then((response) => {
+          this.flush();
+        });
+      }
+    },
     showSetDomain() {
-      this.curDomain=this.networkData.domain;
+      this.curDomain = this.networkData.domain;
       this.setDomainVisiable = true;
     },
     showCreateProxy() {

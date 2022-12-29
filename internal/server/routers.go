@@ -37,6 +37,7 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.POST("httpproxyconfig", api.CreateHttpProxyConfig)
 		apiv1.DELETE("httpproxyconfig/:hostname", api.DelHttpProxyConfig)
 		apiv1.POST("domain", api.EditDomain)
+		apiv1.POST("httpgateway", api.EnableHttpGateway)
 
 		apiv1.POST("login", api.Login)
 	}

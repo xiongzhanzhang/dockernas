@@ -34,7 +34,7 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	SavePortUsed(instance, param)
 }
 
-func CreateInstance(param models.InstanceParam) {
+func CreateInstance(param models.InstanceParam) *models.Instance {
 	docker.PullImage(param.ImageUrl) //if pull image error, break exec here
 	CheckIsPortUsed(param)
 
@@ -53,6 +53,7 @@ func CreateInstance(param models.InstanceParam) {
 	models.AddInstance(&instance)
 
 	runNewContainer(instance, param)
+	return &instance
 }
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {

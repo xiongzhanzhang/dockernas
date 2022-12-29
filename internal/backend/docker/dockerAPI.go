@@ -70,6 +70,24 @@ func Start(containerID string) error {
 	return nil
 }
 
+func Restart(containerID string) error {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		return err
+	}
+
+	timeoutSecond := time.Second * 180
+	err = cli.ContainerRestart(ctx, containerID, &timeoutSecond)
+	if err != nil {
+		log.Println("restart docker error")
+		return err
+	}
+
+	return nil
+}
+
 func PullImage(imageUrl string) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
@@ -135,7 +153,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		usedVolumeName = append(usedVolumeName, item.Name)
 
 		if item.MountFile {
-			config.GetLocalVolumePath(param.Name, "")  // create dir if not exit
+			config.GetLocalVolumePath(param.Name, "") // create dir if not exit
 			templateFilePath := config.GetAppMountFilePath(param.AppName, param.Version, item.Name)
 			instanceLocalPath := config.GetAppLocalFilePath(param.Name, item.Name)
 			_, err := utils.CopyFile(templateFilePath, instanceLocalPath)

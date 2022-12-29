@@ -2,6 +2,7 @@ package utils
 
 import (
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -25,6 +26,15 @@ func IsFileExist(path string) bool {
 		return false
 	}
 	return true
+}
+
+func ReadFile(filePath string) string {
+	data, error := ioutil.ReadFile(filePath)
+	if error != nil {
+		panic(error)
+	}
+
+	return string(data)
 }
 
 func WriteFile(filePath string, data string) {

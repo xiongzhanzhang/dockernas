@@ -34,3 +34,7 @@ export const postDomain = (domain) => {
         "domain":domain
     })
 }
+
+export const startHttpGateway = (domain) => {
+    return http.post("/api/httpgateway",{})
+}

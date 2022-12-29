@@ -8,3 +8,7 @@ func SetDomain(domain string) {
 	SetConfig("domain", domain)
 	SaveConfig()
 }
+
+func GetGateWayInstanceName() string{
+	return "http_gateway"
+}
