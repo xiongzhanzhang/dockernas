@@ -1,6 +1,5 @@
 {
     "imageUrl":"nginx:latest",
-    "privileged":true,
     "portParams":[
         {
             "prompt":"web访问端口",

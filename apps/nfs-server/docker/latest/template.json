@@ -1,0 +1,34 @@
+{
+    "imageUrl":"itsthenetwork/nfs-server-alpine:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"nfs访问端口",
+            "key":"2049",
+            "value":"2049",
+            "reg":"",
+            "protocol":"tcp"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"nfs共享目录",
+            "key":"SHARED_DIRECTORY",
+            "value":"/nfsshare",
+            "reg":"",
+            "hide":true
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"nfs共享目录",
+            "key":"/nfsshare",
+            "value":"",
+            "reg":"",
+            "name":"nfsshare"
+        }
+    ]
+}
+

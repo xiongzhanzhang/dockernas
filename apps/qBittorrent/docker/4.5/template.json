@@ -29,7 +29,7 @@
             "key":"WEBUIPORT",
             "value":"8080",
             "reg":"",
-            "Hide":true
+            "hide":true
         },
         {
             "prompt":"系统时区",
