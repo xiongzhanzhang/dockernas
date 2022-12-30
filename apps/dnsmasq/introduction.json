@@ -1,0 +1,8 @@
+{
+  "name": "dnsmasq",
+  "category": [
+    "网络",
+    "编程开发"
+  ],
+  "summary": "DNSmasq是一个小巧且方便地用于配置DNS和DHCP的工具"
+}
