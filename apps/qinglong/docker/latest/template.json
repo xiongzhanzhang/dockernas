@@ -1,0 +1,26 @@
+{
+    "imageUrl":"whyour/qinglong:latest",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"5700",
+            "value":"5700",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/ql/data",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+
