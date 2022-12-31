@@ -1,0 +1,26 @@
+{
+    "imageUrl":"joyqi/typecho:nightly-php7.4-apache",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"80",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/app/usr",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+
