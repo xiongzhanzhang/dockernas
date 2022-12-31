@@ -36,6 +36,10 @@ func monitorContainer() {
 		newStat.BlockWrite = (stat.BlockWrite - oldStat.BlockWrite) / timeGap
 		newStat.CreateTime = curTime //reset time make chart on frontend looks good
 
+		if newStat.NetworkRx < 0 || newStat.NetworkTx < 0 || newStat.BlockRead < 0 || newStat.BlockWrite < 0 {
+			continue
+		}
+
 		log.Println(newStat)
 		statsBySpeed = append(statsBySpeed, newStat)
 	}
