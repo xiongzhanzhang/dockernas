@@ -68,3 +68,19 @@ func EnableHttpGateway(c *gin.Context) {
 		"state": "ok",
 	})
 }
+
+func PatchHttpGateway(c *gin.Context) {
+	patchMap := map[string]string{}
+	c.BindJSON(&patchMap)
+
+	op, _ := patchMap["op"]
+	if op == "restart" {
+		service.RestartHttpGateway()
+	} else {
+		panic("unkown patch request")
+	}
+
+	c.JSON(200, gin.H{
+		"state": "ok",
+	})
+}

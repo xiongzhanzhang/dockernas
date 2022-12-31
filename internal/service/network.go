@@ -81,6 +81,16 @@ func getGatewayInstance() *models.Instance {
 	return models.GetInstanceByName(config.GetGateWayInstanceName())
 }
 
+func RestartHttpGateway() {
+	gateWayInstance := models.GetInstanceByName(config.GetGateWayInstanceName())
+	if gateWayInstance == nil {
+		panic("http gateway is not start")
+	}
+
+	flushGatewayConfig(*gateWayInstance)
+	RestartInstance(*gateWayInstance)
+}
+
 func EnableHttpGateway() {
 	if config.GetDomain() == "" {
 		panic("domain is not set")

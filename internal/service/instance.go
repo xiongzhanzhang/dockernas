@@ -79,6 +79,11 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 	models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
 }
 
+func RestartInstance(instance models.Instance) {
+	StopInstance(instance)
+	StartInstance(instance)
+}
+
 func StartInstance(instance models.Instance) {
 	if instance.ContainerID == "" {
 		var param models.InstanceParam

@@ -38,3 +38,7 @@ export const postDomain = (domain) => {
 export const startHttpGateway = (domain) => {
     return http.post("/api/httpgateway",{})
 }
+
+export const restartHttpGateway = (name) => {
+    return http.patch("/api/httpgateway", { "op": "restart" })
+}

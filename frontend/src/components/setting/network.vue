@@ -40,6 +40,8 @@
         <el-button
           type="primary"
           style="height: 40px; width: 250px; margin-right: 100px"
+          :loading="restartGatewayLoading"
+          @click="tryRestartHttpGateway"
           >重启HTTP网关</el-button
         >
         <el-button
@@ -186,6 +188,7 @@ import {
   delHttpProxyConfig,
   postDomain,
   startHttpGateway,
+  restartHttpGateway,
 } from "../../api/host";
 import { getInstanceHttpPort } from "../../api/instance";
 
@@ -194,7 +197,6 @@ export default {
   data() {
     return {
       networkData: {},
-      value1: true,
       httpProxyConfigs: [],
       createProxyVisible: false,
       instancesPorts: [],
@@ -205,9 +207,17 @@ export default {
 
       setDomainVisiable: false,
       curDomain: "",
+
+      restartGatewayLoading:false,
     };
   },
   methods: {
+    tryRestartHttpGateway(){
+      this.restartGatewayLoading=true;
+      restartHttpGateway().then((response) => {
+        this.restartGatewayLoading=false;
+      })
+    },
     changeGatewayState() {
       console.log("changeGatewayState");
       if (this.networkData.httpGatewayEnable == true) {
