@@ -1,0 +1,8 @@
+{
+  "name": "webdav",
+  "category": [
+    "网络",
+    "NAS"
+  ],
+  "summary": "Web-based Distributed Authoring and Versioning，维基百科上对它的解释是这样的：基于Web的分布式编写和版本控制（WebDAV）是超文本传输协议（HTTP）的扩展，有利于用户间协同编辑和管理存储在万维网服务器文档"
+}

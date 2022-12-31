@@ -1,0 +1,46 @@
+{
+    "imageUrl":"bytemark/webdav:latest",
+    "portParams":[
+        {
+            "prompt":"webdav服务器端口",
+            "key":"80",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"用户名",
+            "key":"USERNAME",
+            "value":"",
+            "reg":""
+        },
+        {
+            "prompt":"用户密码",
+            "key":"PASSWORD",
+            "value":"",
+            "reg":""
+        },
+        {
+            "prompt":"AUTH_TYPE",
+            "key":"AUTH_TYPE",
+            "value":"Digest",
+            "reg":"",
+            "hide":true
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"共享数据目录",
+            "key":"/var/lib/dav",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "otherParams":[]
+}
+
