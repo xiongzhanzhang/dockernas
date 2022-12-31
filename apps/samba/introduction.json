@@ -1,0 +1,8 @@
+{
+  "name": "samba",
+  "category": [
+    "网络",
+    "NAS"
+  ],
+  "summary": "Samba is the standard Windows interoperability suite of programs for Linux and Unix"
+}

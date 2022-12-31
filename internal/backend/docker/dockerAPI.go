@@ -5,6 +5,7 @@ import (
 	"context"
 	"io"
 	"log"
+	"strings"
 	"time"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
@@ -133,6 +134,20 @@ func Create(param *models.InstanceParam) (string, error) {
 	return resp.ID, nil
 }
 
+func replaceVariable(aStr string, param *models.InstanceParam) string {
+	if param.OtherParams == nil {
+		return aStr
+	}
+
+	for _, v := range param.OtherParams {
+		if v.OtherType == models.PLACEHOLDER_PARAM {
+			aStr = strings.ReplaceAll(aStr, v.Key, v.Value)
+		}
+	}
+
+	return aStr
+}
+
 func buildConfig(param *models.InstanceParam) (container.Config, container.HostConfig) {
 	m := make([]mount.Mount, 0, len(param.DfsVolume)+len(param.LocalVolume))
 	for _, item := range param.DfsVolume {
@@ -179,7 +194,13 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 
 	var envs []string
 	for _, item := range param.EnvParams {
-		envs = append(envs, item.Key+"="+item.Value)
+		envs = append(envs, replaceVariable(item.Key, param)+"="+replaceVariable(item.Value, param))
+	}
+
+	cmdStr := replaceVariable(param.Cmd, param)
+	var cmds []string
+	if cmdStr != "" {
+		cmds = strings.Split(cmdStr, " ")
 	}
 
 	exports := make(nat.PortSet)
@@ -201,6 +222,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		Image:        param.ImageUrl,
 		ExposedPorts: exports,
 		Env:          envs,
+		Cmd:          cmds,
 	}
 	hostConfig := container.HostConfig{
 		PortBindings:  netPort,

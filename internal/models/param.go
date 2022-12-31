@@ -9,6 +9,7 @@ type ParamItem struct {
 	Hide      bool   `json:"hide"`      // is show on frontend
 	Protocol  string `json:"protocol"`  // network protocol, used by port param
 	MountFile bool   `json:"mountFile"` // mount file to container
+	OtherType string `json:"otherType"` // other param type
 }
 
 type DockerTemplate struct {
@@ -18,6 +19,7 @@ type DockerTemplate struct {
 	EnvParams   []ParamItem `json:"envParams"`
 	LocalVolume []ParamItem `json:"localVolume"`
 	DfsVolume   []ParamItem `json:"dfsVolume"`
+	OtherParams []ParamItem `json:"otherParams"`
 	Privileged  bool        `json:"privileged"`
 	Cmd         string      `json:"cmd"`
 }
@@ -29,3 +31,7 @@ type InstanceParam struct {
 	IconUrl string `json:"iconUrl"`
 	DockerTemplate
 }
+
+const (
+	PLACEHOLDER_PARAM = "placeholder"
+)

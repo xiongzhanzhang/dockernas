@@ -33,6 +33,7 @@
       <div
         class="input_div"
         v-for="param in instanceParam.portParams"
+        v-show="param.hide == false"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
@@ -43,6 +44,17 @@
       <div
         class="input_div"
         v-for="param in instanceParam.envParams"
+        v-show="param.hide == false"
+        :key="param.prompt"
+      >
+        <div class="first_input">{{ param.prompt }}</div>
+        <div>{{ param.value }}</div>
+      </div>
+
+      <div
+        class="input_div"
+        v-for="param in instanceParam.otherParams"
+        v-show="param.hide == false"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
@@ -52,6 +64,7 @@
       <div
         class="input_div"
         v-for="param in instanceParam.dfsVolume"
+        v-show="param.hide == false"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>

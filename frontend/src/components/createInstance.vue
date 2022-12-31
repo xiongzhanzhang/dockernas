@@ -123,6 +123,23 @@
           </div>
         </div>
 
+        <div
+          class="input_div"
+          v-for="param in instanceParam.otherParams"
+          v-show="param.hide == false"
+          :key="param.prompt"
+        >
+          <div class="first_input">{{ param.prompt }}</div>
+          <div>
+            <el-input
+              v-model="param.value"
+              class="w-50 m-2"
+              style="width: 400px"
+              size="large"
+            ></el-input>
+          </div>
+        </div>
+
         <div class="center_div" style="margin-top: 50px">
           <el-button
             type="primary"
@@ -156,9 +173,10 @@ export default {
         summary: "",
         appName: "",
         version: "",
-        portParams: "",
-        envParams: "",
-        dfsVolume: "",
+        portParams: [],
+        envParams: [],
+        dfsVolume: [],
+        otherParam: [],
       },
 
       dialogTableVisible: false,
