@@ -1,0 +1,27 @@
+{
+    "imageUrl":"nextcloud:latest",
+    "portParams":[
+        {
+            "prompt":"web服务端口",
+            "key":"80",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"共享数据目录",
+            "key":"/var/www/html",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "otherParams":[]
+}
+
