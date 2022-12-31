@@ -19,6 +19,7 @@ type DockerTemplate struct {
 	LocalVolume []ParamItem `json:"localVolume"`
 	DfsVolume   []ParamItem `json:"dfsVolume"`
 	Privileged  bool        `json:"privileged"`
+	Cmd         string      `json:"cmd"`
 }
 
 type InstanceParam struct {

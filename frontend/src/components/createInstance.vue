@@ -155,14 +155,10 @@ export default {
         name: "",
         summary: "",
         appName: "",
-        imageUrl: "",
         version: "",
         portParams: "",
         envParams: "",
-        localVolume: "",
         dfsVolume: "",
-        iconUrl: "",
-        privileged: false,
       },
 
       dialogTableVisible: false,
@@ -197,15 +193,7 @@ export default {
       this.dialogTableVisible = true;
     },
     setParams(instanceParam) {
-      this.instanceParam.name = instanceParam.name;
-      this.instanceParam.summary = instanceParam.summary;
-      this.instanceParam.version = instanceParam.version;
-      this.instanceParam.portParams = instanceParam.portParams;
-      this.instanceParam.dfsVolume = instanceParam.dfsVolume;
-      this.instanceParam.envParams = instanceParam.envParams;
-      this.instanceParam.localVolume = instanceParam.localVolume;
-      this.instanceParam.imageUrl = instanceParam.imageUrl;
-      this.instanceParam.privileged = instanceParam.privileged;
+      this.instanceParam = instanceParam;
     },
     setApp(app) {
       this.app = app;
@@ -224,20 +212,9 @@ export default {
     versionChange() {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.instanceParam.version) {
-          this.instanceParam.imageUrl = d.imageUrl;
-          this.instanceParam.privileged = d.privileged;
-          this.instanceParam.portParams = JSON.parse(
-            JSON.stringify(d.portParams)
-          );
-          this.instanceParam.dfsVolume = JSON.parse(
-            JSON.stringify(d.dfsVolume)
-          );
-          this.instanceParam.envParams = JSON.parse(
-            JSON.stringify(d.envParams)
-          );
-          this.instanceParam.localVolume = JSON.parse(
-            JSON.stringify(d.localVolume)
-          );
+          for(let key in d) {
+            this.instanceParam[key] = JSON.parse(JSON.stringify(d[key]))
+          }
         }
       }
     },
