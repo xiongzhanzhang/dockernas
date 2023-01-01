@@ -10,7 +10,9 @@ func IsPortUsed(protocol string, port string) bool {
 		protocol = "tcp"
 	}
 	conn, err := net.DialTimeout(protocol, net.JoinHostPort("localhost", port), time.Second)
-	defer conn.Close()
+	if conn != nil {
+		conn.Close()
+	}
 	if err == nil {
 		return true
 	}

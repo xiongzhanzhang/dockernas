@@ -4,7 +4,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type InstancePort struct {

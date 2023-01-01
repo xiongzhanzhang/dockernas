@@ -3,10 +3,12 @@ package models
 import (
 	"log"
 	"sync"
+	"time"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 
 	"tinycloud/internal/config"
 )
@@ -24,22 +26,31 @@ func GetDb() *gorm.DB {
 
 	dbFilePath := config.GetDBFilePath()
 
-	_db, err := gorm.Open("sqlite3", dbFilePath)
+	newLogger := logger.New(
+		log.New(log.Writer(), "\n", 0),
+		logger.Config{
+			SlowThreshold:             time.Second,
+			LogLevel:                  logger.Info,
+			IgnoreRecordNotFoundError: true,
+			Colorful:                  false,
+		},
+	)
+
+	_db, err := gorm.Open(sqlite.Open(dbFilePath), &gorm.Config{
+		Logger:         newLogger,
+		NamingStrategy: schema.NamingStrategy{TablePrefix: "t_", SingularTable: true},
+	})
 	if err != nil || _db == nil {
 		log.Println(err)
 		panic(err)
 	}
 
-	_db.SingularTable(true)
 	_db.AutoMigrate(&ParamItem{})
 	_db.AutoMigrate(&Instance{})
 	_db.AutoMigrate(&EventLog{})
 	_db.AutoMigrate(&InstancePort{})
 	_db.AutoMigrate(&ContainerStat{})
 	_db.AutoMigrate(&HttpProxyConfig{})
-
-	_db.DB().SetMaxIdleConns(3)
-	_db.DB().SetMaxOpenConns(20)
 
 	db = _db
 

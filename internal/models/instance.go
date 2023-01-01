@@ -4,7 +4,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 const (
@@ -67,7 +67,7 @@ func GetInstance() []Instance {
 
 func GetInstanceByName(name string) *Instance {
 	var instance Instance
-	err := GetDb().First(&instance, "Name=?", name).Error
+	err := GetDb().First(&instance, "name=?", name).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil
