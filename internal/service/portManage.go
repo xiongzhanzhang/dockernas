@@ -4,6 +4,7 @@ import (
 	"log"
 	"strconv"
 	"tinycloud/internal/models"
+	"tinycloud/internal/utils"
 )
 
 func DelInstancePorts(instance models.Instance) {
@@ -21,6 +22,9 @@ func CheckIsPortUsed(param models.InstanceParam) {
 		}
 		if port != nil {
 			panic("port " + port.Port + " with " + port.Protocol + " protocol is used by " + port.InstanceName)
+		}
+		if utils.IsPortUsed(item.Protocol, item.Value) {
+			panic("port " + item.Value + " with " + item.Protocol + " protocol is used")
 		}
 	}
 }
