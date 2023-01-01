@@ -1,0 +1,19 @@
+{
+    "imageUrl":"oldiy/dosgame-web-docker:latest",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"262",
+            "value":"262",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}
+

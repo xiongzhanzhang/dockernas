@@ -1,0 +1,7 @@
+{
+  "name": "dosgame-web",
+  "category": [
+    "游戏"
+  ],
+  "summary": "Dos游戏中文版webui，一个可以浏览器内玩dos游戏的镜像，包含40几个经典游戏"
+}

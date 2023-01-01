@@ -1,0 +1,34 @@
+{
+    "imageUrl":"hectorqin/reader:latest",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"8080",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"log目录",
+            "key":"/log",
+            "value":"",
+            "reg":"",
+            "name":"log"
+        },
+        {
+            "prompt":"书籍目录",
+            "key":"/storage",
+            "value":"",
+            "reg":"",
+            "name":"storage"
+        }
+    ],
+    "dfsVolume":[
+
+    ]
+}
+

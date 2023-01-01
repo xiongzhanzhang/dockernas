@@ -1,0 +1,33 @@
+{
+    "imageUrl":"itzg/minecraft-server:latest",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"25565",
+            "value":"25565",
+            "reg":"",
+            "protocol":"tcp"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"EULA",
+            "key":"EULA",
+            "value":"TRUE",
+            "reg":"",
+            "hide":true
+        }
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/data",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+

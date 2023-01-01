@@ -1,0 +1,27 @@
+{
+    "imageUrl":"ghcr.io/suwayomi/tachidesk",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"4567",
+            "value":"4567",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/home/suwayomi/.local/share/Tachidesk",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+
+    ]
+}
+
