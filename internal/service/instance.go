@@ -15,6 +15,7 @@ import (
 func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	var err error
 
+	log.Println("create instance " + instance.Name)
 	instance.ContainerID, err = docker.Create(&param)
 	instance.InstanceParamStr = utils.GetJsonFromObj(param)
 
@@ -36,6 +37,7 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 }
 
 func CreateInstance(param models.InstanceParam) *models.Instance {
+	log.Println("pull image " + param.ImageUrl)
 	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
 	CheckIsPortUsed(param)
 
@@ -68,11 +70,13 @@ func CreateInstance(param models.InstanceParam) *models.Instance {
 			line := scanner.Text()
 			log.Println(line)
 			if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
+				log.Println("pull image " + param.ImageUrl + " time out")
 				instance.State = models.PULL_ERROR
 				models.UpdateInstance(&instance)
 				return
 			}
 		}
+		log.Println("pull image " + param.ImageUrl + " ok")
 		tmp := models.GetInstanceByName(instance.Name)
 		if tmp == nil || tmp.Id != instance.Id { //check if instance is deleted
 			return
@@ -86,6 +90,7 @@ func CreateInstance(param models.InstanceParam) *models.Instance {
 func EditInstance(instance models.Instance, param models.InstanceParam) {
 	DelInstancePorts(instance)
 	CheckIsPortUsed(param)
+	log.Println("delete comtainer of instance " + instance.Name)
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
@@ -121,6 +126,7 @@ func StartInstance(instance models.Instance) {
 		}
 		runNewContainer(instance, param)
 	} else {
+		log.Println("start comtainer of instance " + instance.Name)
 		err := docker.Start(instance.ContainerID)
 		if err != nil {
 			models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
@@ -133,6 +139,7 @@ func StartInstance(instance models.Instance) {
 }
 
 func StopInstance(instance models.Instance) {
+	log.Println("stop comtainer of instance " + instance.Name)
 	err := docker.Stop(instance.ContainerID)
 	if err != nil {
 		models.AddEventLog(instance.Id, models.STOP_EVENT, err.Error())
@@ -146,16 +153,13 @@ func StopInstance(instance models.Instance) {
 
 func DeleteInstance(instance models.Instance) {
 	if instance.State == models.RUNNING {
-		err := docker.Stop(instance.ContainerID)
-		if err != nil {
-			models.AddEventLog(instance.Id, models.STOP_EVENT, err.Error())
-			log.Println(err)
-		}
+		StopInstance(instance)
 	}
 
 	DelInstancePorts(instance)
 	models.DelInstanceStatData(instance.Name)
 
+	log.Println("delete comtainer of instance " + instance.Name)
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {
 		models.AddEventLog(instance.Id, models.DELETE_EVENT, err.Error())
