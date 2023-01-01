@@ -1,0 +1,26 @@
+{
+    "imageUrl":"crazyq/pt_helper:latest",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"8192",
+            "value":"8192",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/data",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+
