@@ -135,7 +135,13 @@ func updateNginxConfig(instance models.Instance) {
 	templateData := utils.ReadFile(templateFilePath)
 
 	proxyConfigs := models.GetHttpProxyConfig()
-	configStr := ""
+	configStr := `
+		map $http_upgrade $connection_upgrade {
+			default upgrade;
+			''      close;
+		}
+
+	`
 	for _, proxyConfig := range proxyConfigs {
 		configStr += `
 		server {
@@ -146,6 +152,11 @@ func updateNginxConfig(instance models.Instance) {
 				proxy_set_header Host      $host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+				proxy_http_version 1.1;
+				proxy_read_timeout 300s;
+                proxy_send_timeout 300s;
+				proxy_set_header Upgrade $http_upgrade;
+        		proxy_set_header Connection  $connection_upgrade;
 				proxy_pass  http://host.docker.internal:` + proxyConfig.Port + `;
 			}
 		}
