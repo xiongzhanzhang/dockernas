@@ -1,0 +1,36 @@
+{
+    "imageUrl":"privoce/vocechat-server:latest",
+    "cmd":"--network.frontend_url DOMAIN_PLACEHOLDER",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"3000",
+            "value":"3000",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/home/vocechat-server/data",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ],
+    "otherParams":[
+        {
+            "prompt":"域名",
+            "key":"DOMAIN_PLACEHOLDER",
+            "value":"https://vocechat.yourdomain.com",
+            "reg":"",
+            "otherType":"placeholder"
+        }
+    ]
+}
+

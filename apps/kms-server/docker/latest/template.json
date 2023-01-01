@@ -1,0 +1,19 @@
+{
+    "imageUrl":"luodaoyi/kms-server",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"1688",
+            "value":"1688",
+            "reg":"",
+            "protocol":"tcp"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}
+

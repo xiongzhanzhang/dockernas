@@ -1,0 +1,7 @@
+{
+  "name": "jackett",
+  "category": [
+    "下载","NAS"
+  ],
+  "summary": "Jackett 是跨平台的开源应用，支持 OSX ，Windows 和 Linux 平台，集成了众多种子站，可作为代理服务器通过 API 来响应来自应用程序（ Sonarr ， Radarr ，SickRage ，CouchPotato ，Mylar ，Lidarr ，DuckieTV ，qBittorrent ，Nefarious 等）的查询，然后将结果发送回请求软件"
+}

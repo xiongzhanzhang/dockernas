@@ -1,0 +1,7 @@
+{
+  "name": "kms-server",
+  "category": [
+    "网络"
+  ],
+  "summary": "https://hub.docker.com/r/luodaoyi/kms-server/"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "speedtest",
+  "category": [
+    "网络"
+  ],
+  "summary": "This is a very lightweight Speedtest implemented in Javascript, using XMLHttpRequest and Web Workers."
+}

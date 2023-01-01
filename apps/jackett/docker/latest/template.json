@@ -1,0 +1,26 @@
+{
+    "imageUrl":"linuxserver/jackett",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"9117",
+            "value":"9117",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/downloads",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+
