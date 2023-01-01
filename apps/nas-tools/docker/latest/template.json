@@ -1,0 +1,33 @@
+{
+    "imageUrl":"jxxghp/nas-tools",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"3000",
+            "value":"3000",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"config数据目录",
+            "key":"/config",
+            "value":"",
+            "reg":"",
+            "name":"config"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"下载数据目录",
+            "key":"/pt",
+            "value":"",
+            "reg":"",
+            "name":"pt"
+        }
+    ]
+}
+
