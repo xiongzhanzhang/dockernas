@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bufio"
 	"encoding/json"
 	"log"
 	"os"
@@ -35,14 +36,14 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 }
 
 func CreateInstance(param models.InstanceParam) *models.Instance {
-	docker.PullImage(param.ImageUrl) //if pull image error, break exec here
+	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
 	CheckIsPortUsed(param)
 
 	var instance models.Instance
 
 	instance.Name = param.Name
 	instance.Summary = param.Summary
-	instance.State = models.NEW_STATE
+	instance.State = models.PULL_IMAGE
 	instance.AppName = param.AppName
 	instance.Version = param.Version
 	instance.IconUrl = param.IconUrl
@@ -52,7 +53,33 @@ func CreateInstance(param models.InstanceParam) *models.Instance {
 
 	models.AddInstance(&instance)
 
-	runNewContainer(instance, param)
+	go func() {
+		defer func() {
+			err := recover()
+			if err != nil {
+				log.Println("create instance:", err)
+			}
+			reader.Close()
+		}()
+
+		startTime := time.Now().Unix()
+		scanner := bufio.NewScanner(reader)
+		for scanner.Scan() {
+			line := scanner.Text()
+			log.Println(line)
+			if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
+				instance.State = models.PULL_ERROR
+				models.UpdateInstance(&instance)
+				return
+			}
+		}
+		tmp := models.GetInstanceByName(instance.Name)
+		if tmp == nil || tmp.Id != instance.Id { //check if instance is deleted
+			return
+		}
+		runNewContainer(instance, param)
+	}()
+
 	return &instance
 }
 
@@ -66,7 +93,7 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 	}
 
 	instance.Summary = param.Summary
-	instance.State = models.NEW_STATE
+	instance.State = models.PULL_IMAGE
 	instance.AppName = param.AppName
 	instance.Version = param.Version
 	instance.IconUrl = param.IconUrl

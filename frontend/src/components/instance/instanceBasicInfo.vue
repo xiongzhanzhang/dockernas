@@ -15,11 +15,12 @@
       </div>
       <div class="input_div">
         <div class="first_input">状态</div>
-        <div v-if="instance.state == 0" style="color: gray">新建作业</div>
+        <div v-if="instance.state == 0" style="color: green">拉取镜像</div>
         <div v-if="instance.state == 1" style="color: yellow">创建失败</div>
         <div v-if="instance.state == 2" style="color: red">运行失败</div>
         <div v-if="instance.state == 3" style="color: green">运行中</div>
         <div v-if="instance.state == 4" style="color: gray">已停止</div>
+        <div v-if="instance.state == 5" style="color: red">拉取失败</div>
       </div>
       <div class="input_div">
         <div class="first_input">应用名</div>

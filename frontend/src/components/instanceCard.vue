@@ -13,8 +13,8 @@
       </div>
       <div style="flex-grow: 1"></div>
       <div style="height: 100%">
-        <div class="color_dot" v-if="instance.state == 0 || instance.state == 4" style="background-color:gray"></div>
-        <div class="color_dot" v-if="instance.state == 1" style="background-color:yellow"></div>
+        <div class="color_dot" v-if="instance.state == 4" style="background-color:gray"></div>
+        <div class="color_dot" v-if="instance.state == 0 || instance.state == 1" style="background-color:yellow"></div>
         <div class="color_dot" v-if="instance.state == 2" style="background-color:red"></div>
         <div class="color_dot" v-if="instance.state == 3" style="background-color:green"></div>
       </div>

@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	NEW_STATE    = 0
+	PULL_IMAGE   = 0
 	CREATE_ERROR = 1
 	RUN_ERROR    = 2
 	RUNNING      = 3
 	STOPPED      = 4
+	PULL_ERROR   = 5
 )
 
 type Instance struct {
@@ -38,7 +39,7 @@ func AddInstance(instance *Instance) {
 }
 
 func UpdateInstance(instance *Instance) {
-	err := GetDb().Model(&Instance{}).Where("name = ?", instance.Name).Updates(instance).Error
+	err := GetDb().Model(&Instance{}).Where("id = ?", instance.Id).Updates(instance).Error
 	if err != nil {
 		log.Println(err)
 		panic(err)

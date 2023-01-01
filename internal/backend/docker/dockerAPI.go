@@ -89,7 +89,7 @@ func Restart(containerID string) error {
 	return nil
 }
 
-func PullImage(imageUrl string) {
+func PullImage(imageUrl string) io.ReadCloser {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
@@ -97,11 +97,13 @@ func PullImage(imageUrl string) {
 		panic(err)
 	}
 
-	_, err = cli.ImagePull(ctx, imageUrl, types.ImagePullOptions{})
-	if err != nil {
+	reader, err2 := cli.ImagePull(ctx, imageUrl, types.ImagePullOptions{})
+	if err2 != nil {
 		log.Println("pull image error: " + imageUrl)
-		panic(err)
+		panic(err2)
 	}
+
+	return reader
 }
 
 func Create(param *models.InstanceParam) (string, error) {
