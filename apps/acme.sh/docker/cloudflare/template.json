@@ -1,0 +1,32 @@
+{
+    "imageUrl":"neilpang/acme.sh",
+    "cmd":"daemon",
+    "portParams":[
+    ],
+    "envParams":[
+        {
+            "prompt":"Cloudflare邮箱",
+            "key":"CF_Email",
+            "value":"",
+            "reg":""
+        },
+        {
+            "prompt":"Cloudflare Key",
+            "key":"CF_Key",
+            "value":"",
+            "reg":""
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"证书保存目录",
+            "key":"/acme.sh",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ]
+}
+
