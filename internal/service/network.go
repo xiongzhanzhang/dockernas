@@ -6,7 +6,6 @@ import (
 	"net"
 	"strings"
 	"time"
-	"tinycloud/internal/backend/docker"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
@@ -18,7 +17,15 @@ func GetNetworkInfo() models.NetworkInfo {
 	var networkInfo models.NetworkInfo
 	networkInfo.IP = getLocalAddress()
 	networkInfo.Domain = config.GetDomain()
-	networkInfo.HttpGatewayEnable = gateway != nil
+
+	networkInfo.HttpsEnable = config.GetIsHttpsEnabled()
+	networkInfo.SslCertificatePath = config.GetCaFileDir()
+	if gateway != nil && gateway.State != models.STOPPED {
+		networkInfo.HttpGatewayEnable = true
+		if gateway.State != models.RUNNING {
+			networkInfo.HttpGatewayLoading = true
+		}
+	}
 
 	return networkInfo
 }
@@ -82,18 +89,22 @@ func getGatewayInstance() *models.Instance {
 }
 
 func RestartHttpGateway() {
-	gateWayInstance := models.GetInstanceByName(config.GetGateWayInstanceName())
-	if gateWayInstance == nil {
-		panic("http gateway is not start")
-	}
+	tryFlushGatewayConfig()
+}
 
-	flushGatewayConfig(*gateWayInstance)
-	RestartInstance(*gateWayInstance)
+func StopHttpGateway() {
+	gateway := getGatewayInstance()
+	if gateway != nil {
+		StopInstance(*gateway)
+	}
 }
 
 func EnableHttpGateway() {
 	if config.GetDomain() == "" {
 		panic("domain is not set")
+	}
+	if config.GetIsHttpsEnabled() {
+		getCaFilePath(config.GetCaFileDir()) // check ca file first
 	}
 
 	gateWayInstance := models.GetInstanceByName(config.GetGateWayInstanceName())
@@ -110,22 +121,67 @@ func EnableHttpGateway() {
 		param.LocalVolume = app.DockerVersions[0].LocalVolume
 		param.EnvParams = app.DockerVersions[0].EnvParams
 		param.PortParams = app.DockerVersions[0].PortParams
-		gateWayInstance = CreateInstance(param)
+
+		CreateInstance(param, true)
 	}
 
-	flushGatewayConfig(*gateWayInstance)
+	tryFlushGatewayConfig()
+}
+
+func EnableHttps() {
+	getCaFilePath(config.GetCaFileDir())
+	config.EnableHttps()
+	tryFlushGatewayConfig()
+}
+
+func DisableHttps() {
+	config.DisableHttps()
+	tryFlushGatewayConfig()
+}
+
+func SetCaFileDir(path string) {
+	getCaFilePath(path)
+	config.SetCaFileDir(path)
+
+	tryFlushGatewayConfig()
+}
+
+func getCaFilePath(caFileDir string) (string, string) {
+	// caFileDir := config.GetCaFileDir()
+	if caFileDir == "" {
+		panic("ca file dir is not set")
+	}
+	domain := config.GetDomain()
+	if domain == "" {
+		panic("domain is not set")
+	}
+
+	fullPath := config.GetFullDfsPath(caFileDir)
+
+	cer := fullPath + "/" + domain + ".cer"
+	key := fullPath + "/" + domain + ".key"
+	if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
+		cer = fullPath + "/" + domain + "/" + domain + ".cer"
+		key = fullPath + "/" + domain + "/" + domain + ".key"
+		if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
+			panic("can't find ca file under " + caFileDir)
+		}
+	}
+
+	//change to path in nginx container
+	return strings.Replace(cer, fullPath, "/ca", 1), strings.Replace(key, fullPath, "/ca", 1)
 }
 
 func tryFlushGatewayConfig() {
 	gateway := getGatewayInstance()
 	if gateway != nil {
-		flushGatewayConfig(*gateway)
+		updateNginxConfig(*gateway)
+		if gateway.State == models.STOPPED {
+			StartInstance(*gateway)
+		} else {
+			RestartInstance(*gateway)
+		}
 	}
-}
-
-func flushGatewayConfig(instance models.Instance) {
-	updateNginxConfig(instance)
-	docker.Restart(instance.ContainerID)
 }
 
 func updateNginxConfig(instance models.Instance) {
@@ -140,13 +196,14 @@ func updateNginxConfig(instance models.Instance) {
 			default upgrade;
 			''      close;
 		}
-
 	`
 	for _, proxyConfig := range proxyConfigs {
 		configStr += `
 		server {
-			listen       80;
+			listen       PORT_PLACEHOLDER;
 			server_name  ` + proxyConfig.HostName + "." + config.GetDomain() + `;
+
+			SSL_PLACEHOLDER
 	
 			location / {
 				proxy_set_header Host      $host;
@@ -161,6 +218,23 @@ func updateNginxConfig(instance models.Instance) {
 			}
 		}
 		`
+	}
+
+	if config.GetIsHttpsEnabled() {
+		cer, key := getCaFilePath(config.GetCaFileDir())
+		sslCOnfig := `
+		ssl_certificate "` + cer + `";
+		ssl_certificate_key "` + key + `";
+		ssl_session_timeout 5m;
+		ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+		ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+		ssl_prefer_server_ciphers on;
+		`
+		configStr = strings.ReplaceAll(configStr, "PORT_PLACEHOLDER", "443 ssl http2")
+		configStr = strings.ReplaceAll(configStr, "SSL_PLACEHOLDER", sslCOnfig)
+	} else {
+		configStr = strings.ReplaceAll(configStr, "PORT_PLACEHOLDER", "80")
+		configStr = strings.ReplaceAll(configStr, "SSL_PLACEHOLDER", "")
 	}
 
 	utils.WriteFile(instanceLocalPath, strings.Replace(templateData, "#####PLACEHOLDER", configStr, 1))

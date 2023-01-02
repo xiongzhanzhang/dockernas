@@ -2,9 +2,16 @@
     "imageUrl":"nginx:latest",
     "portParams":[
         {
-            "prompt":"web访问端口",
+            "prompt":"http访问端口",
             "key":"80",
             "value":"80",
+            "reg":"",
+            "protocol":"http"
+        },
+        {
+            "prompt":"https访问端口",
+            "key":"443",
+            "value":"443",
             "reg":"",
             "protocol":"http"
         }
@@ -22,6 +29,13 @@
         }
     ],
     "dfsVolume":[
+        {
+            "prompt":"证书文件目录",
+            "key":"/ca",
+            "value":"",
+            "reg":"",
+            "name":"ca"
+        }
     ]
 }
 

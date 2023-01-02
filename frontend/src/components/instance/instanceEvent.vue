@@ -35,6 +35,7 @@ export default {
       if (eventType == 2) return "启动实例";
       if (eventType == 3) return "配置实例";
       if (eventType == 4) return "删除实例";
+      if (eventType == 5) return "重启实例";
 
       return "未知事件";
     },

@@ -42,3 +42,19 @@ export const startHttpGateway = (domain) => {
 export const restartHttpGateway = (name) => {
     return http.patch("/api/httpgateway", { "op": "restart" })
 }
+
+export const stopHttpGateway = (name) => {
+    return http.patch("/api/httpgateway", { "op": "stop" })
+}
+
+export const enableHttps = () => {
+    return http.post("/api/httpgateway/https",{})
+}
+
+export const disableHttps = () => {
+    return http.delete("/api/httpgateway/https", {})
+}
+
+export const setCaPath = (path) => {
+    return http.post("/api/httpgateway/capath", {"path":path})
+}

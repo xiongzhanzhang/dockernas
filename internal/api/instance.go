@@ -14,7 +14,7 @@ func PostInstance(c *gin.Context) {
 	var param models.InstanceParam
 	c.BindJSON(&param)
 
-	service.CreateInstance(param)
+	service.CreateInstance(param, false)
 
 	c.JSON(200, gin.H{
 		"state": "ok",

@@ -76,9 +76,40 @@ func PatchHttpGateway(c *gin.Context) {
 	op, _ := patchMap["op"]
 	if op == "restart" {
 		service.RestartHttpGateway()
+	} else if op=="stop"{
+		service.StopHttpGateway()
 	} else {
 		panic("unkown patch request")
 	}
+
+	c.JSON(200, gin.H{
+		"state": "ok",
+	})
+}
+
+func EnableHttps(c *gin.Context) {
+	service.EnableHttps()
+	c.JSON(200, gin.H{
+		"state": "ok",
+	})
+}
+
+func DisableHttps(c *gin.Context) {
+	service.DisableHttps()
+	c.JSON(200, gin.H{
+		"state": "ok",
+	})
+}
+
+func SetCaFileDir(c *gin.Context) {
+	postMap := map[string]string{}
+	c.BindJSON(&postMap)
+	path, ok := postMap["path"]
+	if ok == false {
+		panic("SetCaFilePath without a param")
+	}
+
+	service.SetCaFileDir(path)
 
 	c.JSON(200, gin.H{
 		"state": "ok",

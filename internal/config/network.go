@@ -9,6 +9,29 @@ func SetDomain(domain string) {
 	SaveConfig()
 }
 
-func GetGateWayInstanceName() string{
+func GetGateWayInstanceName() string {
 	return "http_gateway"
+}
+
+func GetIsHttpsEnabled() bool {
+	return GetConfig("https", "") == "true"
+}
+
+func EnableHttps() {
+	SetConfig("https", "true")
+	SaveConfig()
+}
+
+func DisableHttps() {
+	SetConfig("https", "false")
+	SaveConfig()
+}
+
+func GetCaFileDir() string {
+	return GetConfig("ca_dir", "")
+}
+
+func SetCaFileDir(path string) {
+	SetConfig("ca_dir", path)
+	SaveConfig()
 }

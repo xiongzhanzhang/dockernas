@@ -3,6 +3,7 @@ package service
 import (
 	"bufio"
 	"encoding/json"
+	"io"
 	"log"
 	"os"
 	"time"
@@ -29,6 +30,8 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 		log.Println(err)
 		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
 		panic(err)
+	} else {
+		models.AddEventLog(instance.Id, models.START_EVENT, "")
 	}
 
 	instance.State = models.RUNNING
@@ -36,7 +39,7 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	SavePortUsed(instance, param)
 }
 
-func CreateInstance(param models.InstanceParam) *models.Instance {
+func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {
 	log.Println("pull image " + param.ImageUrl)
 	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
 	CheckIsPortUsed(param)
@@ -55,34 +58,39 @@ func CreateInstance(param models.InstanceParam) *models.Instance {
 
 	models.AddInstance(&instance)
 
-	go func() {
-		defer func() {
-			err := recover()
-			if err != nil {
-				log.Println("create instance:", err)
-			}
-			reader.Close()
-		}()
+	if blocking {
+		io.Copy(log.Writer(), reader)
+		runNewContainer(instance, param)
+	} else {
+		go func() {
+			defer func() {
+				err := recover()
+				if err != nil {
+					log.Println("create instance:", err)
+				}
+				reader.Close()
+			}()
 
-		startTime := time.Now().Unix()
-		scanner := bufio.NewScanner(reader)
-		for scanner.Scan() {
-			line := scanner.Text()
-			log.Println(line)
-			if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
-				log.Println("pull image " + param.ImageUrl + " time out")
-				instance.State = models.PULL_ERROR
-				models.UpdateInstance(&instance)
+			startTime := time.Now().Unix()
+			scanner := bufio.NewScanner(reader)
+			for scanner.Scan() {
+				line := scanner.Text()
+				log.Println(line)
+				if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
+					log.Println("pull image " + param.ImageUrl + " time out")
+					instance.State = models.PULL_ERROR
+					models.UpdateInstance(&instance)
+					return
+				}
+			}
+			log.Println("pull image " + param.ImageUrl + " ok")
+			tmp := models.GetInstanceByName(instance.Name)
+			if tmp == nil || tmp.Id != instance.Id { //check if instance is deleted
 				return
 			}
-		}
-		log.Println("pull image " + param.ImageUrl + " ok")
-		tmp := models.GetInstanceByName(instance.Name)
-		if tmp == nil || tmp.Id != instance.Id { //check if instance is deleted
-			return
-		}
-		runNewContainer(instance, param)
-	}()
+			runNewContainer(instance, param)
+		}()
+	}
 
 	return &instance
 }
@@ -95,6 +103,8 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 	if err != nil {
 		models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
 		panic(err)
+	} else {
+		models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
 	}
 
 	instance.Summary = param.Summary
@@ -112,8 +122,12 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 }
 
 func RestartInstance(instance models.Instance) {
-	StopInstance(instance)
-	StartInstance(instance)
+	err := docker.Restart(instance.ContainerID)
+	if err != nil {
+		models.AddEventLog(instance.Id, models.RESTART_EVENT, err.Error())
+	} else {
+		models.AddEventLog(instance.Id, models.RESTART_EVENT, "")
+	}
 }
 
 func StartInstance(instance models.Instance) {

@@ -6,11 +6,12 @@ import (
 )
 
 const (
-	CREATE_EVENT = 0
-	STOP_EVENT   = 1
-	START_EVENT  = 2
-	CONFIG_EVENT = 3
-	DELETE_EVENT = 4
+	CREATE_EVENT  = 0
+	STOP_EVENT    = 1
+	START_EVENT   = 2
+	CONFIG_EVENT  = 3
+	DELETE_EVENT  = 4
+	RESTART_EVENT = 5
 )
 
 type EventLog struct {
