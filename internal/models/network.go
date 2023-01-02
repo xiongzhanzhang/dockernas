@@ -1,6 +1,11 @@
 package models
 
-import "log"
+import (
+	"errors"
+	"log"
+
+	"gorm.io/gorm"
+)
 
 type NetworkInfo struct {
 	IP                 string `json:"ip"`
@@ -59,4 +64,18 @@ func GetHttpProxyConfigByHostName(hostName string) HttpProxyConfig {
 	}
 
 	return config
+}
+
+func GetHttpProxyConfigByInstance(instanceName string, port string) *HttpProxyConfig {
+	var config HttpProxyConfig
+	err := GetDb().First(&config, "instance_name=? and port=?", instanceName, port).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil
+		}
+		log.Println(err)
+		panic(err)
+	}
+
+	return &config
 }

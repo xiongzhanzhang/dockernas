@@ -22,7 +22,7 @@ func PostInstance(c *gin.Context) {
 }
 
 func GetInstance(c *gin.Context) {
-	instances := models.GetInstance()
+	instances := service.GetInstance()
 	c.JSON(200, gin.H{
 		"list": instances,
 	})

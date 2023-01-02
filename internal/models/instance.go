@@ -23,6 +23,7 @@ type Instance struct {
 	State            int    `json:"state"`
 	IconUrl          string `json:"iconUrl"`
 	Port             int    `json:"port"`
+	Url              string `json:"url"`
 	Name             string `json:"name"  gorm:"unique;not null"`
 	AppName          string `json:"appName"`
 	Version          string `json:"version"`

@@ -50,7 +50,11 @@ export default {
     }
   },
   mounted(){
-    this.url=getInstanceWebUrl(this.instance.name, this.instance.port);
+    if(this.instance.url!=""){
+      this.url=this.instance.url;
+    }else{
+      this.url=getInstanceWebUrl(this.instance.name, this.instance.port);
+    }
   }
 };
 </script>

@@ -6,12 +6,32 @@ import (
 	"io"
 	"log"
 	"os"
+	"strconv"
 	"time"
 	"tinycloud/internal/backend/docker"
 	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
 )
+
+func GetInstance() []models.Instance {
+	instances := models.GetInstance()
+
+	networkInfo := GetNetworkInfo()
+	if networkInfo.HttpGatewayEnable {
+		for i, instance := range instances {
+			proxyConfig := models.GetHttpProxyConfigByInstance(instance.Name, strconv.Itoa(instance.Port))
+			if proxyConfig != nil {
+				if networkInfo.HttpsEnable {
+					instances[i].Url = "https://" + proxyConfig.HostName + "." + networkInfo.Domain
+				} else {
+					instances[i].Url = "http://" + proxyConfig.HostName + "." + networkInfo.Domain
+				}
+			}
+		}
+	}
+	return instances
+}
 
 func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	var err error
