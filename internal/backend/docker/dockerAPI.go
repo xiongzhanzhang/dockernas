@@ -176,9 +176,11 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			config.GetLocalVolumePath(param.Name, "") // create dir if not exit
 			templateFilePath := config.GetAppMountFilePath(param.AppName, param.Version, item.Name)
 			instanceLocalPath := config.GetAppLocalFilePath(param.Name, item.Name)
-			_, err := utils.CopyFile(templateFilePath, instanceLocalPath)
-			if err != nil {
-				panic(err)
+			if !utils.IsFileExist(instanceLocalPath) {
+				_, err := utils.CopyFile(templateFilePath, instanceLocalPath)
+				if err != nil {
+					panic(err)
+				}
 			}
 			param.LocalVolume[index].Value = instanceLocalPath
 			m = append(m, mount.Mount{
