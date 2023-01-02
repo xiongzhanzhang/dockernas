@@ -18,6 +18,7 @@ func monitorContainer() {
 	var statsBySpeed []models.ContainerStat
 	var newStatMap map[string]models.ContainerStat = map[string]models.ContainerStat{}
 	containerStats := docker.GetContainerStatus()
+	containerStats = append(containerStats, GetHostState())
 	curTime := time.Now().UnixMilli()
 
 	for _, stat := range containerStats {

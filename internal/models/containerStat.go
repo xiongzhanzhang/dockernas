@@ -39,7 +39,7 @@ func DelStatDataByTime(time int64) {
 
 func GetStatDataByTime(start int64, end int64) []ContainerStat {
 	var stats []ContainerStat
-	err := GetDb().Where("create_time >= ? and create_time <= ?", start, end).Find(&stats).Error
+	err := GetDb().Where("create_time >= ? and create_time <= ? and name!=?", start, end, "physic_host").Find(&stats).Error
 	if err != nil {
 		log.Println(err)
 		panic(err)

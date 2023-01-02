@@ -11,16 +11,19 @@
       </div>
       <div class="input_div">
         <div class="first_input">cpu型号</div>
-        <div>{{hostData.modelName}}</div>
+        <div>{{ hostData.modelName }}</div>
       </div>
       <div class="input_div">
         <div class="first_input">内存大小</div>
-        <div>{{(hostData.memSize/1024/1024/1024).toFixed(2)}} GB</div>
+        <div>{{ (hostData.memSize / 1024 / 1024 / 1024).toFixed(2) }} GB</div>
       </div>
       <div class="input_div">
         <div class="first_input">启动时间</div>
         <div>{{ new Date(hostData.bootTime).toLocaleString() }}</div>
       </div>
+    </div>
+    <div>
+      <instanceMonitor instance="physic_host"></instanceMonitor>
     </div>
     <div>
       <instanceMonitor></instanceMonitor>
@@ -34,8 +37,8 @@ import { getHostInfo } from "../../api/host";
 
 export default {
   name: "host",
-  components:{
-    instanceMonitor
+  components: {
+    instanceMonitor,
   },
   data() {
     return {
