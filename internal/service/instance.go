@@ -192,6 +192,7 @@ func DeleteInstance(instance models.Instance) {
 
 	DelInstancePorts(instance)
 	models.DelInstanceStatData(instance.Name)
+	models.DelEvents(instance.Id)
 
 	log.Println("delete comtainer of instance " + instance.Name)
 	err := docker.Delete(instance.ContainerID)
@@ -202,7 +203,7 @@ func DeleteInstance(instance models.Instance) {
 
 	models.DeleteInstance(&instance)
 	os.RemoveAll(config.GetAppLocalPath(instance.Name))
-	models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
+	// models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
 }
 
 func GetInstanceLog(instance models.Instance) string {

@@ -47,3 +47,10 @@ func GetEvents(InstanceID int) []EventLog {
 
 	return events
 }
+
+func DelEvents(InstanceID int) {
+	err := GetDb().Where("instance_id = ?", InstanceID).Delete(&EventLog{}).Error
+	if err != nil {
+		log.Println(err)
+	}
+}
