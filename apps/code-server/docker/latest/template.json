@@ -1,0 +1,39 @@
+{
+    "imageUrl":"codercom/code-server:latest",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"8080",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"密码",
+            "key":"PASSWORD",
+            "value":"",
+            "reg":""
+        }
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置文件",
+            "key":"/home/coder/.config",
+            "value":"",
+            "reg":"",
+            "name":"conf"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"工程目录",
+            "key":"/home/coder/project",
+            "value":"",
+            "reg":"",
+            "name":"project"
+        }
+    ]
+}
+

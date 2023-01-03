@@ -1,0 +1,26 @@
+{
+    "imageUrl":"xhofe/alist:latest",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"5244",
+            "value":"5244",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置文件",
+            "key":"/opt/alist/data",
+            "value":"",
+            "reg":"",
+            "name":"conf"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+
