@@ -1,6 +1,7 @@
 package server
 
 import (
+	"strings"
 	"tinycloud/internal/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -13,15 +14,17 @@ func StartServer() {
 		middleware.Recovery(),
 	)
 
-	router.Static("/static", "./frontend/dist")
-	router.Static("/apps", "./apps")
 	router.StaticFile("/", "./frontend/dist/index.html")
-	// router.NoRoute(func(ctx *gin.Context) {
-	// 	ctx.Request.URL.Path = "/"
-	// 	router.HandleContext(ctx)
-	// })
+	router.StaticFile("/favicon.ico", "./frontend/dist/favicon.ico")
+	router.Static("/assets", "./frontend/dist/assets")
+	router.Static("/apps", "./apps")
+	router.NoRoute(func(ctx *gin.Context) {
+		if strings.Index(ctx.Request.URL.Path, "/index/") == 0 {
+			ctx.Request.URL.Path = "/"
+			router.HandleContext(ctx)
+		}
+	})
 
 	registerRoutes(router)
-
 	router.Run()
 }
