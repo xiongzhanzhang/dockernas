@@ -7,62 +7,41 @@
             active-text-color="rgb(64,158,255)"
             text-color="#000"
             class="el-menu-demo"
-            default-active="1"
+            :default-active="$router.currentRoute.value.path"
             style="width: 100%"
+            router
           >
-            <el-menu-item index="1" @click="clicked(0)"
+            <el-menu-item index="/index/setting/host"
               ><div class="menu-item">基本信息</div></el-menu-item
             >
-            <el-menu-item index="2" @click="clicked(1)"
+            <el-menu-item index="/index/setting/storage"
               ><div class="menu-item">存储</div></el-menu-item
             >
-            <el-menu-item index="3" @click="clicked(2)"
+            <el-menu-item index="/index/setting/network"
               ><div class="menu-item">网络</div></el-menu-item
             >
           </el-menu>
         </div>
       </el-aside>
-      <el-main style="padding:0px; margin:6px">
-        <div v-show="divShow[0]">
-          <host ref="host"></host>
-        </div>
-        <div v-show="divShow[1]">
-          <storage ref="storage"></storage>
-        </div>
-        <div v-show="divShow[2]">
-          <network ref="network"></network>
-        </div>
+      <el-main style="padding: 0px; margin: 6px">
+        <RouterView v-slot="{ Component }">
+          <component ref="view" :is="Component" />
+        </RouterView>
       </el-main>
     </el-container>
   </div>
 </template>
 
 <script>
-import host from "../components/setting/host.vue";
-import storage from "../components/setting/storage.vue";
-import network from "../components/setting/network.vue";
-
 export default {
   name: "setting",
-  components: {
-    host,storage,network
-  },
   data() {
     return {
-      divShow: [true, false, false],
-    }
+    };
   },
-  methods:{
-    clicked(index){
-      this.divShow[0] = false;
-      this.divShow[1] = false;
-      this.divShow[2] = false;
-      this.divShow[index] = true;
-
-      this.$refs.storage.flush();
-    }
-  }
-}
+  methods: {
+  },
+};
 </script>
 
 <style scoped>

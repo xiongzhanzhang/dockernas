@@ -12,7 +12,7 @@
         @change="setTime"
       />
       <div style="flex-grow: 1000"></div>
-      <div class="click_able" @click="flush">
+      <div class="click_able" @click="initData">
         <el-icon size="20"><Refresh /></el-icon>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default {
     },
     setTime() {
       this.isTimeSeted = true;
-      this.flush();
+      this.initData();
     },
     computeOption(dataList, title, field, factor, precision) {
       var seriesMap = {};
@@ -189,7 +189,7 @@ export default {
       this.diskInChart.resize();
       this.diskOutChart.resize();
     },
-    flush() {
+    initData() {
       if (this.isTimeSeted == false) {
         this.time[1] = new Date();
       }
@@ -212,7 +212,7 @@ export default {
   },
   mounted() {
     this.init();
-    this.flush();
+    this.initData();
   },
 };
 </script>

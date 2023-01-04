@@ -10,7 +10,7 @@
             text-color="#fff"
             class="el-menu-demo"
             mode="horizontal"
-            :default-active="$router.currentRoute.value.path"
+            :default-active="splitRouterPathByIndex($router.currentRoute.value.path,3)"
             router
             style="height:100%"
           >
@@ -30,11 +30,16 @@
 </template>
 
 <script>
+import {splitRouterPathByIndex} from "../utils/url"
+
 export default {
   name: "index",
   data() {
     return {
     };
+  },
+  methods:{
+    splitRouterPathByIndex
   },
   mounted(){
     console.log(this.$router);

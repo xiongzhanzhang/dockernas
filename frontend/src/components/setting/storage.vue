@@ -138,7 +138,9 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() {
+    this.flush();
+  },
 };
 </script>
 

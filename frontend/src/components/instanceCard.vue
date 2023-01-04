@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     clicked() {
-      this.$router.push("/index/instanceinfo/"+this.instance.name);
+      this.$router.push("/index/instances/"+this.instance.name+"/basicInfo");
     },
     tryOpen(event){
       if(this.url!=null){

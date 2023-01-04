@@ -4,3 +4,7 @@ export const getInstanceWebUrl = (instanceName, port) => {
     }
     return window.location.protocol + "//"+window.location.hostname+":"+port
 }
+
+export const splitRouterPathByIndex = (router, index) =>{
+    return router.split("/").slice(0,index).join("/")
+}

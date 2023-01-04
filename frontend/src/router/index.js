@@ -22,12 +22,52 @@ const router = createRouter({
         {
           path: 'setting',
           name: 'setting',
-          component: () => import('../views/setting.vue')
+          component: () => import('../views/setting.vue'),
+          children:[
+            {path:'',redirect:'/index/setting/host'},
+            {
+              path: 'host',
+              name: 'host',
+              component: () => import('../components/setting/host.vue')
+            },
+            {
+              path: 'storage',
+              name: 'storage',
+              component: () => import('../components/setting/storage.vue')
+            },
+            {
+              path: 'network',
+              name: 'network',
+              component: () => import('../components/setting/network.vue')
+            }
+          ]
         },
         {
-          path: 'instanceInfo/:name',
+          path: 'instances/:name',
           name: 'instanceInfo',
-          component: () => import('../views/instanceInfo.vue')
+          component: () => import('../views/instanceInfo.vue'),
+          children:[
+            {
+              path: 'basicInfo',
+              name: 'basicInfo',
+              component: () => import('../components/instance/instanceBasicInfo.vue')
+            },
+            {
+              path: 'log',
+              name: 'log',
+              component: () => import('../components/instance/instanceLog.vue')
+            },
+            {
+              path: 'event',
+              name: 'event',
+              component: () => import('../components/instance/instanceEvent.vue')
+            },
+            {
+              path: 'monitor',
+              name: 'monitor',
+              component: () => import('../components/instance/instanceMonitor.vue')
+            }
+          ]
         }
       ]
     },
