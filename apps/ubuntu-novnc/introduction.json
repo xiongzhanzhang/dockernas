@@ -1,0 +1,7 @@
+{
+  "name": "ubuntu-novnc",
+  "category": [
+    "编程开发"
+  ],
+  "summary": "Ubuntu in a web browser http://localhost:6080. From Doro Wu's work at https://github.com/fcwu"
+}

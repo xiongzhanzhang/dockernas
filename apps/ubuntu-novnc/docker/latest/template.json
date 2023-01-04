@@ -1,0 +1,44 @@
+{
+    "imageUrl":"fredblgr/ubuntu-novnc:20.04",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"80",
+            "value":"6080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"用户",
+            "key":"USER",
+            "value":"root",
+            "reg":""
+        },
+        {
+            "prompt":"密码",
+            "key":"HTTP_PASSWORD",
+            "value":"",
+            "reg":""
+        },
+        {
+            "prompt":"分辨率",
+            "key":"RESOLUTION",
+            "value":"1920x1080",
+            "reg":""
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"工作目录",
+            "key":"/workspace",
+            "value":"",
+            "reg":"",
+            "name":"workspace"
+        }
+    ]
+}
+

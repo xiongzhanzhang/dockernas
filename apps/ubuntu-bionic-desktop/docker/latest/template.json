@@ -1,0 +1,25 @@
+{
+    "imageUrl":"docker pull kasmweb/desktop:1.12.0",
+    "portParams":[
+        {
+            "prompt":"服务器端口",
+            "key":"6901",
+            "value":"6901",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"密码",
+            "key":"VNC_PW",
+            "value":"",
+            "reg":""
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}
+
