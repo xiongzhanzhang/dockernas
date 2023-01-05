@@ -20,7 +20,12 @@ export default defineConfig({
         ws: true,
         changeOrigin: true
       },
-      '/apps':  'http://localhost:8080',
+      '/apps':'http://localhost:8080',
+      '/terminal': {
+        target: 'http://localhost:8080',
+        ws: true,
+        changeOrigin: true
+      }
     }
   },
   define: {

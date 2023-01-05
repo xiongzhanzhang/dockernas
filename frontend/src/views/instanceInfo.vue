@@ -28,12 +28,17 @@
             <el-menu-item :index="`/index/instances/${name}/monitor`" @click="clicked()"
               ><div class="menu-item">监控</div></el-menu-item
             >
+            <el-menu-item :index="`/index/instances/${name}/terminal`" @click="clicked()"
+              ><div class="menu-item">终端</div></el-menu-item
+            >
           </el-menu>
         </div>
       </el-aside>
       <el-main class="card" style="min-height: 100px">
         <RouterView  v-slot="{ Component }">
-          <component  ref="view" :is="Component" />
+          <keep-alive>
+            <component  ref="view" :is="Component"/>
+          </keep-alive>
         </RouterView>
       </el-main>
     </el-container>

@@ -66,6 +66,11 @@ const router = createRouter({
               path: 'monitor',
               name: 'monitor',
               component: () => import('../components/instance/instanceMonitor.vue')
+            },
+            {
+              path: 'terminal',
+              name: 'terminal',
+              component: () => import('../components/instance/instanceTerminal.vue')
             }
           ]
         }

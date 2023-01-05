@@ -8,6 +8,8 @@ import (
 )
 
 func registerRoutes(router *gin.Engine) {
+	router.GET("/terminal", api.InstanceWebTerminal)
+
 	apiv1 := router.Group("/api", middleware.Authentication(), middleware.PathCheck())
 	{
 		apiv1.GET("app", api.GetApps)

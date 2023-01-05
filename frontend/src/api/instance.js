@@ -1,4 +1,5 @@
 import http from '@/utils/request'
+import storage from "@/utils/storage"
 
 export const newInstance = (instanceParam) => {
     return http.post("/api/instance", instanceParam)
@@ -37,13 +38,20 @@ export const getInstanceEvent = (name) => {
 }
 
 export const getInstanceStats = (start, end) => {
-    return http.get("/api/instancestats?start="+start+"&end="+end)
+    return http.get("/api/instancestats?start=" + start + "&end=" + end)
 }
 
 export const getInstanceStatsByName = (name, start, end) => {
-    return http.get("/api/instancestats/"+name+"?start="+start+"&end="+end)
+    return http.get("/api/instancestats/" + name + "?start=" + start + "&end=" + end)
 }
 
 export const getInstanceHttpPort = () => {
     return http.get("/api/instancehttpport")
+}
+
+export const getWebTerminalWebsocket = (containerId, columns) => {
+    var ws = new WebSocket(
+        "ws://127.0.0.1:8081/terminal?containerid=" + containerId + "&columns=" + columns + "&token=" + storage.get("token")
+    );
+    return ws
 }

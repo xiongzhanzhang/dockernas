@@ -264,3 +264,33 @@ func GetLog(containerID string) string {
 
 	return writer.String()
 }
+
+func Exec(container string, columns string) types.HijackedResponse {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	ir, err := cli.ContainerExecCreate(ctx, container, types.ExecConfig{
+		AttachStdin:  true,
+		AttachStdout: true,
+		AttachStderr: true,
+		Cmd:          []string{"/bin/bash"},
+		Env:          []string{"COLUMNS=" + columns},
+		Tty:          true,
+	})
+	if err != nil {
+		log.Println("exec cmd error")
+		panic(err)
+	}
+
+	// 附加到上面创建的/bin/bash进程中
+	hr, err := cli.ContainerExecAttach(ctx, ir.ID, types.ExecStartCheck{Detach: false, Tty: true})
+	if err != nil {
+		log.Println("attch container error")
+		panic(err)
+	}
+	return hr
+}
