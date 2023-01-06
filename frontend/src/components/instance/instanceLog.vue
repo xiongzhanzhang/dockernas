@@ -7,6 +7,7 @@ import { getInstanceLog } from "../../api/instance";
 
 export default {
   name: "instanceLog",
+  props: ["name"],
   data() {
     return {
       log: "",
@@ -14,7 +15,7 @@ export default {
   },
   methods: {
     initData(instance) {
-      getInstanceLog(instance.name).then((response) => {
+      getInstanceLog(this.name).then((response) => {
         this.log = "";
         for(var s of response.data.data.split('\n')){
             // console.log(s);

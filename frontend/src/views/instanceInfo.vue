@@ -16,19 +16,19 @@
             style="width: 100%"
             router
           >
-            <el-menu-item :index="`/index/instances/${name}/basicInfo`" @click="clicked()"
+            <el-menu-item :index="`/index/instances/${name}/basicInfo`"
               ><div class="menu-item">基本信息</div></el-menu-item
             >
-            <el-menu-item :index="`/index/instances/${name}/event`" @click="clicked()"
+            <el-menu-item :index="`/index/instances/${name}/event`"
               ><div class="menu-item">事件记录</div></el-menu-item
             >
-            <el-menu-item :index="`/index/instances/${name}/log`" @click="clicked()"
+            <el-menu-item :index="`/index/instances/${name}/log`"
               ><div class="menu-item">日志</div></el-menu-item
             >
-            <el-menu-item :index="`/index/instances/${name}/monitor`" @click="clicked()"
+            <el-menu-item :index="`/index/instances/${name}/monitor`" 
               ><div class="menu-item">监控</div></el-menu-item
             >
-            <el-menu-item :index="`/index/instances/${name}/terminal`" @click="clicked()"
+            <el-menu-item :index="`/index/instances/${name}/terminal`"
               ><div class="menu-item">终端</div></el-menu-item
             >
           </el-menu>
@@ -57,7 +57,6 @@ export default {
       iconUrl: "",
       state: null,
       summary: "",
-      instanceParam: {},
       instanceData: {},
     };
   },
@@ -70,17 +69,10 @@ export default {
           this.iconUrl = response.data.iconUrl;
           this.state = response.data.state;
           this.summary = response.data.summary;
-          this.instanceParam = JSON.parse(response.data.instanceParamStr);
-          console.log(response);
-
-          this.$refs.view.initData(this.instanceData);
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-    clicked() {
-      this.flushInstance();
     },
   },
   created(){

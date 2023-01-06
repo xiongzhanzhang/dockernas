@@ -49,8 +49,8 @@ export const getInstanceHttpPort = () => {
     return http.get("/api/instancehttpport")
 }
 
-export const getWebTerminalWebsocket = (containerId, columns) => {
-    var url=window.location.host+"/terminal?containerid=" + containerId + "&columns=" + columns + "&token=" + storage.get("token")
+export const getWebTerminalWebsocket = (instanceName, columns) => {
+    var url=window.location.host+"/terminal?instanceName=" + instanceName + "&columns=" + columns + "&token=" + storage.get("token")
     if(window.location.protocol=='http:'){
         url="ws://"+url
     }else{

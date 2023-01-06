@@ -28,5 +28,5 @@ func InstanceWebTerminal(c *gin.Context) {
 		return
 	}
 	defer ws.Close()
-	service.ProcessWebsocketConn(ws, c.Query("containerid"), c.Query("columns"))
+	service.ProcessWebsocketConn(ws, c.Query("instanceName"), c.Query("columns"))
 }

@@ -17,6 +17,7 @@ import { getInstanceEvent } from "../../api/instance";
 
 export default {
   name: "instanceEvent",
+  props: ["name"],
   data() {
     return {
       events: [],
@@ -39,9 +40,9 @@ export default {
 
       return "未知事件";
     },
-    initData(instance) {
+    initData() {
       this.events=[]
-      getInstanceEvent(instance.name).then((response) => {
+      getInstanceEvent(this.name).then((response) => {
         for (var d of response.data.list) {
           this.events.push({
             createTime: new Date(d.createTime).toLocaleString(),
@@ -53,6 +54,9 @@ export default {
       });
     },
   },
+  mounted(){
+    this.initData();
+  }
 };
 </script>
 

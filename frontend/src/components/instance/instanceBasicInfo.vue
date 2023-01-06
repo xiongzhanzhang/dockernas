@@ -142,10 +142,12 @@ import {
   stopInstance,
   startInstance,
   deleteInstance,
+  getInstance
 } from "../../api/instance";
 
 export default {
   name: "instanceBasicInfo",
+  props: ["name"],
   components: {
     createInstance,
   },
@@ -196,7 +198,11 @@ export default {
       this.$refs.createCard.showDialog();
     },
   },
-  mounted() {},
+  mounted() {
+    getInstance(this.name).then((response) => {
+      this.initData(response.data)
+    });
+  },
 };
 </script>
 

@@ -12,10 +12,9 @@ import { getWebTerminalWebsocket } from "../../api/instance";
 
 export default {
   name: "instanceTerminal",
-  props:["instanceData"],
+  props: ["name"],
   data() {
     return {
-      instance: {},
     };
   },
   methods: {
@@ -33,7 +32,7 @@ export default {
       term.open(this.$refs.terminal);
       fitAddon.fit();
 
-      var ws = getWebTerminalWebsocket(this.instance.containerID, term.cols);
+      var ws = getWebTerminalWebsocket(this.name, term.cols);
       var attachAddon = new AttachAddon(ws);
       term.loadAddon(attachAddon);
       term.focus();
@@ -42,19 +41,10 @@ export default {
       window.onresize = function () {
         fitAddon.fit();
       };
-    },
-    initData(instance) {
-        if (instance==null){
-            return
-        }
-      this.instance = instance;
-      console.log(instance);
-      this.connect();
-    },
+    }
   },
   mounted() {
-    this.instance=this.instanceData;
-    this.initData(this.instance);
+    this.connect();
   },
 };
 </script>

@@ -23,7 +23,7 @@
       </div>
     </div>
     <div>
-      <instanceMonitor instance="physic_host"></instanceMonitor>
+      <instanceMonitor name="physic_host"></instanceMonitor>
     </div>
     <div>
       <instanceMonitor></instanceMonitor>

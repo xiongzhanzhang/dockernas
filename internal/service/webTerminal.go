@@ -4,12 +4,18 @@ import (
 	"io"
 	"log"
 	"tinycloud/internal/backend/docker"
+	"tinycloud/internal/models"
 
 	"github.com/gorilla/websocket"
 )
 
-func ProcessWebsocketConn(conn *websocket.Conn, containerId string, columns string) {
-	hr := docker.Exec(containerId, columns)
+func ProcessWebsocketConn(conn *websocket.Conn, instanceName string, columns string) {
+	instance := models.GetInstanceByName(instanceName)
+	if instance == nil {
+		panic("no instance with name " + instanceName)
+	}
+
+	hr := docker.Exec(instance.ContainerID, columns)
 	defer hr.Close()
 
 	// 退出进程
@@ -17,7 +23,7 @@ func ProcessWebsocketConn(conn *websocket.Conn, containerId string, columns stri
 		hr.Conn.Write([]byte("exit\r"))
 	}()
 
-	log.Println("websocket attach " + containerId)
+	log.Println("websocket attach " + instanceName)
 
 	// 转发输入/输出至websocket
 	go func() {
@@ -25,7 +31,7 @@ func ProcessWebsocketConn(conn *websocket.Conn, containerId string, columns stri
 	}()
 	wsReaderCopy(conn, hr.Conn)
 
-	log.Println("websocket disattach " + containerId)
+	log.Println("websocket disattach " + instanceName)
 }
 
 // 将终端的输出转发到前端

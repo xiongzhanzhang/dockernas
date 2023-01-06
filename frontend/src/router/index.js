@@ -50,26 +50,31 @@ const router = createRouter({
             {
               path: 'basicInfo',
               name: 'basicInfo',
+              props: true,
               component: () => import('../components/instance/instanceBasicInfo.vue')
             },
             {
               path: 'log',
               name: 'log',
+              props: true,
               component: () => import('../components/instance/instanceLog.vue')
             },
             {
               path: 'event',
               name: 'event',
+              props: true,
               component: () => import('../components/instance/instanceEvent.vue')
             },
             {
               path: 'monitor',
               name: 'monitor',
+              props: true,
               component: () => import('../components/instance/instanceMonitor.vue')
             },
             {
               path: 'terminal',
               name: 'terminal',
+              props: true,
               component: () => import('../components/instance/instanceTerminal.vue')
             }
           ]

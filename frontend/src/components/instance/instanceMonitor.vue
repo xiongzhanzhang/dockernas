@@ -45,7 +45,7 @@ import { getInstanceStats, getInstanceStatsByName } from "../../api/instance";
 
 export default {
   name: "instanceMonitor",
-  props: ["instance"],
+  props: ["name"],
   data() {
     return {
       isTimeSeted: false,
@@ -193,7 +193,7 @@ export default {
       if (this.isTimeSeted == false) {
         this.time[1] = new Date();
       }
-      if (this.instance == null || this.instance == "") {
+      if (this.name == null || this.name == "") {
         getInstanceStats(this.time[0].getTime(), this.time[1].getTime()).then(
           (response) => {
             this.setData(response.data.list);
@@ -201,7 +201,7 @@ export default {
         );
       } else {
         getInstanceStatsByName(
-          this.instance,
+          this.name,
           this.time[0].getTime(),
           this.time[1].getTime()
         ).then((response) => {
