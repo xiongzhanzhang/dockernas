@@ -1,0 +1,7 @@
+{
+  "name": "wiki.js",
+  "category": [
+    "wiki","个人博客"
+  ],
+  "summary": "A modern, lightweight and powerful wiki app built on NodeJS"
+}
