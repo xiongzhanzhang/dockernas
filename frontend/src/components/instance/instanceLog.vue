@@ -14,7 +14,7 @@ export default {
     };
   },
   methods: {
-    initData(instance) {
+    initData() {
       getInstanceLog(this.name).then((response) => {
         this.log = "";
         for(var s of response.data.data.split('\n')){
@@ -24,6 +24,9 @@ export default {
       });
     },
   },
+  mounted(){
+    this.initData();
+  }
 };
 </script>
 

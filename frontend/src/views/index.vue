@@ -29,9 +29,7 @@
 
         <el-main class="main_router">
           <RouterView v-slot="{ Component }">
-            <keep-alive>
               <component :is="Component" />
-            </keep-alive>
           </RouterView>
         </el-main>
       </el-container>
