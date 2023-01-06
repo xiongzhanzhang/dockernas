@@ -50,8 +50,12 @@ export const getInstanceHttpPort = () => {
 }
 
 export const getWebTerminalWebsocket = (containerId, columns) => {
-    var ws = new WebSocket(
-        "ws://127.0.0.1:8081/terminal?containerid=" + containerId + "&columns=" + columns + "&token=" + storage.get("token")
-    );
+    var url=window.location.host+"/terminal?containerid=" + containerId + "&columns=" + columns + "&token=" + storage.get("token")
+    if(window.location.protocol=='http:'){
+        url="ws://"+url
+    }else{
+        url="wss://"+url
+    }
+    var ws = new WebSocket(url);
     return ws
 }

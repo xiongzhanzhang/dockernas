@@ -278,7 +278,7 @@ func Exec(container string, columns string) types.HijackedResponse {
 		AttachStdout: true,
 		AttachStderr: true,
 		Cmd:          []string{"/bin/bash"},
-		Env:          []string{"COLUMNS=" + columns},
+		Env:          []string{"COLUMNS=" + columns, "TERM=xterm-256color"},
 		Tty:          true,
 	})
 	if err != nil {

@@ -2,6 +2,7 @@ package service
 
 import (
 	"io"
+	"log"
 	"tinycloud/internal/backend/docker"
 
 	"github.com/gorilla/websocket"
@@ -16,11 +17,15 @@ func ProcessWebsocketConn(conn *websocket.Conn, containerId string, columns stri
 		hr.Conn.Write([]byte("exit\r"))
 	}()
 
+	log.Println("websocket attach " + containerId)
+
 	// 转发输入/输出至websocket
 	go func() {
 		wsWriterCopy(hr.Conn, conn)
 	}()
 	wsReaderCopy(conn, hr.Conn)
+
+	log.Println("websocket disattach " + containerId)
 }
 
 // 将终端的输出转发到前端
