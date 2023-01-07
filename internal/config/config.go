@@ -1,6 +1,8 @@
 package config
 
-import "tinycloud/internal/utils"
+import (
+	"tinycloud/internal/utils"
+)
 
 const configFilePath = "./config.json"
 
@@ -8,7 +10,9 @@ var configMap map[string]string = map[string]string{}
 
 func InitConfig() {
 	if utils.IsFileExist(configFilePath) {
-		utils.GetObjFromJsonFile(configFilePath, &configMap)
+		if utils.GetObjFromJsonFile(configFilePath, &configMap) == nil {
+			panic("read config file error")
+		}
 	} else {
 		SetConfig("user", "admin")
 		SetConfig("passwd", utils.GenPasswd())

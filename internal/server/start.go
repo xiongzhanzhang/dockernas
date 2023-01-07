@@ -2,6 +2,7 @@ package server
 
 import (
 	"strings"
+	"tinycloud/internal/config"
 	"tinycloud/internal/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,9 @@ func StartServer() {
 	router.StaticFile("/favicon.ico", "./frontend/dist/favicon.ico")
 	router.Static("/assets", "./frontend/dist/assets")
 	router.Static("/apps", "./apps")
+	if config.IsBasePathSet() {
+		router.Static("/extra/apps", config.GetExtraAppPath())
+	}
 	router.NoRoute(func(ctx *gin.Context) {
 		if strings.Index(ctx.Request.URL.Path, "/index/") == 0 {
 			ctx.Request.URL.Path = "/"

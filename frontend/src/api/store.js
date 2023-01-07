@@ -6,5 +6,8 @@ export const getApps = () => {
 
 
 export const getAppsByName = (name) => {
+    if(name.indexOf("/")>0){
+        return http.get("/api/extra/app/"+name)
+    }
     return http.get("/api/app/"+name)
 };

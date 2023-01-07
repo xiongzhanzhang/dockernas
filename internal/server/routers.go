@@ -14,6 +14,7 @@ func registerRoutes(router *gin.Engine) {
 	{
 		apiv1.GET("app", api.GetApps)
 		apiv1.GET("app/:name", api.GetAppByName)
+		apiv1.GET("extra/app/:dir/:name", api.GetExtraAppByName)
 
 		apiv1.POST("instance", api.PostInstance)
 		apiv1.GET("instance", api.GetInstance)

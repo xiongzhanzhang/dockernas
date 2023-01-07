@@ -3,25 +3,76 @@ package service
 import (
 	"io/ioutil"
 	"log"
+	"path/filepath"
 	"strings"
+	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/utils"
 )
 
 func GetApps() []models.App {
-	models.GetDb()
-	return getAppsFromPath("./apps")
+	apps := []models.App{}
+
+	dirs, err := ioutil.ReadDir("./apps")
+	if err != nil {
+		log.Println("list dir error", err)
+	} else {
+		for _, fi := range dirs {
+			if fi.IsDir() {
+				app := GetAppByName(fi.Name())
+				apps = append(apps, app)
+			}
+		}
+	}
+
+	dir1, err1 := ioutil.ReadDir(config.GetExtraAppPath())
+	if err1 != nil {
+		log.Println("list dir error", err1)
+	} else {
+		for _, fi1 := range dir1 {
+			if fi1.IsDir() {
+				dir2, err2 := ioutil.ReadDir(filepath.Join(config.GetExtraAppPath(), fi1.Name()))
+				if err2 != nil {
+					log.Println("list dir error", err2)
+				} else {
+					for _, fi2 := range dir2 {
+						if fi2.IsDir() {
+							app := GetAppByName(fi1.Name() + "/" + fi2.Name())
+							apps = append(apps, app)
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return apps
 }
 
 func GetAppByName(name string) models.App {
-	var path = "./apps"
-	var app models.App
-	app.Name = name
-	app.IconUrl = strings.Replace(path, "./", "/", 1) + "/" + name + "/icon.jpg"
-	utils.GetObjFromJsonFile(path+"/"+name+"/introduction.json", &app)
-	app.DockerVersions = getDockerTemplates(path + "/" + name + "/docker")
+	var app *models.App
+	if !strings.Contains(name, "/") {
+		app = GetAppByNameAndPath(name, "./apps", "/apps")
+	} else {
+		app = GetAppByNameAndPath(name, config.GetExtraAppPath(), "/extra/apps")
+	}
 
-	return app
+	if app == nil {
+		panic("can't get app " + name)
+	}
+	return *app
+}
+
+func GetAppByNameAndPath(name string, path string, urlPrefix string) *models.App {
+	var app models.App
+	app.IconUrl = urlPrefix + "/" + name + "/icon.jpg"
+	app.DockerVersions = getDockerTemplates(path + "/" + name + "/docker")
+	if utils.GetObjFromJsonFile(path+"/"+name+"/introduction.json", &app) == nil {
+		return nil
+	}
+	app.Name = name
+
+	return &app
 }
 
 func getAppsFromPath(path string) []models.App {

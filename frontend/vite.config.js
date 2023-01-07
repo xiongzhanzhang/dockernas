@@ -21,6 +21,7 @@ export default defineConfig({
         changeOrigin: true
       },
       '/apps':'http://localhost:8080',
+      '/extra/apps':'http://localhost:8080',
       '/terminal': {
         target: 'http://localhost:8080',
         ws: true,

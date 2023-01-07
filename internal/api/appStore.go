@@ -18,3 +18,10 @@ func GetAppByName(c *gin.Context) {
 	app := service.GetAppByName(name)
 	c.JSON(200, app)
 }
+
+func GetExtraAppByName(c *gin.Context) {
+	name := c.Param("name")
+	dir := c.Param("dir")
+	app := service.GetAppByName(dir + "/" + name)
+	c.JSON(200, app)
+}
