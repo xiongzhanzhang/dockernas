@@ -39,6 +39,11 @@ const router = createRouter({
               path: 'network',
               name: 'network',
               component: () => import('../components/setting/network.vue')
+            },
+            {
+              path: 'subscribe',
+              name: 'subscribe',
+              component: () => import('../components/setting/subscribe.vue')
             }
           ]
         },

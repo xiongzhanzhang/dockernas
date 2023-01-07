@@ -48,7 +48,6 @@
         <el-button
           type="primary"
           style="height: 40px; width: 250px; margin-right: 100px"
-          :loading="restartGatewayLoading"
           @click="tryRestartHttpGateway"
           >重启HTTP网关</el-button
         >

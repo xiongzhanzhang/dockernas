@@ -48,6 +48,13 @@ func GetDBFilePath() string {
 	return filepath.Join(basePath, "data.db3")
 }
 
+func GetExtraAppPath() string {
+	basePath := GetBasePath()
+	basePath = filepath.Join(basePath, "apps")
+	utils.CheckCreateDir(basePath)
+	return basePath
+}
+
 func GetAppLocalPath(instanceName string) string {
 	basePath := GetBasePath()
 	basePath = filepath.Join(basePath, "local", instanceName)

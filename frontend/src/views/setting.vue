@@ -20,6 +20,9 @@
             <el-menu-item index="/index/setting/network"
               ><div class="menu-item">网络</div></el-menu-item
             >
+            <el-menu-item index="/index/setting/subscribe"
+              ><div class="menu-item">订阅</div></el-menu-item
+            >
           </el-menu>
         </div>
       </el-aside>
