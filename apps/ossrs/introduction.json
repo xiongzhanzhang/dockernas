@@ -1,0 +1,7 @@
+{
+  "name": "ossrs",
+  "category": [
+    "直播"
+  ],
+  "summary": "SRS是一个简单高效的实时视频服务器，支持RTMP/WebRTC/HLS/HTTP-FLV/SRT/GB28181"
+}

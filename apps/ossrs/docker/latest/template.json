@@ -1,0 +1,33 @@
+{
+    "imageUrl":"ossrs/srs:latest",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"8080",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        },
+        {
+            "prompt":"服务端口1",
+            "key":"1935",
+            "value":"1935",
+            "reg":"",
+            "protocol":"tcp"
+        },
+        {
+            "prompt":"服务端口2",
+            "key":"1985",
+            "value":"1985",
+            "reg":"",
+            "protocol":"tcp"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}
+

@@ -1,0 +1,7 @@
+{
+  "name": "syncthing",
+  "category": [
+    "文件","下载"
+  ],
+  "summary": "Syncthing是一个开源免费的文件夹/文件同步神器，支持Android、Linux、Windows、Mac OS X等系统，可以使我们在2台任何系统任何设备之间，实现文件实时同步"
+}
