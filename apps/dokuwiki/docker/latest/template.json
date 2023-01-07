@@ -1,0 +1,38 @@
+{
+    "imageUrl":"bitnami/dokuwiki",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"8080",
+            "value":"8080",
+            "reg":"",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[      
+        {
+            "prompt":"用户",
+            "key":"DOKUWIKI_USERNAME",
+            "value":"host.docker.internal:3306",
+            "reg":""
+        },
+        {
+            "prompt":"密码",
+            "key":"DOKUWIKI_PASSWORD",
+            "value":"",
+            "reg":""
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/bitnami/dokuwiki",
+            "value":"",
+            "reg":"",
+            "name":"data"
+        }
+    ]
+}
+
