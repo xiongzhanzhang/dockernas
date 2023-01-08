@@ -1,0 +1,7 @@
+{
+  "name": "aliyunpan-sync",
+  "category": [
+    "NAS","文件"
+  ],
+  "summary": "阿里云盘同步备份功能。https://github.com/tickstep/aliyunpan"
+}
