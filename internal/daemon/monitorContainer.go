@@ -45,6 +45,21 @@ func monitorContainer() {
 		statsBySpeed = append(statsBySpeed, newStat)
 	}
 
+	instances := models.GetInstance()
+	for _, instance := range instances {
+		if _, ok := newStatMap[instance.ContainerID]; !ok {
+			if instance.State == models.RUNNING {
+				instance.State = models.STOPPED
+				models.UpdateInstance(&instance)
+			}
+		} else {
+			if instance.State == models.STOPPED {
+				instance.State = models.RUNNING
+				models.UpdateInstance(&instance)
+			}
+		}
+	}
+
 	historyStatMap = newStatMap
 	models.AddContainerStat(statsBySpeed)
 	models.DelStatDataByTime(time.Now().UnixMilli() - 7*24*60*60*1000)
