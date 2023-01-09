@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"strconv"
+	"tinycloud/internal/config"
 	"tinycloud/internal/models"
 	"tinycloud/internal/service"
 
@@ -13,7 +14,9 @@ import (
 func PostInstance(c *gin.Context) {
 	var param models.InstanceParam
 	c.BindJSON(&param)
-
+	if config.IsInstanceNameConflict(param.Name) {
+		panic(param.Name + " is internal used")
+	}
 	service.CreateInstance(param, false)
 
 	c.JSON(200, gin.H{

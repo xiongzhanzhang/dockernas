@@ -9,10 +9,6 @@ func SetDomain(domain string) {
 	SaveConfig()
 }
 
-func GetGateWayInstanceName() string {
-	return "http_gateway"
-}
-
 func GetIsHttpsEnabled() bool {
 	return GetConfig("https", "") == "true"
 }
