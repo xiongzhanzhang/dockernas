@@ -152,18 +152,6 @@ func replaceVariable(aStr string, param *models.InstanceParam) string {
 
 func buildConfig(param *models.InstanceParam) (container.Config, container.HostConfig) {
 	m := make([]mount.Mount, 0, len(param.DfsVolume)+len(param.LocalVolume))
-	for _, item := range param.DfsVolume {
-		if item.Value == "" {
-			continue
-		}
-		dfsPath := config.GetFullDfsPath(item.Value)
-		utils.CheckCreateDir(dfsPath)
-		m = append(m, mount.Mount{
-			Type:   mount.TypeBind,
-			Source: dfsPath,
-			Target: item.Key,
-		})
-	}
 
 	var usedVolumeName []string
 	for index, item := range param.LocalVolume {
@@ -194,6 +182,30 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
 				Source: localDir,
+				Target: item.Key,
+			})
+		}
+	}
+
+	for _, item := range param.DfsVolume {
+		//mount a local dir if dfs dir is empty, let user decide whether or not delete data when delete instance
+		if item.Value == "" {
+			if item.Name == "" || utils.Contains(usedVolumeName, item.Name) {
+				panic("local volume name error:" + item.Name)
+			}
+			usedVolumeName = append(usedVolumeName, item.Name)
+			localDir := config.GetLocalVolumePath(param.Name, item.Name)
+			m = append(m, mount.Mount{
+				Type:   mount.TypeBind,
+				Source: localDir,
+				Target: item.Key,
+			})
+		} else {
+			dfsPath := config.GetFullDfsPath(item.Value)
+			utils.CheckCreateDir(dfsPath)
+			m = append(m, mount.Mount{
+				Type:   mount.TypeBind,
+				Source: dfsPath,
 				Target: item.Key,
 			})
 		}
