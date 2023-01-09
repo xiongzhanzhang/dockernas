@@ -9,6 +9,7 @@ import (
 
 type NetworkInfo struct {
 	IP                 string `json:"ip"`
+	IPv6               string `json:"ipv6"`
 	Domain             string `json:"domain"`
 	HttpGatewayEnable  bool   `json:"httpGatewayEnable"`
 	HttpGatewayLoading bool   `json:"httpGatewayLoading"`

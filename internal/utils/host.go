@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"log"
 	"net"
 	"time"
 
@@ -56,7 +57,7 @@ func IsPortUsed(protocol string, port string) bool {
 	if protocol != "udp" {
 		protocol = "tcp"
 	}
-	conn, err := net.DialTimeout(protocol, net.JoinHostPort("localhost", port), time.Second)
+	conn, err := net.DialTimeout(protocol, net.JoinHostPort("localhost", port), time.Millisecond*200)
 	if conn != nil {
 		conn.Close()
 	}
@@ -64,4 +65,26 @@ func IsPortUsed(protocol string, port string) bool {
 		return true
 	}
 	return false
+}
+
+func GetLocalAddress() string {
+	con, error := net.Dial("udp", "8.8.8.8:80")
+	if error != nil {
+		log.Println(error)
+		return ""
+	}
+	defer con.Close()
+	localAddress := con.LocalAddr().(*net.UDPAddr)
+	return localAddress.IP.String()
+}
+
+func GetLocalAddressIpv6() string {
+	con, error := net.Dial("udp", "[2001:4860:4860::8888]:80")
+	if error != nil {
+		log.Println(error)
+		return ""
+	}
+	defer con.Close()
+	localAddress := con.LocalAddr().(*net.UDPAddr)
+	return localAddress.IP.String()
 }

@@ -36,6 +36,8 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.GET("host", api.GetHostInfo)
 		apiv1.GET("storage", api.GetStorageInfo)
 		apiv1.GET("network", api.GetNetworkInfo)
+		apiv1.GET("network/ipv4", api.GetHostIpv4)
+		apiv1.GET("network/ipv6", api.GetHostIpv6)
 		apiv1.GET("httpproxyconfig", api.GetHttpProxyConfig)
 		apiv1.POST("httpproxyconfig", api.CreateHttpProxyConfig)
 		apiv1.DELETE("httpproxyconfig/:hostname", api.DelHttpProxyConfig)

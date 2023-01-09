@@ -3,6 +3,7 @@ package api
 import (
 	"tinycloud/internal/models"
 	"tinycloud/internal/service"
+	"tinycloud/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -76,7 +77,7 @@ func PatchHttpGateway(c *gin.Context) {
 	op, _ := patchMap["op"]
 	if op == "restart" {
 		service.RestartHttpGateway()
-	} else if op=="stop"{
+	} else if op == "stop" {
 		service.StopHttpGateway()
 	} else {
 		panic("unkown patch request")
@@ -114,4 +115,12 @@ func SetCaFileDir(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"state": "ok",
 	})
+}
+
+func GetHostIpv4(c *gin.Context) {
+	c.String(200, utils.GetLocalAddress())
+}
+
+func GetHostIpv6(c *gin.Context) {
+	c.String(200, utils.GetLocalAddressIpv6())
 }

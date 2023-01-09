@@ -3,7 +3,6 @@ package service
 import (
 	"encoding/json"
 	"log"
-	"net"
 	"strings"
 	"time"
 	"tinycloud/internal/config"
@@ -15,7 +14,8 @@ func GetNetworkInfo() models.NetworkInfo {
 	gateway := getGatewayInstance()
 
 	var networkInfo models.NetworkInfo
-	networkInfo.IP = getLocalAddress()
+	networkInfo.IP = utils.GetLocalAddress()
+	networkInfo.IPv6 = utils.GetLocalAddressIpv6()
 	networkInfo.Domain = config.GetDomain()
 
 	networkInfo.HttpsEnable = config.GetIsHttpsEnabled()
@@ -28,18 +28,6 @@ func GetNetworkInfo() models.NetworkInfo {
 	}
 
 	return networkInfo
-}
-
-func getLocalAddress() string {
-	con, error := net.Dial("udp", "8.8.8.8:80")
-	if error != nil {
-		log.Fatal(error)
-	}
-	defer con.Close()
-
-	localAddress := con.LocalAddr().(*net.UDPAddr)
-
-	return localAddress.IP.String()
 }
 
 func GetInstanceHttpPorts() []models.InstanceHttpPorts {

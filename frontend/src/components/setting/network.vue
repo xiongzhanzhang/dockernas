@@ -2,8 +2,12 @@
   <div>
     <div class="card">
       <div class="input_div">
-        <div class="first_input">IP地址</div>
+        <div class="first_input">IPv4地址</div>
         <div>{{ networkData.ip }}</div>
+      </div>
+      <div class="input_div">
+        <div class="first_input">IPv6地址</div>
+        <div>{{ networkData.ipv6 }}</div>
       </div>
       <div class="input_div">
         <div class="first_input">域名</div>
