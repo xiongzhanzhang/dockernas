@@ -1,0 +1,7 @@
+{
+  "name": "ddns",
+  "category": [
+    "网络"
+  ],
+  "summary": "自动更新域名解析到本机IP(支持dnspod,阿里DNS,CloudFlare,华为云,DNSCOM...). https://github.com/NewFuture/DDNS"
+}
