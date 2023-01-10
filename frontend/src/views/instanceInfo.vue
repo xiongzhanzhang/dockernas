@@ -34,7 +34,7 @@
           </el-menu>
         </div>
       </el-aside>
-      <el-main class="card" style="min-height: 100px">
+      <el-main class="card" style="min-height: 100px;padding: 5px; margin: 6px">
         <RouterView  v-slot="{ Component }">
           <keep-alive>
             <component  ref="view" :is="Component"/>
