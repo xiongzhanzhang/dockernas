@@ -16,12 +16,18 @@ func GetApps(c *gin.Context) {
 func GetAppByName(c *gin.Context) {
 	name := c.Param("name")
 	app := service.GetAppByName(name)
-	c.JSON(200, app)
+	if app == nil {
+		panic("cant get app " + name)
+	}
+	c.JSON(200, *app)
 }
 
 func GetExtraAppByName(c *gin.Context) {
 	name := c.Param("name")
 	dir := c.Param("dir")
 	app := service.GetAppByName(dir + "/" + name)
-	c.JSON(200, app)
+	if app == nil {
+		panic("cant get app " + name)
+	}
+	c.JSON(200, *app)
 }

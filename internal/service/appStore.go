@@ -20,7 +20,9 @@ func GetApps() []models.App {
 		for _, fi := range dirs {
 			if fi.IsDir() {
 				app := GetAppByName(fi.Name())
-				apps = append(apps, app)
+				if app != nil {
+					apps = append(apps, *app)
+				}
 			}
 		}
 	}
@@ -38,7 +40,9 @@ func GetApps() []models.App {
 					for _, fi2 := range dir2 {
 						if fi2.IsDir() {
 							app := GetAppByName(fi1.Name() + "/" + fi2.Name())
-							apps = append(apps, app)
+							if app != nil {
+								apps = append(apps, *app)
+							}
 						}
 					}
 				}
@@ -49,7 +53,7 @@ func GetApps() []models.App {
 	return apps
 }
 
-func GetAppByName(name string) models.App {
+func GetAppByName(name string) *models.App {
 	var app *models.App
 	if !strings.Contains(name, "/") {
 		app = GetAppByNameAndPath(name, "./apps", "/apps")
@@ -58,39 +62,24 @@ func GetAppByName(name string) models.App {
 	}
 
 	if app == nil {
-		panic("can't get app " + name)
+		return nil
 	}
-	return *app
+	return app
 }
 
 func GetAppByNameAndPath(name string, path string, urlPrefix string) *models.App {
 	var app models.App
 	app.IconUrl = urlPrefix + "/" + name + "/icon.jpg"
 	app.DockerVersions = getDockerTemplates(path + "/" + name + "/docker")
+	if len(app.DockerVersions) == 0 {
+		return nil
+	}
 	if utils.GetObjFromJsonFile(path+"/"+name+"/introduction.json", &app) == nil {
 		return nil
 	}
 	app.Name = name
 
 	return &app
-}
-
-func getAppsFromPath(path string) []models.App {
-	dirs, err := ioutil.ReadDir(path)
-	if err != nil {
-		log.Println("list dir error", err)
-		return nil
-	}
-
-	apps := []models.App{}
-	for _, fi := range dirs {
-		if fi.IsDir() {
-			app := GetAppByName(fi.Name())
-			apps = append(apps, app)
-		}
-	}
-
-	return apps
 }
 
 func getDockerTemplates(path string) []models.DockerTemplate {
@@ -107,6 +96,10 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 			var dockerTemplate models.DockerTemplate
 			dockerTemplate.Version = fi.Name()
 			if utils.GetObjFromJsonFile(path+"/"+fi.Name()+"/template.json", &dockerTemplate) != nil {
+				if dockerTemplate.OSList != "" &&
+					strings.Contains(dockerTemplate.OSList, utils.GetOperationSystemName()) == false {
+					continue
+				}
 				dockerTemplates = append(dockerTemplates, dockerTemplate)
 			}
 		}

@@ -22,6 +22,7 @@ type DockerTemplate struct {
 	OtherParams []ParamItem `json:"otherParams"`
 	Privileged  bool        `json:"privileged"`
 	Cmd         string      `json:"cmd"`
+	OSList      string      `json:"osList"`
 }
 
 type InstanceParam struct {

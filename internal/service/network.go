@@ -98,6 +98,10 @@ func EnableHttpGateway() {
 	gateWayInstance := models.GetInstanceByName(config.GetGateWayInstanceName())
 	if gateWayInstance == nil {
 		app := GetAppByName("nginx")
+		if app == nil {
+			panic("cant get gateway app nginx")
+		}
+
 		var param models.InstanceParam
 		param.Name = config.GetGateWayInstanceName()
 		param.Summary = "http gateway"

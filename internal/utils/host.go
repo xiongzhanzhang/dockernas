@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"net"
+	"runtime"
 	"time"
 
 	"github.com/shirou/gopsutil/cpu"
@@ -10,6 +11,10 @@ import (
 	"github.com/shirou/gopsutil/mem"
 	net2 "github.com/shirou/gopsutil/net"
 )
+
+func GetOperationSystemName()string{
+	return runtime.GOOS
+}
 
 func GetHostMemUsed() float64 {
 	memData, err := mem.VirtualMemory()
