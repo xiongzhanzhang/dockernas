@@ -106,6 +106,48 @@ func PullImage(imageUrl string) io.ReadCloser {
 	return reader
 }
 
+func DelImage(imageId string) {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	_, err2 := cli.ImageRemove(ctx, imageId, types.ImageRemoveOptions{})
+	if err2 != nil {
+		panic(err2)
+	}
+}
+
+func ListImage() []models.ImageInfo {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	images, err2 := cli.ImageList(ctx, types.ImageListOptions{All: true})
+	if err2 != nil {
+		panic(err2)
+	}
+
+	var infos []models.ImageInfo
+	for _, v := range images {
+		for _, tag := range v.RepoTags {
+			infos = append(infos, models.ImageInfo{
+				Id:    v.ID,
+				Name:  tag,
+				Size:  v.Size,
+				State: "100%",
+			})
+		}
+	}
+
+	return infos
+}
+
 func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)
 

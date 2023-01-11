@@ -3,11 +3,9 @@ package models
 import (
 	"log"
 	"sync"
-	"time"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
 	"tinycloud/internal/config"
@@ -26,18 +24,18 @@ func GetDb() *gorm.DB {
 
 	dbFilePath := config.GetDBFilePath()
 
-	newLogger := logger.New(
-		log.New(log.Writer(), "\n", 0),
-		logger.Config{
-			SlowThreshold:             time.Second,
-			LogLevel:                  logger.Info,
-			IgnoreRecordNotFoundError: true,
-			Colorful:                  false,
-		},
-	)
+	// newLogger := logger.New(
+	// 	log.New(log.Writer(), "\n", 0),
+	// 	logger.Config{
+	// 		SlowThreshold:             time.Second,
+	// 		LogLevel:                  logger.Info,
+	// 		IgnoreRecordNotFoundError: true,
+	// 		Colorful:                  false,
+	// 	},
+	// )
 
 	_db, err := gorm.Open(sqlite.Open(dbFilePath), &gorm.Config{
-		Logger:         newLogger,
+		// Logger:         newLogger,
 		NamingStrategy: schema.NamingStrategy{TablePrefix: "t_", SingularTable: true},
 	})
 	if err != nil || _db == nil {

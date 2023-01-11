@@ -44,6 +44,11 @@ const router = createRouter({
               path: 'subscribe',
               name: 'subscribe',
               component: () => import('../components/setting/subscribe.vue')
+            },
+            {
+              path: 'image',
+              name: 'image',
+              component: () => import('../components/setting/image.vue')
             }
           ]
         },

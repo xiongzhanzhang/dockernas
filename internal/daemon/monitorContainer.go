@@ -1,7 +1,6 @@
 package daemon
 
 import (
-	"log"
 	"time"
 	"tinycloud/internal/backend/docker"
 	"tinycloud/internal/config"
@@ -41,7 +40,7 @@ func monitorContainer() {
 			continue
 		}
 
-		log.Println(newStat)
+		// log.Println(newStat)
 		statsBySpeed = append(statsBySpeed, newStat)
 	}
 

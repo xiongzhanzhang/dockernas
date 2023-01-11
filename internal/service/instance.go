@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"runtime/debug"
 	"strconv"
 	"time"
 	"tinycloud/internal/backend/docker"
@@ -87,6 +88,7 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 				err := recover()
 				if err != nil {
 					log.Println("create instance:", err)
+					log.Panicln(string(debug.Stack()))
 				}
 				reader.Close()
 			}()
@@ -95,9 +97,10 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 			scanner := bufio.NewScanner(reader)
 			for scanner.Scan() {
 				line := scanner.Text()
-				log.Println(line)
+				ProcessImagePullMsg(param.ImageUrl, line)
 				if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
 					log.Println("pull image " + param.ImageUrl + " time out")
+					ReportImagePullTimeout(param.ImageUrl)
 					instance.State = models.PULL_ERROR
 					models.UpdateInstance(&instance)
 					return

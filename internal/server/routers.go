@@ -16,6 +16,9 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.GET("app/:name", api.GetAppByName)
 		apiv1.GET("extra/app/:dir/:name", api.GetExtraAppByName)
 
+		apiv1.GET("image", api.GetImages)
+		apiv1.DELETE("image", api.DelImage)
+
 		apiv1.POST("instance", api.PostInstance)
 		apiv1.GET("instance", api.GetInstance)
 		apiv1.GET("instance/:name", api.GetInstanceByName)

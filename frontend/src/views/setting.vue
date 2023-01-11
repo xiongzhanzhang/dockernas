@@ -23,6 +23,9 @@
             <el-menu-item index="/index/setting/subscribe"
               ><div class="menu-item">订阅</div></el-menu-item
             >
+            <el-menu-item index="/index/setting/image"
+              ><div class="menu-item">镜像</div></el-menu-item
+            >
           </el-menu>
         </div>
       </el-aside>
