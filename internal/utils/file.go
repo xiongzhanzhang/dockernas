@@ -20,6 +20,16 @@ func CheckCreateDir(path string) {
 	}
 }
 
+func GetFileModTimestamp(filePath string) (int64, error) {
+	fileInfo, err := os.Stat(filePath)
+	if err != nil {
+		log.Println(err)
+		return 0, err
+	}
+	modTime := fileInfo.ModTime()
+	return modTime.UnixMilli(), nil
+}
+
 func IsFileExist(path string) bool {
 	_, err := os.Stat(path)
 	if err != nil {

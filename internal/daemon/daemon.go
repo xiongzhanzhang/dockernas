@@ -25,5 +25,6 @@ func runTaskEveryMinute(aFun func()) {
 
 func StartBackgroundTask() {
 	go runTaskEveryMinute(monitorContainer)
+	go runTaskEveryMinute(MonitorCaFile)
 	// time.Sleep(1000000 * time.Second)
 }
