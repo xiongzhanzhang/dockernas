@@ -14,7 +14,8 @@
             "prompt":"DNSPod Key",
             "key":"DP_Key",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

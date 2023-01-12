@@ -13,7 +13,8 @@
             "prompt":"token",
             "key":"ALIYUNPAN_REFRESH_TOKEN",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"云盘目录",

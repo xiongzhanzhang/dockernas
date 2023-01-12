@@ -2,7 +2,7 @@
   <el-dialog
     v-model="dialogTableVisible"
     :title="title"
-    style="min-height: 500px"
+    style="min-height: 500px; min-width: 700px"
   >
     <div class="center_div">
       <div>
@@ -115,10 +115,12 @@
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
+              :type='param.passwd==true?"password":"text"'
               v-model="param.value"
               class="w-50 m-2"
               style="width: 400px"
               size="large"
+              :show-password="param.passwd"
             ></el-input>
           </div>
         </div>

@@ -49,7 +49,8 @@
             "key":"USER_PASSWD_PLACEHOLDER",
             "value":"",
             "reg":"",
-            "otherType":"placeholder"
+            "otherType":"placeholder",
+            "passwd":true
         },
         {
             "prompt":"挂载目录名称",

@@ -10,6 +10,7 @@ type ParamItem struct {
 	Protocol  string `json:"protocol"`  // network protocol, used by port param
 	MountFile bool   `json:"mountFile"` // mount file to container
 	OtherType string `json:"otherType"` // other param type
+	Passwd    bool   `json:"passwd"`    // is a password config
 }
 
 type DockerTemplate struct {

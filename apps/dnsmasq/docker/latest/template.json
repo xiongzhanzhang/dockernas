@@ -27,7 +27,8 @@
             "prompt":"web用户密码",
             "key":"HTTP_PASS",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

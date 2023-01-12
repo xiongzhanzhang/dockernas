@@ -20,7 +20,8 @@
             "prompt":"密码",
             "key":"HTTP_PASSWORD",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"分辨率",

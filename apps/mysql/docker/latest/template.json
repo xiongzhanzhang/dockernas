@@ -20,7 +20,8 @@
             "prompt":"用户密码",
             "key":"MYSQL_PASSWORD",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"库名",

@@ -14,7 +14,8 @@
             "prompt":"密码",
             "key":"VNC_PW",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

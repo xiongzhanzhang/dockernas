@@ -14,7 +14,8 @@
             "prompt":"Admin密码",
             "key":"PHOTOPRISM_ADMIN_PASSWORD",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

@@ -45,7 +45,7 @@
       <div
         class="input_div"
         v-for="param in instanceParam.envParams"
-        v-show="param.hide == false"
+        v-show="param.hide == false && param.passwd != true"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
@@ -55,7 +55,7 @@
       <div
         class="input_div"
         v-for="param in instanceParam.otherParams"
-        v-show="param.hide == false"
+        v-show="param.hide == false && param.passwd != true"
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
@@ -86,7 +86,6 @@
       <el-button
         type="primary"
         style="height: 40px; width: 200px"
-        :disabled="instance.state == 3"
         @click="edit"
         >配置</el-button
       >

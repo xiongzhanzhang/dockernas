@@ -19,7 +19,8 @@
             "prompt":"api授权token",
             "key":"DDNS_TOKEN",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"ipv4域名列表",

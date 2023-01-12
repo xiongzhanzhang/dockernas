@@ -39,7 +39,8 @@
             "prompt":"mysql用户密码",
             "key":"DB_PASS",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"mysql库名",

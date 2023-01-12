@@ -14,7 +14,8 @@
             "prompt":"密码",
             "key":"PASSWORD",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

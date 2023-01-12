@@ -14,7 +14,8 @@
             "prompt":"Cloudflare Key",
             "key":"CF_Key",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         }
     ],
     "localVolume":[

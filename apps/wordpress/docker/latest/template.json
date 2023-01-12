@@ -26,7 +26,8 @@
             "prompt":"mysql用户密码",
             "key":"WORDPRESS_DB_PASSWORD",
             "value":"",
-            "reg":""
+            "reg":"",
+            "passwd":true
         },
         {
             "prompt":"mysql库名",
