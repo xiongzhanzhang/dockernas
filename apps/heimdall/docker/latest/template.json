@@ -5,7 +5,6 @@
             "prompt":"服务器端口",
             "key":"80",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -16,7 +15,6 @@
             "prompt":"config数据目录",
             "key":"/config",
             "value":"",
-            "reg":"",
             "name":"config"
         }
     ],

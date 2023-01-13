@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"8080",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -18,7 +17,6 @@
             "prompt":"保存目录",
             "key":"/srv/bililive",
             "value":"",
-            "reg":"",
             "name":"bililive"
         }
     ]

@@ -7,14 +7,12 @@
         {
             "prompt":"DNSPod ID",
             "key":"DP_Id",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"DNSPod Key",
             "key":"DP_Key",
             "value":"",
-            "reg":"",
             "passwd":true
         }
     ],
@@ -25,7 +23,6 @@
             "prompt":"证书保存目录",
             "key":"/acme.sh",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ]

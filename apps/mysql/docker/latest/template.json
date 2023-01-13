@@ -5,7 +5,6 @@
             "prompt":"数据库端口",
             "key":"3306",
             "value":"3306",
-            "reg":"",
             "protocol":"tcp"
         }
     ],
@@ -13,27 +12,23 @@
         {
             "prompt":"用户名",
             "key":"MYSQL_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"用户密码",
             "key":"MYSQL_PASSWORD",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"库名",
             "key":"MYSQL_DATABASE",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"随机root密码",
             "key":"MYSQL_RANDOM_ROOT_PASSWORD",
             "value":"yes",
-            "reg":"",
             "hide":true
         }
     ],
@@ -42,7 +37,6 @@
             "prompt":"数据库数据目录",
             "key":"/var/lib/mysql",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],

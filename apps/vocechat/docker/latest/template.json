@@ -6,7 +6,6 @@
             "prompt":"服务器端口",
             "key":"3000",
             "value":"3000",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -17,7 +16,6 @@
             "prompt":"数据目录",
             "key":"/home/vocechat-server/data",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],
@@ -28,7 +26,6 @@
             "prompt":"域名",
             "key":"DOMAIN_PLACEHOLDER",
             "value":"https://vocechat.yourdomain.com",
-            "reg":"",
             "otherType":"placeholder"
         }
     ]

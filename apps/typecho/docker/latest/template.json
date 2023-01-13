@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"80",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -16,7 +15,6 @@
             "prompt":"数据目录",
             "key":"/app/usr",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],

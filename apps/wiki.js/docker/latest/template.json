@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"3000",
             "value":"3000",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -14,39 +13,33 @@
             "prompt":"DB_TYPE",
             "key":"DB_TYPE",
             "value":"mysql",
-            "reg":"",
             "hide":true
         },        
         {
             "prompt":"mysql地址",
             "key":"DB_HOST",
-            "value":"host.docker.internal",
-            "reg":""
+            "value":"host.docker.internal"
         },
         {
             "prompt":"mysql端口",
             "key":"DB_PORT",
-            "value":"3306",
-            "reg":""
+            "value":"3306"
         },
         {
             "prompt":"mysql用户",
             "key":"DB_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"mysql用户密码",
             "key":"DB_PASS",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"mysql库名",
             "key":"DB_NAME",
-            "value":"",
-            "reg":""
+            "value":""
         }
     ],
     "localVolume":[

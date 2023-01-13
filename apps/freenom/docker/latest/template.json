@@ -9,14 +9,12 @@
             "prompt":"config数据目录",
             "key":"/conf",
             "value":"",
-            "reg":"",
             "name":"config"
         },
         {
             "prompt":"日志目录",
             "key":"/app/logs",
             "value":"",
-            "reg":"",
             "name":"logs"
         }
     ],

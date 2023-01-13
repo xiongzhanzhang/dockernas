@@ -6,50 +6,42 @@
         {
             "prompt":"用户名",
             "key":"FRP_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"token",
             "key":"FRP_TOEKN",
-            "value":"SakuraFrpClientToken",
-            "reg":""
+            "value":"SakuraFrpClientToken"
         },
         {
             "prompt":"协议",
             "key":"FRP_PROTOCOL",
-            "value":"tcp",
-            "reg":""
+            "value":"tcp"
         },
         {
             "prompt":"服务器地址",
             "key":"FRP_SERVER_ADDR",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"服务器端口",
             "key":"FRP_SERVER_PORT",
-            "value":"7000",
-            "reg":""
+            "value":"7000"
         },
         {
             "prompt":"本地端口",
             "key":"FRP_LOCAL_PORT",
-            "value":"443",
-            "reg":""
+            "value":"443"
         },
         {
             "prompt":"远程访问端口",
             "key":"FRP_REMOTE_PORT",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"隧道名",
             "key":"FRP_SERVER_CHANEL",
-            "value":"",
-            "reg":""
+            "value":""
         }
     ],
     "localVolume":[
@@ -57,7 +49,6 @@
             "prompt":"配置文件",
             "key":"/etc/frp/frpc.ini",
             "value":"",
-            "reg":"",
             "name":"frpc.ini",
             "mountFile":true
         }

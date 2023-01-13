@@ -6,33 +6,28 @@
         {
             "prompt":"时区",
             "key":"TZ",
-            "value":"Asia/Shanghai",
-            "reg":""
+            "value":"Asia/Shanghai"
         },
         {
             "prompt":"token",
             "key":"ALIYUNPAN_REFRESH_TOKEN",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"云盘目录",
             "key":"ALIYUNPAN_PAN_DIR",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"备份模式",
             "key":"ALIYUNPAN_SYNC_MODE",
-            "value":"upload",
-            "reg":""
+            "value":"upload"
         },
         {
             "prompt":"任务步骤",
             "key":"ALIYUNPAN_TASK_STEP",
-            "value":"sync",
-            "reg":""
+            "value":"sync"
         }
     ],
     "localVolume":[
@@ -42,7 +37,6 @@
             "prompt":"同步目录",
             "key":"/home/app/data",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ]

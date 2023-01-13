@@ -5,14 +5,12 @@
             "prompt":"web访问端口",
             "key":"8384",
             "value":"8384",
-            "reg":"",
             "protocol":"http"
         },
         {
             "prompt":"服务端口",
             "key":"22000",
             "value":"22000",
-            "reg":"",
             "protocol":"tcp"
         }
     ],
@@ -25,7 +23,6 @@
             "prompt":"同步目录",
             "key":"/var/syncthing",
             "value":"",
-            "reg":"",
             "name":"syncthing"
         }
     ]

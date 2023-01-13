@@ -6,7 +6,6 @@
             "prompt":"web访问端口",
             "key":"2345",
             "value":"2345",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -17,7 +16,6 @@
             "prompt":"配置文件位置",
             "key":"/xunlei/data",
             "value":"",
-            "reg":"",
             "name":"config"
         }
     ],
@@ -26,7 +24,6 @@
             "prompt":"下载文件位置",
             "key":"/xunlei/downloads",
             "value":"",
-            "reg":"",
             "name":"downloads"
         }
     ]

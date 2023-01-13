@@ -5,14 +5,12 @@
             "prompt":"web访问端口",
             "key":"8080",
             "value":"5380",
-            "reg":"",
             "protocol":"http"
         },
         {
             "prompt":"DNS服务器端口",
             "key":"53",
             "value":"53",
-            "reg":"",
             "protocol":"udp"
         }
     ],
@@ -20,14 +18,12 @@
         {
             "prompt":"web用户名",
             "key":"HTTP_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"web用户密码",
             "key":"HTTP_PASS",
             "value":"",
-            "reg":"",
             "passwd":true
         }
     ],
@@ -36,7 +32,6 @@
             "prompt":"配置文件",
             "key":"/etc/dnsmasq.conf",
             "value":"",
-            "reg":"",
             "name":"dnsmasq.conf",
             "mountFile":true
         }

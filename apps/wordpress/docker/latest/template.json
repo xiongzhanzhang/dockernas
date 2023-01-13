@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"80",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -13,27 +12,23 @@
         {
             "prompt":"mysql地址",
             "key":"WORDPRESS_DB_HOST",
-            "value":"host.docker.internal:3306",
-            "reg":""
+            "value":"host.docker.internal:3306"
         },
         {
             "prompt":"mysql用户",
             "key":"WORDPRESS_DB_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"mysql用户密码",
             "key":"WORDPRESS_DB_PASSWORD",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"mysql库名",
             "key":"WORDPRESS_DB_NAME",
-            "value":"",
-            "reg":""
+            "value":""
         }
     ],
     "localVolume":[
@@ -41,7 +36,6 @@
             "prompt":"数据目录",
             "key":"/var/www/html",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],

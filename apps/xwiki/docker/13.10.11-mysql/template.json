@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"8080",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -14,26 +13,22 @@
             "prompt":"mysql地址",
             "key":"DB_HOST",
             "value":"host.docker.internal:3306",
-            "reg":""
         },
         {
             "prompt":"mysql用户",
             "key":"DB_USER",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"mysql用户密码",
             "key":"DB_PASSWORD",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"mysql库名",
             "key":"DB_DATABASE",
-            "value":"",
-            "reg":""
+            "value":""
         }
     ],
     "localVolume":[
@@ -41,7 +36,6 @@
             "prompt":"数据目录",
             "key":"/usr/local/xwiki",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],

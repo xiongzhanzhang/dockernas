@@ -5,7 +5,6 @@
             "prompt":"服务器端口",
             "key":"2342",
             "value":"2342",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -14,7 +13,6 @@
             "prompt":"Admin密码",
             "key":"PHOTOPRISM_ADMIN_PASSWORD",
             "value":"",
-            "reg":"",
             "passwd":true
         }
     ],
@@ -23,7 +21,6 @@
             "prompt":"数据目录",
             "key":"/photoprism/storage",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ],
@@ -32,7 +29,6 @@
             "prompt":"保存目录",
             "key":"/photoprism/originals",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ]

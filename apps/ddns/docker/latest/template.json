@@ -6,45 +6,38 @@
         {
             "prompt":"dns服务商",
             "key":"DDNS_DNS",
-            "value":"dnspod",
-            "reg":""
+            "value":"dnspod"
         },
         {
             "prompt":"api访问ID",
             "key":"DDNS_ID",
-            "value":"",
-            "reg":""
+            "value":""
         },
         {
             "prompt":"api授权token",
             "key":"DDNS_TOKEN",
             "value":"",
-            "reg":"",
             "passwd":true
         },
         {
             "prompt":"ipv4域名列表",
             "key":"DDNS_IPV4",
-            "value":"[www.example.com]",
-            "reg":""
+            "value":"[www.example.com]"
         },
         {
             "prompt":"ipv6域名列表",
             "key":"DDNS_IPV6",
-            "value":"[www.example.com]",
-            "reg":""
+            "value":"[www.example.com]"
         },
         {
             "prompt":"ipv4获取方式",
             "key":"DDNS_INDEX4",
-            "value":"url:http://host.docker.internal:8080/api/network/ipv4",
-            "reg":""
+            "value":"url:http://host.docker.internal:8080/api/network/ipv4"
         },
         {
             "prompt":"ipv6获取方式",
             "key":"DDNS_INDEX6",
-            "value":"url:http://host.docker.internal:8080/api/network/ipv6",
-            "reg":""
+            "value":"url:http://host.docker.internal:8080/api/network/ipv6"
         }
     ],
     "localVolume":[

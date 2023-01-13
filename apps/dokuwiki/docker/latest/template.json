@@ -5,7 +5,6 @@
             "prompt":"web访问端口",
             "key":"8080",
             "value":"8080",
-            "reg":"",
             "protocol":"http"
         }
     ],
@@ -13,14 +12,12 @@
         {
             "prompt":"用户",
             "key":"DOKUWIKI_USERNAME",
-            "value":"host.docker.internal:3306",
-            "reg":""
+            "value":"host.docker.internal:3306"
         },
         {
             "prompt":"密码",
             "key":"DOKUWIKI_PASSWORD",
             "value":"",
-            "reg":"",
             "passwd":true
         }
     ],
@@ -31,7 +28,6 @@
             "prompt":"数据目录",
             "key":"/bitnami/dokuwiki",
             "value":"",
-            "reg":"",
             "name":"data"
         }
     ]
