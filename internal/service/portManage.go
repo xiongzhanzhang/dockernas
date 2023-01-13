@@ -23,6 +23,13 @@ func CheckIsPortUsed(param models.InstanceParam) {
 		if port != nil {
 			panic("port " + port.Port + " with " + port.Protocol + " protocol is used by " + port.InstanceName)
 		}
+		portValue, err := strconv.Atoi(item.Value)
+		if err!=nil{
+			panic(item.Value+ " is not a valide port value")
+		}
+		if portValue>=65535{
+			panic(item.Value+ " is greater than max port value 65535")
+		}
 		if utils.IsPortUsed(item.Protocol, item.Value) {
 			panic("port " + item.Value + " with " + item.Protocol + " protocol is used")
 		}

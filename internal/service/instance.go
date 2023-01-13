@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"regexp"
 	"runtime/debug"
 	"strconv"
 	"time"
@@ -60,9 +61,29 @@ func runNewContainer(instance models.Instance, param models.InstanceParam) {
 	SavePortUsed(instance, param)
 }
 
+func checkParamIsValid(param models.InstanceParam) {
+	match, _ := regexp.MatchString("[a-zA-Z0-9][a-zA-Z0-9_.-]", param.Name)
+	if match == false {
+		panic(param.Name + " not match [a-zA-Z0-9][a-zA-Z0-9_.-] to be a container name")
+	}
+
+	for _, item := range append(param.EnvParams, param.OtherParams...) {
+		if item.Reg != "" {
+			match, err := regexp.MatchString(item.Reg, item.Value)
+			if err != nil {
+				panic("regexp check faild with " + item.Reg + " " + item.Value + ": " + err.Error())
+			}
+			if match == false {
+				panic(item.Value + " is not match " + item.Reg + " on param " + item.Prompt)
+			}
+		}
+	}
+}
+
 func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {
 	log.Println("pull image " + param.ImageUrl)
 	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
+	checkParamIsValid(param)
 	CheckIsPortUsed(param)
 
 	var instance models.Instance
@@ -88,7 +109,7 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 				err := recover()
 				if err != nil {
 					log.Println("create instance:", err)
-					log.Panicln(string(debug.Stack()))
+					log.Println(string(debug.Stack()))
 				}
 				reader.Close()
 			}()
@@ -119,6 +140,7 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 }
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {
+	checkParamIsValid(param)
 	DelInstancePorts(instance)
 	CheckIsPortUsed(param)
 	log.Println("delete comtainer of instance " + instance.Name)
