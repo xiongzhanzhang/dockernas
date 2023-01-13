@@ -16,51 +16,6 @@ import (
 	"tinycloud/internal/utils"
 )
 
-func GetInstance() []models.Instance {
-	instances := models.GetInstance()
-
-	networkInfo := GetNetworkInfo()
-	if networkInfo.HttpGatewayEnable {
-		for i, instance := range instances {
-			proxyConfig := models.GetHttpProxyConfigByInstance(instance.Name, strconv.Itoa(instance.Port))
-			if proxyConfig != nil {
-				if networkInfo.HttpsEnable {
-					instances[i].Url = "https://" + proxyConfig.HostName + "." + networkInfo.Domain
-				} else {
-					instances[i].Url = "http://" + proxyConfig.HostName + "." + networkInfo.Domain
-				}
-			}
-		}
-	}
-	return instances
-}
-
-func runNewContainer(instance models.Instance, param models.InstanceParam) {
-	var err error
-
-	log.Println("create instance " + instance.Name)
-	instance.ContainerID, err = docker.Create(&param)
-	instance.InstanceParamStr = utils.GetJsonFromObj(param)
-
-	if err != nil {
-		if instance.ContainerID == "" {
-			instance.State = models.CREATE_ERROR
-		} else {
-			instance.State = models.RUN_ERROR
-		}
-		models.UpdateInstance(&instance)
-		log.Println(err)
-		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
-		panic(err)
-	} else {
-		models.AddEventLog(instance.Id, models.START_EVENT, "")
-	}
-
-	instance.State = models.RUNNING
-	models.UpdateInstance(&instance)
-	SavePortUsed(instance, param)
-}
-
 func checkParamIsValid(param models.InstanceParam) {
 	match, _ := regexp.MatchString("[a-zA-Z0-9][a-zA-Z0-9_.-]", param.Name)
 	if match == false {
@@ -80,25 +35,57 @@ func checkParamIsValid(param models.InstanceParam) {
 	}
 }
 
-func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {
+func GetInstance() []models.Instance {
+	instances := models.GetInstance()
+
+	networkInfo := GetNetworkInfo()
+	if networkInfo.HttpGatewayEnable {
+		for i, instance := range instances {
+			proxyConfig := models.GetHttpProxyConfigByInstance(instance.Name, strconv.Itoa(instance.Port))
+			if proxyConfig != nil {
+				if networkInfo.HttpsEnable {
+					instances[i].Url = "https://" + proxyConfig.HostName + "." + networkInfo.Domain
+				} else {
+					instances[i].Url = "http://" + proxyConfig.HostName + "." + networkInfo.Domain
+				}
+			}
+		}
+	}
+	return instances
+}
+
+func runNewContainer(instance *models.Instance, param models.InstanceParam) {
+	var err error
+
+	log.Println("create instance " + instance.Name)
+	instance.ContainerID, err = docker.Create(&param)
+	instance.InstanceParamStr = utils.GetJsonFromObj(param)
+
+	if err != nil {
+		if instance.ContainerID == "" {
+			instance.State = models.CREATE_ERROR
+		} else {
+			instance.State = models.RUN_ERROR
+		}
+		models.UpdateInstance(instance)
+		log.Println(err)
+		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
+		panic(err)
+	} else {
+		models.AddEventLog(instance.Id, models.START_EVENT, "")
+	}
+
+	instance.State = models.RUNNING
+	models.UpdateInstance(instance)
+	SavePortUsed(instance, param)
+}
+
+func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, blocking bool) *models.Instance {
 	log.Println("pull image " + param.ImageUrl)
 	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
-	checkParamIsValid(param)
-	CheckIsPortUsed(param)
 
-	var instance models.Instance
-
-	instance.Name = param.Name
-	instance.Summary = param.Summary
 	instance.State = models.PULL_IMAGE
-	instance.AppName = param.AppName
-	instance.Version = param.Version
-	instance.IconUrl = param.IconUrl
-	instance.Port = getFirstHttpPort(param)
-	instance.InstanceParamStr = utils.GetJsonFromObj(param)
-	instance.CreateTime = time.Now().UnixMilli()
-
-	models.AddInstance(&instance)
+	models.UpdateInstance(instance)
 
 	if blocking {
 		io.Copy(log.Writer(), reader)
@@ -123,7 +110,7 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 					log.Println("pull image " + param.ImageUrl + " time out")
 					ReportImagePullTimeout(param.ImageUrl)
 					instance.State = models.PULL_ERROR
-					models.UpdateInstance(&instance)
+					models.UpdateInstance(instance)
 					return
 				}
 			}
@@ -135,6 +122,27 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 			runNewContainer(instance, param)
 		}()
 	}
+
+	return instance
+}
+
+func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {
+	checkParamIsValid(param)
+	CheckIsPortUsed(param)
+
+	var instance models.Instance
+	instance.Name = param.Name
+	instance.Summary = param.Summary
+	instance.State = models.PULL_IMAGE
+	instance.AppName = param.AppName
+	instance.Version = param.Version
+	instance.IconUrl = param.IconUrl
+	instance.Port = getFirstHttpPort(param)
+	instance.InstanceParamStr = utils.GetJsonFromObj(param)
+	instance.CreateTime = time.Now().UnixMilli()
+	models.AddInstance(&instance)
+
+	pullAndRunContainer(&instance, param, blocking)
 
 	return &instance
 }
@@ -162,7 +170,7 @@ func EditInstance(instance models.Instance, param models.InstanceParam) {
 
 	models.UpdateInstance(&instance)
 
-	runNewContainer(instance, param)
+	pullAndRunContainer(&instance, param, false)
 	models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
 }
 
@@ -183,7 +191,8 @@ func StartInstance(instance models.Instance) {
 			log.Println(err)
 			panic(err)
 		}
-		runNewContainer(instance, param)
+		pullAndRunContainer(&instance, param, false)
+
 	} else {
 		log.Println("start comtainer of instance " + instance.Name)
 		err := docker.Start(instance.ContainerID)
