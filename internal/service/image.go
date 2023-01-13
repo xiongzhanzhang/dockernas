@@ -25,7 +25,7 @@ func ProcessImagePullMsg(imageUrl string, msg string) {
 
 	var msgObj models.ImagePullMsg
 	err := json.Unmarshal([]byte(msg), &msgObj)
-	if err != nil {
+	if err != nil || msgObj.ProgressDetail.Total == 0 {
 		return
 	}
 

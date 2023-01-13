@@ -1,0 +1,24 @@
+{
+    "imageUrl":"jupyter/scipy-notebook",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"8888",
+            "value":"8888",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/home/jovyan/work",
+            "value":"",
+            "name":"data"
+        }
+    ]
+}
+
