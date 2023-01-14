@@ -40,7 +40,7 @@ func AddInstance(instance *Instance) {
 }
 
 func UpdateInstance(instance *Instance) {
-	err := GetDb().Model(&Instance{}).Where("id = ?", instance.Id).Updates(instance).Error
+	err := GetDb().Model(&Instance{}).Where("id = ?", instance.Id).Save(instance).Error
 	if err != nil {
 		log.Println(err)
 		panic(err)

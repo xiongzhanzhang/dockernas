@@ -35,7 +35,7 @@ func AddSubscribe(subscribe *Subscribe) {
 func UpdateSubscribe(subscribe *Subscribe) {
 	err := GetDb().Model(&Subscribe{}).
 		Where("id = ? and name = ?", subscribe.Id, subscribe.Name).
-		Updates(subscribe).Error
+		Save(subscribe).Error
 	if err != nil {
 		log.Println(err)
 		panic(err)
