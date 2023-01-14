@@ -29,6 +29,7 @@ type Instance struct {
 	Version          string `json:"version"`
 	InstanceParamStr string `json:"instanceParamStr" gorm:"type:varchar(1024)"` //store json str
 	CreateTime       int64  `json:"createTime"`
+	ImagePullState   string `json:"imagePullState"`
 }
 
 func AddInstance(instance *Instance) {

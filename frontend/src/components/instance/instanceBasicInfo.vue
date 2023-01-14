@@ -15,7 +15,7 @@
       </div>
       <div class="input_div">
         <div class="first_input">状态</div>
-        <div v-if="instance.state == 0" style="color: green">拉取镜像</div>
+        <div v-if="instance.state == 0" style="color: green">拉取镜像 {{ instance.imagePullState }}</div>
         <div v-if="instance.state == 1" style="color: yellow">创建失败</div>
         <div v-if="instance.state == 2" style="color: red">运行失败</div>
         <div v-if="instance.state == 3" style="color: green">运行中</div>

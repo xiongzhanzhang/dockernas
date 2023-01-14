@@ -108,13 +108,14 @@ func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, 
 				ProcessImagePullMsg(param.ImageUrl, line)
 				if (time.Now().Unix() - startTime) >= (60 * 30) { // timeout for 30 minute
 					log.Println("pull image " + param.ImageUrl + " time out")
-					ReportImagePullTimeout(param.ImageUrl)
+					ReportImagePullStoped(param.ImageUrl)
 					instance.State = models.PULL_ERROR
 					models.UpdateInstance(instance)
 					return
 				}
 			}
 			log.Println("pull image " + param.ImageUrl + " ok")
+			ReportImagePullStoped(param.ImageUrl)
 			tmp := models.GetInstanceByName(instance.Name)
 			if tmp == nil || tmp.Id != instance.Id { //check if instance is deleted
 				return
@@ -124,6 +125,20 @@ func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, 
 	}
 
 	return instance
+}
+
+func GetInstanceByName(name string) models.Instance {
+	instance := models.GetInstanceByName(name)
+	if instance == nil {
+		panic("instance " + name + " not exists")
+	}
+	if instance.State == models.PULL_IMAGE {
+		var param models.InstanceParam
+		if utils.GetObjFromJson(instance.InstanceParamStr, &param) != nil {
+			instance.ImagePullState = GetImagePullState(param.ImageUrl)
+		}
+	}
+	return *instance
 }
 
 func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {

@@ -49,26 +49,37 @@ func ProcessImagePullMsg(imageUrl string, msg string) {
 	}
 }
 
-func ReportImagePullTimeout(imageUrl string) {
+func ReportImagePullStoped(imageUrl string) {
 	mutex.Lock()
 	defer mutex.Unlock()
 	fullName := getImageName(imageUrl)
 	delete(pullingImageStateMap, fullName)
 }
 
+func GetImagePullState(imageUrl string) string {
+	mutex.Lock()
+	defer mutex.Unlock()
+	fullName := getImageName(imageUrl)
+	if _, ok := pullingImageStateMap[fullName]; ok {
+		return pullingImageStateMap[fullName].State
+	}
+	return ""
+}
+
 func GetImages() []models.ImageInfo {
 	mutex.Lock()
 	defer mutex.Unlock()
-	infos := docker.ListImage()
+	var infos []models.ImageInfo
 	for _, value := range pullingImageStateMap {
 		infos = append(infos, *value)
 	}
+	infos = append(infos, docker.ListImage()...)
 	return infos
 }
 
 func DelImage(info models.ImageInfo) {
 	if info.Id == "" {
-		ReportImagePullTimeout(info.Name)
+		ReportImagePullStoped(info.Name)
 	} else {
 		docker.DelImage(info.Id)
 	}

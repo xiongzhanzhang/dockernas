@@ -33,7 +33,7 @@ func GetInstance(c *gin.Context) {
 
 func GetInstanceByName(c *gin.Context) {
 	name := c.Param("name")
-	instance := models.GetInstanceByName(name)
+	instance := service.GetInstanceByName(name)
 	c.JSON(200, instance)
 }
 

@@ -14,6 +14,10 @@ func GetObjFromJsonFile(filePath string, obj any) any {
 		return nil
 	}
 
+	return GetObjFromJson(string(data), obj)
+}
+
+func GetObjFromJson(data string, obj any) any {
 	err := json.Unmarshal([]byte(data), obj)
 	if err != nil {
 		log.Print("unmarshal json error")
