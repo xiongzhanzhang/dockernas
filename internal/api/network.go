@@ -1,9 +1,9 @@
 package api
 
 import (
-	"tinycloud/internal/models"
-	"tinycloud/internal/service"
-	"tinycloud/internal/utils"
+	"dockernas/internal/models"
+	"dockernas/internal/service"
+	"dockernas/internal/utils"
 
 	"github.com/gin-gonic/gin"
 )

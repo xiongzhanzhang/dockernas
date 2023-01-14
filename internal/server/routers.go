@@ -1,8 +1,8 @@
 package server
 
 import (
-	"tinycloud/internal/api"
-	"tinycloud/internal/middleware"
+	"dockernas/internal/api"
+	"dockernas/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

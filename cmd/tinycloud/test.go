@@ -1,7 +1,7 @@
 package main
 
 import (
-	"tinycloud/internal/daemon"
+	"dockernas/internal/daemon"
 )
 
 func main() {

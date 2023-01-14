@@ -1,13 +1,13 @@
 package service
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/models"
+	"dockernas/internal/utils"
 	"log"
 	"os"
 	"path/filepath"
 	"time"
-	"tinycloud/internal/config"
-	"tinycloud/internal/models"
-	"tinycloud/internal/utils"
 
 	"github.com/go-git/go-git/v5"
 )

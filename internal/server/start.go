@@ -1,9 +1,9 @@
 package server
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/middleware"
 	"strings"
-	"tinycloud/internal/config"
-	"tinycloud/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

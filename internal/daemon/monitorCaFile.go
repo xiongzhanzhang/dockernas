@@ -1,9 +1,9 @@
 package daemon
 
 import (
-	"tinycloud/internal/config"
-	"tinycloud/internal/service"
-	"tinycloud/internal/utils"
+	"dockernas/internal/config"
+	"dockernas/internal/service"
+	"dockernas/internal/utils"
 )
 
 var lastCerModTime int64 = 0

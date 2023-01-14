@@ -1,10 +1,10 @@
 package service
 
 import (
+	"dockernas/internal/backend/docker"
+	"dockernas/internal/models"
 	"io"
 	"log"
-	"tinycloud/internal/backend/docker"
-	"tinycloud/internal/models"
 
 	"github.com/gorilla/websocket"
 )

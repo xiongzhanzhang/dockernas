@@ -1,13 +1,13 @@
 package service
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/models"
+	"dockernas/internal/utils"
 	"encoding/json"
 	"log"
 	"strings"
 	"time"
-	"tinycloud/internal/config"
-	"tinycloud/internal/models"
-	"tinycloud/internal/utils"
 )
 
 func GetNetworkInfo() models.NetworkInfo {

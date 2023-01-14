@@ -1,13 +1,13 @@
 package service
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/models"
+	"dockernas/internal/utils"
 	"io/ioutil"
 	"log"
 	"path/filepath"
 	"strings"
-	"tinycloud/internal/config"
-	"tinycloud/internal/models"
-	"tinycloud/internal/utils"
 )
 
 func GetApps() []models.App {

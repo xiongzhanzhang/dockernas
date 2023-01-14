@@ -1,7 +1,7 @@
 package config
 
 import (
-	"tinycloud/internal/utils"
+	"dockernas/internal/utils"
 )
 
 const configFilePath = "./config.json"

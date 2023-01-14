@@ -1,10 +1,10 @@
 package service
 
 import (
+	"dockernas/internal/models"
+	"dockernas/internal/utils"
 	"log"
 	"strconv"
-	"tinycloud/internal/models"
-	"tinycloud/internal/utils"
 )
 
 func DelInstancePorts(instance models.Instance) {

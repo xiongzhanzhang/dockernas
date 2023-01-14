@@ -1,7 +1,7 @@
 package service
 
 import (
-	"tinycloud/internal/config"
+	"dockernas/internal/config"
 
 	"github.com/google/uuid"
 )

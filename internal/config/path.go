@@ -1,9 +1,9 @@
 package config
 
 import (
+	"dockernas/internal/utils"
 	"os"
 	"path/filepath"
-	"tinycloud/internal/utils"
 )
 
 // func GetBasePath() string {

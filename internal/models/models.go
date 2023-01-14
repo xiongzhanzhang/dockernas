@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
-	"tinycloud/internal/config"
+	"dockernas/internal/config"
 )
 
 var db *gorm.DB = nil

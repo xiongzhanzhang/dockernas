@@ -1,11 +1,11 @@
 package service
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/models"
 	"io/ioutil"
 	"log"
 	"strings"
-	"tinycloud/internal/config"
-	"tinycloud/internal/models"
 
 	"github.com/shirou/gopsutil/disk"
 )

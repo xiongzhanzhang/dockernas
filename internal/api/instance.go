@@ -1,12 +1,12 @@
 package api
 
 import (
+	"dockernas/internal/config"
+	"dockernas/internal/models"
+	"dockernas/internal/service"
 	"encoding/json"
 	"log"
 	"strconv"
-	"tinycloud/internal/config"
-	"tinycloud/internal/models"
-	"tinycloud/internal/service"
 
 	"github.com/gin-gonic/gin"
 )

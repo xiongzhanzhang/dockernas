@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"tinycloud/internal/config"
+	"dockernas/internal/config"
 
 	"github.com/gin-gonic/gin"
 )

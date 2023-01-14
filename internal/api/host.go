@@ -1,7 +1,7 @@
 package api
 
 import (
-	"tinycloud/internal/service"
+	"dockernas/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +12,6 @@ func GetHostInfo(c *gin.Context) {
 }
 
 func GetStorageInfo(c *gin.Context) {
-	storageInfo:=service.GetStorageInfo()
+	storageInfo := service.GetStorageInfo()
 	c.JSON(200, storageInfo)
 }

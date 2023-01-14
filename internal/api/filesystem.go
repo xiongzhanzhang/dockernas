@@ -1,7 +1,7 @@
 package api
 
 import (
-	"tinycloud/internal/service"
+	"dockernas/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +26,7 @@ func SetBasePath(c *gin.Context) {
 	postMap := map[string]string{}
 	c.BindJSON(&postMap)
 	path, ok := postMap["path"]
-	if ok==false{
+	if ok == false {
 		panic("SetBasePath must has a path param")
 	}
 
