@@ -15,6 +15,7 @@
             router
             style="height: 100%"
           >
+            <el-menu-item style="font-weight:bold;font-size:20px">DockerNAS</el-menu-item>
             <el-menu-item index="/index/instances">{{
               $t("index.apps")
             }}</el-menu-item>
@@ -29,7 +30,7 @@
 
         <el-main class="main_router">
           <RouterView v-slot="{ Component }">
-              <component :is="Component" />
+            <component :is="Component" />
           </RouterView>
         </el-main>
       </el-container>
