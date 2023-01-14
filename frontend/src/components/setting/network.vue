@@ -39,7 +39,14 @@
         </div>
       </div>
       <div class="input_div">
-        <div class="first_input">ssl证书路径</div>
+        <div class="first_input">ssl证书路径
+          <el-tooltip effect="dark" placement="bottom">
+              <el-icon><InfoFilled /></el-icon>
+              <template #content
+                ><div style="width: 300px">证书需要命名为example.com.key，example.com.key.crt或example.com.key.cer或example.com_bundle.crt。设置后需要重启网关</div></template
+              >
+            </el-tooltip>
+        </div>
         <div>
           {{ networkData.sslCertificatePath }}
           <el-icon class="click_able" @click="showSetCaFilePath"
@@ -48,23 +55,19 @@
         </div>
       </div>
 
-      <div class="center_div" style="padding-top: 30px; padding-bottom: 20px">
-        <el-button
-          type="primary"
-          style="height: 40px; width: 250px; margin-right: 100px"
-          @click="tryRestartHttpGateway"
-          >重启HTTP网关</el-button
-        >
-        <el-button
-          type="success"
-          style="height: 40px; width: 250px"
-          @click="showCreateProxy"
-          >添加HTTP转发</el-button
-        >
-      </div>
     </div>
 
-    <div class="card" style="margin-top: 16px; min-height: 200px">
+    <div class="card" style="margin-top: 16px; min-height: 300px">
+      <div class="center_div" style="padding-top: 10px; padding-bottom: 10px; margin-right: 20px;">
+        <div style="flex-grow: 1"></div>
+        <el-button
+        type="primary"
+          style="height: 35px; width: 100px"
+          @click="showCreateProxy"
+          >添加代理
+        </el-button>
+      </div>
+
       <el-table
         :data="httpProxyConfigs"
         stripe

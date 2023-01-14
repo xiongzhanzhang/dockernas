@@ -84,7 +84,7 @@ func StopHttpGateway() {
 	config.DisableHttpGateway()
 	gateway := getGatewayInstance()
 	if gateway != nil {
-		StopInstance(*gateway)
+		DeleteInstance(*gateway)
 	}
 }
 
@@ -159,6 +159,18 @@ func getCaFilePath(caFileDir string) (string, string) {
 }
 
 func GetCaFilePathOnHost(caFileDir string) (string, string, string) {
+	cer := ""
+	key := ""
+	msg := ""
+
+	for _, subfix := range []string{".cer", ".crt", "_bundle.crt"} {
+		cer, key, msg = tryGetCaFilePathOnHost(caFileDir, subfix)
+	}
+
+	return cer, key, msg
+}
+
+func tryGetCaFilePathOnHost(caFileDir string, subfix string) (string, string, string) {
 	if caFileDir == "" {
 		return "", "", "ca file dir is not set"
 	}
@@ -169,10 +181,10 @@ func GetCaFilePathOnHost(caFileDir string) (string, string, string) {
 
 	fullPath := config.GetFullDfsPath(caFileDir)
 
-	cer := fullPath + "/" + domain + ".cer"
+	cer := fullPath + "/" + domain + subfix
 	key := fullPath + "/" + domain + ".key"
 	if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
-		cer = fullPath + "/" + domain + "/" + domain + ".cer"
+		cer = fullPath + "/" + domain + "/" + domain + subfix
 		key = fullPath + "/" + domain + "/" + domain + ".key"
 		if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
 			return "", "", "can't find ca file under " + caFileDir
