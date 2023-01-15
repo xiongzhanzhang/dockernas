@@ -8,6 +8,7 @@ import (
 
 func main() {
 	config.InitConfig()
+	config.InitLogger()
 	daemon.StartBackgroundTask()
 	server.StartServer()
 }

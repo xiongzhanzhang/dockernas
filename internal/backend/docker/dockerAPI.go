@@ -179,6 +179,16 @@ func Create(param *models.InstanceParam) (string, error) {
 	return resp.ID, nil
 }
 
+func GetContainerStat(id string) (types.ContainerStats, error) {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+	return cli.ContainerStats(ctx, id, false)
+}
+
 func replaceVariable(aStr string, param *models.InstanceParam) string {
 	if param.OtherParams == nil {
 		return aStr

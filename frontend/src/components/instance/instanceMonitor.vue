@@ -88,8 +88,8 @@ export default {
           seriesMap[d.name] = {
             name: d.name,
             type: "line",
-            stack: "Total",
-            areaStyle: {},
+            // stack: "Total",
+            // areaStyle: {},
             emphasis: {
               focus: "series",
             },

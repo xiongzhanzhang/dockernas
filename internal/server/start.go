@@ -3,12 +3,17 @@ package server
 import (
 	"dockernas/internal/config"
 	"dockernas/internal/middleware"
+	"log"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
 func StartServer() {
+	gin.DisableConsoleColor()
+	gin.DefaultWriter = log.Writer()
+	gin.DefaultErrorWriter = log.Writer()
+
 	router := gin.New()
 	router.Use(
 		gin.Logger(),

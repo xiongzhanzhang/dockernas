@@ -38,6 +38,7 @@ func getDirInfo(fullPath string, relativePath string) []models.DirInfo {
 }
 
 func GetDfsDirInfo(path string) []models.DirInfo {
+	utils.CheckCreateDir(config.GetFullDfsPath(""))
 	basePath := config.GetFullDfsPath(path)
 	return getDirInfo(basePath, path)
 }

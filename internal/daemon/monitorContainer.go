@@ -14,10 +14,12 @@ func monitorContainer() {
 		return
 	}
 
+	models.AddContainerStat([]models.ContainerStat{GetHostState()})
+	models.DelStatDataByTime(time.Now().UnixMilli() - 7*24*60*60*1000)
+
 	var statsBySpeed []models.ContainerStat
 	var newStatMap map[string]models.ContainerStat = map[string]models.ContainerStat{}
 	containerStats := docker.GetContainerStatus()
-	containerStats = append(containerStats, GetHostState())
 	curTime := time.Now().UnixMilli()
 
 	for _, stat := range containerStats {
@@ -48,8 +50,11 @@ func monitorContainer() {
 	for _, instance := range instances {
 		if _, ok := newStatMap[instance.ContainerID]; !ok {
 			if instance.State == models.RUNNING {
-				instance.State = models.STOPPED
-				models.UpdateInstance(&instance)
+				_, err := docker.GetContainerStat(instance.ContainerID)
+				if err != nil {
+					instance.State = models.STOPPED
+					models.UpdateInstance(&instance)
+				}
 			}
 		} else {
 			if instance.State == models.STOPPED {
@@ -61,5 +66,4 @@ func monitorContainer() {
 
 	historyStatMap = newStatMap
 	models.AddContainerStat(statsBySpeed)
-	models.DelStatDataByTime(time.Now().UnixMilli() - 7*24*60*60*1000)
 }
