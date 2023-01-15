@@ -65,7 +65,7 @@ func WriteFile(filePath string, data string) {
 func GetDirectorySize(path string) (int64, error) {
 	var size int64
 	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
-		if !info.IsDir() {
+		if info != nil && !info.IsDir() {
 			size += info.Size()
 		}
 		return err
