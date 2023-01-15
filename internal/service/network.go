@@ -114,6 +114,7 @@ func EnableHttpGateway() {
 		param.LocalVolume = app.DockerVersions[0].LocalVolume
 		param.EnvParams = app.DockerVersions[0].EnvParams
 		param.PortParams = app.DockerVersions[0].PortParams
+		param.Privileged = true
 
 		if config.GetIsHttpsEnabled() {
 			param.DfsVolume = app.DockerVersions[0].DfsVolume

@@ -8,6 +8,7 @@ import (
 	"dockernas/internal/utils"
 	"io"
 	"log"
+	"os/user"
 	"strings"
 	"time"
 
@@ -293,6 +294,17 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 
 	if param.Privileged {
 		hostConfig.Privileged = true
+	}
+
+	if utils.GetOperationSystemName() == "linux" {
+		if param.Privileged == false {
+			curUser, err := user.Current()
+			if err != nil {
+				panic("get current user error: " + err.Error())
+			}
+			containerConfig.User = curUser.Uid
+		}
+		hostConfig.ExtraHosts = append(hostConfig.ExtraHosts, "host.docker.internal:host-gateway")
 	}
 
 	return containerConfig, hostConfig
