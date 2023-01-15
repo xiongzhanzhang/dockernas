@@ -2,3 +2,4 @@ data
 vscode
 *.exe
 config.json
+__debug_bin

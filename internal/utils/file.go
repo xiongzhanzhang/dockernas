@@ -48,7 +48,7 @@ func ReadFile(filePath string) string {
 }
 
 func WriteFile(filePath string, data string) {
-	f, err := os.OpenFile(filePath, os.O_RDONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	f, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		log.Println("open file error :", err)
 		panic(err)
