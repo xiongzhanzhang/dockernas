@@ -16,6 +16,7 @@ func InitConfig() {
 	} else {
 		SetConfig("user", "admin")
 		SetConfig("passwd", utils.GenPasswd())
+		SetConfig("bindAddr", "0.0.0.0:8080")
 		SaveConfig()
 	}
 }

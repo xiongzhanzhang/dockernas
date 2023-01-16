@@ -1,5 +1,9 @@
 package config
 
+func GetBindAddr() string {
+	return GetConfig("bindAddr", "127.0.0.1:8080")
+}
+
 func GetDomain() string {
 	return GetConfig("domain", "")
 }

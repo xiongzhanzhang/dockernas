@@ -11,8 +11,8 @@ func InitLogger() {
 	utils.CheckCreateDir("./logs")
 	log.SetOutput(&lumberjack.Logger{
 		Filename:   "./logs/server.log",
-		MaxSize:    128, // megabytes
-		MaxBackups: 128,
+		MaxSize:    64, // megabytes
+		MaxBackups: 32,
 		MaxAge:     30, //days
 	})
 }

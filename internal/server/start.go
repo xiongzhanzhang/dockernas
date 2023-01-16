@@ -35,5 +35,5 @@ func StartServer() {
 	})
 
 	registerRoutes(router)
-	router.Run()
+	router.Run(config.GetBindAddr())
 }

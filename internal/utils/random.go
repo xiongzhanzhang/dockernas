@@ -12,5 +12,5 @@ func GenToken() string {
 
 func GenPasswd() string {
 	token := GenToken()
-	return strings.Replace(token, "-", "", -1)[0:10]
+	return strings.Replace(token, "-", "", -1)
 }
