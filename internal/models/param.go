@@ -27,10 +27,11 @@ type DockerTemplate struct {
 }
 
 type InstanceParam struct {
-	Name    string `json:"name"`
-	AppName string `json:"appName"`
-	Summary string `json:"summary"`
-	IconUrl string `json:"iconUrl"`
+	Name     string `json:"name"`
+	AppName  string `json:"appName"`
+	Summary  string `json:"summary"`
+	IconUrl  string `json:"iconUrl"`
+	HostOnly bool   `json:"hostOnly"`  // can only access by 127.0.0.1
 	DockerTemplate
 }
 

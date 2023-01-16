@@ -15,7 +15,9 @@
       </div>
       <div class="input_div">
         <div class="first_input">状态</div>
-        <div v-if="instance.state == 0" style="color: green">拉取镜像 {{ instance.imagePullState }}</div>
+        <div v-if="instance.state == 0" style="color: green">
+          拉取镜像 {{ instance.imagePullState }}
+        </div>
         <div v-if="instance.state == 1" style="color: yellow">创建失败</div>
         <div v-if="instance.state == 2" style="color: red">运行失败</div>
         <div v-if="instance.state == 3" style="color: green">运行中</div>
@@ -25,6 +27,12 @@
       <div class="input_div">
         <div class="first_input">应用名</div>
         <div>{{ instance.appName }}</div>
+      </div>
+      <div class="input_div">
+        <div class="first_input">仅本地访问</div>
+        <div>
+          <el-switch v-model="instanceParam.hostOnly" disabled></el-switch>
+        </div>
       </div>
       <div class="input_div">
         <div class="first_input">版本</div>
@@ -38,7 +46,13 @@
         :key="param.prompt"
       >
         <div class="first_input">{{ param.prompt }}</div>
-        <div v-if="param.protocol == 'http'"><a  target="_blank" :href="getInstanceWebUrl(instance.name, param.value)">{{ param.value }}</a></div>
+        <div v-if="param.protocol == 'http'">
+          <a
+            target="_blank"
+            :href="getInstanceWebUrl(instance.name, param.value)"
+            >{{ param.value }}</a
+          >
+        </div>
         <div v-if="param.protocol != 'http'">{{ param.value }}</div>
       </div>
 
@@ -83,10 +97,7 @@
     </div>
 
     <div class="center_div" style="margin-top: 100px">
-      <el-button
-        type="primary"
-        style="height: 40px; width: 200px"
-        @click="edit"
+      <el-button type="primary" style="height: 40px; width: 200px" @click="edit"
         >配置</el-button
       >
       <el-button
@@ -135,13 +146,13 @@
 </template>
 
 <script>
-import {getInstanceWebUrl} from "../../utils/url"
+import { getInstanceWebUrl } from "../../utils/url";
 import createInstance from "../createInstance.vue";
 import {
   stopInstance,
   startInstance,
   deleteInstance,
-  getInstance
+  getInstance,
 } from "../../api/instance";
 
 export default {
@@ -184,14 +195,16 @@ export default {
       this.showDeleteDialog = true;
     },
     requestDeleteInstance() {
-      this.delBtnLoading= true,
-      this.cancelBtnDisable= true,
-      deleteInstance(this.instance.name).then((response) => {
-        this.$router.push("/index/instances");
-      }).catch((error) => {
-        this.delBtnLoading= false;
-        this.cancelBtnDisable= false;
-      });
+      (this.delBtnLoading = true),
+        (this.cancelBtnDisable = true),
+        deleteInstance(this.instance.name)
+          .then((response) => {
+            this.$router.push("/index/instances");
+          })
+          .catch((error) => {
+            this.delBtnLoading = false;
+            this.cancelBtnDisable = false;
+          });
     },
     edit() {
       this.$refs.createCard.showDialog();
@@ -199,7 +212,7 @@ export default {
   },
   mounted() {
     getInstance(this.name).then((response) => {
-      this.initData(response.data)
+      this.initData(response.data);
     });
   },
 };

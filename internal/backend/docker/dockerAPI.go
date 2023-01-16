@@ -27,7 +27,7 @@ func Delete(containerID string) error {
 		return err
 	}
 
-	err = cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{})
+	err = cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{Force: true})
 	if err != nil {
 		log.Println("start docker error")
 		return err
@@ -278,6 +278,10 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 	exports := make(nat.PortSet)
 	netPort := make(nat.PortMap)
 
+	hostIp := "0.0.0.0"
+	if param.HostOnly {
+		hostIp = "127.0.0.1"
+	}
 	for _, item := range param.PortParams {
 		proto := "tcp"
 		if item.Protocol == "udp" {
@@ -286,7 +290,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		natPort, _ := nat.NewPort(proto, item.Key)
 		exports[natPort] = struct{}{}
 		portList := make([]nat.PortBinding, 0, 1)
-		portList = append(portList, nat.PortBinding{HostIP: "0.0.0.0", HostPort: item.Value})
+		portList = append(portList, nat.PortBinding{HostIP: hostIp, HostPort: item.Value})
 		netPort[natPort] = portList
 	}
 

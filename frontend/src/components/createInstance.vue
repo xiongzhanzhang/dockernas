@@ -43,6 +43,14 @@
             </el-tooltip>
           </div>
         </div>
+
+        <div class="input_div">
+          <div class="first_input">仅本地访问</div>
+          <div>
+            <el-switch v-model="instanceParam.hostOnly"></el-switch>
+          </div>
+        </div>
+
         <div class="input_div">
           <div class="first_input">{{ $t("store.appVersion") }}</div>
           <div>
@@ -115,7 +123,7 @@
           <div class="first_input">{{ param.prompt }}</div>
           <div>
             <el-input
-              :type='param.passwd==true?"password":"text"'
+              :type="param.passwd == true ? 'password' : 'text'"
               v-model="param.value"
               class="w-50 m-2"
               style="width: 400px"
@@ -193,11 +201,13 @@ export default {
       if (node.isLeaf) return resolve([]);
       var curPath = node.data.value;
       if (curPath == null) {
-        resolve([{
-          name:"/",
-          value:"/",
-          label:"/",
-        }])
+        resolve([
+          {
+            name: "/",
+            value: "/",
+            label: "/",
+          },
+        ]);
       } else {
         getDfsDirs(curPath).then((response) => {
           console.log(response.data);
@@ -232,8 +242,8 @@ export default {
     versionChange() {
       for (let d of this.app.dockerVersions) {
         if (d.version == this.instanceParam.version) {
-          for(let key in d) {
-            this.instanceParam[key] = JSON.parse(JSON.stringify(d[key]))
+          for (let key in d) {
+            this.instanceParam[key] = JSON.parse(JSON.stringify(d[key]));
           }
         }
       }
