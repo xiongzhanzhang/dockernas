@@ -1,0 +1,8 @@
+{
+  "name": "MongoDB",
+  "category": [
+    "数据库",
+    "编程开发"
+  ],
+  "summary": "MongoDB document databases provide high availability and easy scalability."
+}
