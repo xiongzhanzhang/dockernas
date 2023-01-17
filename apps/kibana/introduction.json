@@ -1,0 +1,8 @@
+{
+  "name": "kibana",
+  "category": [
+    "数据库",
+    "编程开发"
+  ],
+  "summary": "Kibana gives shape to any kind of data — structured and unstructured — indexed in Elasticsearch."
+}

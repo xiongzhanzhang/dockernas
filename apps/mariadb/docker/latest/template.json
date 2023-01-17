@@ -1,5 +1,5 @@
 {
-    "imageUrl":"mysql:5.7.40",
+    "imageUrl":"mariadb:latest",
     "portParams":[
         {
             "prompt":"数据库端口",

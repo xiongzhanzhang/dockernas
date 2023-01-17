@@ -1,0 +1,22 @@
+{
+    "imageUrl":"kibana:5.6.16",
+    "portParams":[
+        {
+            "prompt":"访问端口",
+            "key":"5601",
+            "value":"5601",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"es服务器地址",
+            "key":"ELASTICSEARCH_HOSTS",
+            "value":"[\"http://host.docker.internal:9200\"]"
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}

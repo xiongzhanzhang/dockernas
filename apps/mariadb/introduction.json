@@ -1,0 +1,8 @@
+{
+  "name": "MariaDB",
+  "category": [
+    "数据库",
+    "编程开发"
+  ],
+  "summary": "MariaDB Server is a high performing open source relational database, forked from MySQL"
+}

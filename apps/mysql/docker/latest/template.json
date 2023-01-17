@@ -33,12 +33,13 @@
         }
     ],
     "localVolume":[
+    ],
+    "dfsVolume":[
         {
-            "prompt":"数据库数据目录",
+            "prompt":"数据目录",
             "key":"/var/lib/mysql",
             "value":"",
             "name":"data"
         }
-    ],
-    "dfsVolume":[]
+    ]
 }

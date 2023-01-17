@@ -41,6 +41,7 @@ func ProcessImagePullMsg(imageUrl string, msg string) {
 			}
 		}
 
+		pullingImageStateMap[fullName].Size = msgObj.ProgressDetail.Total
 		pullingImageStateMap[fullName].State =
 			strconv.FormatInt(msgObj.ProgressDetail.Current*100/msgObj.ProgressDetail.Total, 10) + "%"
 	}
