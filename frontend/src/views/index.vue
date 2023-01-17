@@ -4,6 +4,7 @@
       <el-container class="full_size">
         <el-header class="no-padding" style="height: 50px">
           <el-menu
+            :ellipsis="false"
             active-text-color="#ffd04b"
             background-color="#545c64"
             text-color="#fff"
@@ -15,7 +16,9 @@
             router
             style="height: 100%"
           >
-            <el-menu-item style="font-weight:bold;font-size:20px">DockerNAS</el-menu-item>
+            <el-menu-item style="font-weight: bold; font-size: 20px"
+              >DockerNAS</el-menu-item
+            >
             <el-menu-item index="/index/instances">{{
               $t("index.apps")
             }}</el-menu-item>
@@ -25,6 +28,17 @@
             <el-menu-item index="/index/setting">{{
               $t("index.setting")
             }}</el-menu-item>
+
+            <div style="flex-grow: 1"></div>
+
+            <el-sub-menu>
+              <template #title>帮助</template>
+              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">文档</el-menu-item>
+              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">社区</el-menu-item>
+              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">github</el-menu-item>
+              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">gitee</el-menu-item>
+              <el-menu-item @click="logout" index="">退出</el-menu-item>
+            </el-sub-menu>
           </el-menu>
         </el-header>
 
@@ -40,6 +54,7 @@
 
 <script>
 import { splitRouterPathByIndex } from "../utils/url";
+import storage from "@/utils/storage";
 
 export default {
   name: "index",
@@ -48,6 +63,14 @@ export default {
   },
   methods: {
     splitRouterPathByIndex,
+    gotoLink(url) {
+      window.open(url);
+    },
+    logout() {
+      storage.rm("token");
+      storage.rm("user");
+      this.$router.push("/login");
+    },
   },
   mounted() {
     console.log(this.$router);
