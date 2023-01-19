@@ -1,0 +1,24 @@
+{
+    "imageUrl":"halcyonazure/lsky-pro-docker",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"80",
+            "value":"9080",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/var/www/html",
+            "value":"",
+            "name":"data"
+        }
+    ]
+}
+

@@ -235,9 +235,9 @@ func StopInstance(instance models.Instance) {
 }
 
 func DeleteInstance(instance models.Instance) {
-	if instance.State == models.RUNNING {
-		StopInstance(instance)
-	}
+	// if instance.State == models.RUNNING {
+	// 	StopInstance(instance)
+	// }
 
 	DelInstancePorts(instance)
 	models.DelInstanceStatData(instance.Name)
