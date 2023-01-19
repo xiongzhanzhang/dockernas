@@ -1,0 +1,47 @@
+{
+    "imageUrl":"gitlab/gitlab-ce",
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"80",
+            "value":"8080",
+            "protocol":"http"
+        },
+        {
+            "prompt":"ssh访问端口",
+            "key":"22",
+            "value":"22",
+            "protocol":"tcp"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"配置",
+            "key":"GITLAB_OMNIBUS_CONFIG",
+            "value":"external_url 'http://my.domain.com/'; gitlab_rails['lfs_enabled'] = true;"
+        }
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置目录",
+            "key":"/etc/gitlab",
+            "value":"",
+            "name":"etc"
+        },
+        {
+            "prompt":"日志目录",
+            "key":"/var/log/gitlab",
+            "value":"",
+            "name":"log"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/var/opt/gitlab",
+            "value":"",
+            "name":"data"
+        }
+    ]
+}
+
