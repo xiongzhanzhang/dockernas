@@ -8,7 +8,6 @@ import (
 	"dockernas/internal/utils"
 	"io"
 	"log"
-	"os/user"
 	"strings"
 	"time"
 
@@ -149,6 +148,38 @@ func ListImage() []models.ImageInfo {
 	return infos
 }
 
+func ListContainer() []types.Container {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+	if err != nil {
+		panic(err)
+	}
+
+	return containers
+}
+
+func GetContainerInspect(containerID string) types.ContainerJSON {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	data, err := cli.ContainerInspect(ctx, containerID)
+	if err != nil {
+		panic(err)
+	}
+
+	return data
+}
+
 func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)
 
@@ -226,7 +257,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			param.LocalVolume[index].Value = instanceLocalPath
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
-				Source: instanceLocalPath,
+				Source: GetPathOnHost(instanceLocalPath),
 				Target: item.Key,
 			})
 		} else {
@@ -234,7 +265,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			param.LocalVolume[index].Value = localDir
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
-				Source: localDir,
+				Source: GetPathOnHost(localDir),
 				Target: item.Key,
 			})
 		}
@@ -250,7 +281,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			localDir := config.GetLocalVolumePath(param.Name, item.Name)
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
-				Source: localDir,
+				Source: GetPathOnHost(localDir),
 				Target: item.Key,
 			})
 		} else {
@@ -258,7 +289,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			utils.CheckCreateDir(dfsPath)
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
-				Source: dfsPath,
+				Source: GetPathOnHost(dfsPath),
 				Target: item.Key,
 			})
 		}
@@ -311,13 +342,13 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 	}
 
 	if utils.GetOperationSystemName() == "linux" {
-		if param.Privileged == false {
-			curUser, err := user.Current()
-			if err != nil {
-				panic("get current user error: " + err.Error())
-			}
-			containerConfig.User = curUser.Uid
-		}
+		// if param.Privileged == false {
+		// 	curUser, err := user.Current()
+		// 	if err != nil {
+		// 		panic("get current user error: " + err.Error())
+		// 	}
+		// 	containerConfig.User = curUser.Uid
+		// }
 		hostConfig.ExtraHosts = append(hostConfig.ExtraHosts, "host.docker.internal:host-gateway")
 	}
 

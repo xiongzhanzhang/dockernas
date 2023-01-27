@@ -17,6 +17,7 @@ require (
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
+	github.com/glebarez/go-sqlite v1.20.0 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.4.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
@@ -33,6 +34,7 @@ require (
 	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/pjbgf/sha1cd v0.2.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/skeema/knownhosts v1.1.0 // indirect
@@ -45,10 +47,15 @@ require (
 	golang.org/x/tools v0.1.12 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gotest.tools/v3 v3.4.0 // indirect
+	modernc.org/libc v1.21.5 // indirect
+	modernc.org/mathutil v1.5.0 // indirect
+	modernc.org/memory v1.4.0 // indirect
+	modernc.org/sqlite v1.20.0 // indirect
 )
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/glebarez/sqlite v1.6.0
 	github.com/go-git/go-git/v5 v5.5.2
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -58,7 +65,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect

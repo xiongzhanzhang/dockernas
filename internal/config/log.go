@@ -8,9 +8,13 @@ import (
 )
 
 func InitLogger() {
-	utils.CheckCreateDir("./logs")
+	logPath := "./logs"
+	if IsBasePathSet() {
+		logPath = GetBasePath() + "/logs"
+	}
+	utils.CheckCreateDir(logPath)
 	log.SetOutput(&lumberjack.Logger{
-		Filename:   "./logs/server.log",
+		Filename:   logPath + "/server.log",
 		MaxSize:    64, // megabytes
 		MaxBackups: 32,
 		MaxAge:     30, //days

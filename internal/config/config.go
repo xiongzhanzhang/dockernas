@@ -2,21 +2,35 @@ package config
 
 import (
 	"dockernas/internal/utils"
+	"os"
 )
-
-const configFilePath = "./config.json"
 
 var configMap map[string]string = map[string]string{}
 
+func IsRunInConainer() bool {
+	return os.Getenv("DOCKERNAS_RUN_IN_CONTAINER") == "true"
+}
+
+func getConfigPath() string {
+	if IsRunInConainer() {
+		utils.CheckCreateDir("./data")
+		return "./data/config.json"
+	}
+	return "./config.json"
+}
+
 func InitConfig() {
-	if utils.IsFileExist(configFilePath) {
-		if utils.GetObjFromJsonFile(configFilePath, &configMap) == nil {
+	if utils.IsFileExist(getConfigPath()) {
+		if utils.GetObjFromJsonFile(getConfigPath(), &configMap) == nil {
 			panic("read config file error")
 		}
 	} else {
 		SetConfig("user", "admin")
 		SetConfig("passwd", utils.GenPasswd())
 		SetConfig("bindAddr", "0.0.0.0:8080")
+		if IsRunInConainer() {
+			SetConfig("basePath", "/home/dockernas/data")
+		}
 		SaveConfig()
 	}
 }
@@ -36,5 +50,5 @@ func SetConfig(key string, value string) {
 }
 
 func SaveConfig() {
-	utils.WriteFile(configFilePath, utils.GetJsonFromObj(configMap))
+	utils.WriteFile(getConfigPath(), utils.GetJsonFromObj(configMap))
 }
