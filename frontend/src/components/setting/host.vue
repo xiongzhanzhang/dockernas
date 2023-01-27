@@ -23,7 +23,7 @@
       </div>
     </div>
     <div>
-      <instanceMonitor name="physic_host"></instanceMonitor>
+      <instanceMonitor name="dockernas"></instanceMonitor>
     </div>
     <div>
       <instanceMonitor></instanceMonitor>

@@ -5,7 +5,7 @@ func GetGateWayInstanceName() string {
 }
 
 func GetHostNameInStats() string {
-	return "physic_host"
+	return "dockernas"
 }
 
 func IsInstanceNameConflict(name string) bool {
