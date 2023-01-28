@@ -2,6 +2,7 @@ package docker
 
 import (
 	"context"
+	"dockernas/internal/config"
 	"dockernas/internal/models"
 	"encoding/json"
 	"log"
@@ -27,6 +28,9 @@ func GetContainerStatus() []models.ContainerStat {
 
 	var stats []models.ContainerStat
 	for _, container := range containers {
+		if len(container.Names) > 0 && container.Names[0] == "/"+config.GetHostNameInStats() {
+			continue
+		}
 		stat := collect(ctx, container, cli)
 		if stat != nil {
 			stats = append(stats, *stat)
