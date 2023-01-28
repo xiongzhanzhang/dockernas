@@ -1,6 +1,7 @@
 package service
 
 import (
+	"dockernas/internal/config"
 	"dockernas/internal/models"
 	"dockernas/internal/utils"
 	"log"
@@ -30,10 +31,19 @@ func CheckIsPortUsed(param models.InstanceParam) {
 		if portValue >= 65535 {
 			panic(item.Value + " is greater than max port value 65535")
 		}
-		if utils.IsPortUsed(item.Protocol, item.Value) {
+		if utils.IsPortUsed(getCheckHost(), item.Protocol, item.Value) {
 			panic("port " + item.Value + " with " + item.Protocol + " protocol is used")
 		}
 	}
+}
+
+func getCheckHost() string {
+	host := "localhost"
+	if config.IsRunInConainer() {
+		host = "host.docker.internal"
+	}
+
+	return host
 }
 
 func SavePortUsed(instance *models.Instance, param models.InstanceParam) {

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"dockernas/internal/backend/docker"
 	"dockernas/internal/config"
 	"dockernas/internal/models"
 	"dockernas/internal/utils"
@@ -47,23 +48,29 @@ func GetStorageInfo() models.StorageInfo {
 	var storageInfo models.StorageInfo
 	storageInfo.BaseDir = config.GetBasePath()
 
-	infos, err := disk.Partitions(false)
-	if err != nil {
-		panic(err)
-	}
-	for _, info := range infos {
-		log.Println(info)
-		if strings.Index(storageInfo.BaseDir, info.Mountpoint) == 0 {
-			storageInfo.Device = info.Device
-			storageInfo.Fstype = info.Fstype
-			diskUsage, error := disk.Usage(info.Mountpoint)
-			if error != nil {
-				panic(err)
-			}
-			storageInfo.Capacity = int64(diskUsage.Total)
-			storageInfo.FreeSize = int64(diskUsage.Free)
+	if config.IsRunInConainer() {
+		storageInfo.Device, storageInfo.Fstype, storageInfo.Capacity, storageInfo.FreeSize =
+			utils.GetDeviceSizeByCmd(config.GetBasePath())
+		storageInfo.BaseDir = docker.GetPathOnHost(config.GetBasePath())
+	} else {
+		infos, err := disk.Partitions(false)
+		if err != nil {
+			panic(err)
+		}
+		for _, info := range infos {
+			log.Println(info)
+			if strings.Index(storageInfo.BaseDir, info.Mountpoint) == 0 {
+				storageInfo.Device = info.Device
+				storageInfo.Fstype = info.Fstype
+				diskUsage, error := disk.Usage(info.Mountpoint)
+				if error != nil {
+					panic(err)
+				}
+				storageInfo.Capacity = int64(diskUsage.Total)
+				storageInfo.FreeSize = int64(diskUsage.Free)
 
-			break
+				break
+			}
 		}
 	}
 
