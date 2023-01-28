@@ -5,6 +5,7 @@ import (
 	"dockernas/internal/models"
 	"dockernas/internal/utils"
 	"io/ioutil"
+	"log"
 	"strings"
 
 	"github.com/shirou/gopsutil/cpu"
@@ -51,6 +52,7 @@ func GetStorageInfo() models.StorageInfo {
 		panic(err)
 	}
 	for _, info := range infos {
+		log.Println(info)
 		if strings.Index(storageInfo.BaseDir, info.Mountpoint) == 0 {
 			storageInfo.Device = info.Device
 			storageInfo.Fstype = info.Fstype

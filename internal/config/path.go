@@ -33,6 +33,7 @@ func SetBasePath(path string) {
 	}
 	SetConfig("basePath", path)
 	SaveConfig()
+	InitLogger()
 }
 
 func GetFullDfsPath(path string) string {

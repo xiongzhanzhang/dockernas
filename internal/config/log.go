@@ -8,10 +8,10 @@ import (
 )
 
 func InitLogger() {
-	logPath := "./logs"
-	if IsBasePathSet() {
-		logPath = GetBasePath() + "/logs"
+	if IsBasePathSet() == false {
+		return
 	}
+	logPath := GetBasePath() + "/logs"
 	utils.CheckCreateDir(logPath)
 	log.SetOutput(&lumberjack.Logger{
 		Filename:   logPath + "/server.log",
