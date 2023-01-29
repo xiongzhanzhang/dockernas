@@ -15,7 +15,7 @@ func GetApps(c *gin.Context) {
 
 func GetAppByName(c *gin.Context) {
 	name := c.Param("name")
-	app := service.GetAppByName(name)
+	app := service.GetAppByName(name, true)
 	if app == nil {
 		panic("cant get app " + name)
 	}
@@ -25,7 +25,7 @@ func GetAppByName(c *gin.Context) {
 func GetExtraAppByName(c *gin.Context) {
 	name := c.Param("name")
 	dir := c.Param("dir")
-	app := service.GetAppByName(dir + "/" + name)
+	app := service.GetAppByName(dir+"/"+name, true)
 	if app == nil {
 		panic("cant get app " + name)
 	}

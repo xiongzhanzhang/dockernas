@@ -10,24 +10,38 @@ import (
 	"strings"
 )
 
+var appMap = map[string]models.App{}
+
 func GetApps() []models.App {
 	apps := []models.App{}
 
-	dirs, err := ioutil.ReadDir("./apps")
-	if err != nil {
-		log.Println("list dir error", err)
+	dir1, err1 := ioutil.ReadDir("./apps")
+	if err1 != nil {
+		log.Println("list dir error", err1)
 	} else {
-		for _, fi := range dirs {
-			if fi.IsDir() {
-				app := GetAppByName(fi.Name())
-				if app != nil {
-					apps = append(apps, *app)
+		for _, fi1 := range dir1 {
+			if fi1.IsDir() {
+				dir2, err2 := ioutil.ReadDir(filepath.Join("./apps", fi1.Name()))
+				if err2 != nil {
+					log.Println("list dir error", err2)
+				} else {
+					for _, fi2 := range dir2 {
+						if fi2.IsDir() {
+							app := GetAppByNameAndPath(
+								fi2.Name(),
+								"./apps/"+fi1.Name(),
+								"/apps/"+fi1.Name())
+							if app != nil {
+								apps = append(apps, *app)
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 
-	dir1, err1 := ioutil.ReadDir(config.GetExtraAppPath())
+	dir1, err1 = ioutil.ReadDir(config.GetExtraAppPath())
 	if err1 != nil {
 		log.Println("list dir error", err1)
 	} else {
@@ -39,7 +53,7 @@ func GetApps() []models.App {
 				} else {
 					for _, fi2 := range dir2 {
 						if fi2.IsDir() {
-							app := GetAppByName(fi1.Name() + "/" + fi2.Name())
+							app := GetAppByNameAndPath(fi1.Name()+"/"+fi2.Name(), config.GetExtraAppPath(), "/extra/apps")
 							if app != nil {
 								apps = append(apps, *app)
 							}
@@ -50,21 +64,27 @@ func GetApps() []models.App {
 		}
 	}
 
+	for k := range appMap {
+		delete(appMap, k)
+	}
+	for _, app := range apps {
+		appMap[app.Name] = app
+	}
+
 	return apps
 }
 
-func GetAppByName(name string) *models.App {
-	var app *models.App
-	if !strings.Contains(name, "/") {
-		app = GetAppByNameAndPath(name, "./apps", "/apps")
-	} else {
-		app = GetAppByNameAndPath(name, config.GetExtraAppPath(), "/extra/apps")
+func GetAppByName(name string, flush bool) *models.App {
+	app, ok := appMap[name]
+	if ok {
+		return &app
 	}
-
-	if app == nil {
+	if flush == false {
 		return nil
 	}
-	return app
+
+	GetApps()
+	return GetAppByName(name, false)
 }
 
 func GetAppByNameAndPath(name string, path string, urlPrefix string) *models.App {
