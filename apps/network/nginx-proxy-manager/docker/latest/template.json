@@ -1,0 +1,43 @@
+{
+    "imageUrl":"jc21/nginx-proxy-manager:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"http访问端口",
+            "key":"80",
+            "value":"80",
+            "protocol":"http"
+        },
+        {
+            "prompt":"管理页面端口",
+            "key":"81",
+            "value":"81",
+            "protocol":"http"
+        },
+        {
+            "prompt":"https访问端口",
+            "key":"443",
+            "value":"443",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"数据目录",
+            "key":"/data",
+            "value":"",
+            "name":"data"
+        },
+        {
+            "prompt":"配置目录",
+            "key":"/etc/letsencrypt",
+            "value":"",
+            "name":"etc"
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+

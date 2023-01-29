@@ -1,0 +1,31 @@
+{
+    "imageUrl":"ddsderek/easyimage:latest",
+    "privileged":true,
+    "portParams":[
+        {
+            "prompt":"web访问端口",
+            "key":"80",
+            "value":"80",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置文件位置",
+            "key":"/app/web/config",
+            "value":"",
+            "name":"config"
+        }
+    ],
+    "dfsVolume":[
+        {
+            "prompt":"文件保存位置",
+            "key":"/app/web/i",
+            "value":"",
+            "name":"data"
+        }
+    ]
+}
+
