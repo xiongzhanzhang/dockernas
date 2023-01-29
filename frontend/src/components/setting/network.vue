@@ -101,18 +101,6 @@
       <div class="center_div">
         <div>
           <div class="input_div2">
-            <div class="first_input">主机名</div>
-            <div>
-              <el-input
-                class="w-50 m-2"
-                style="width: 400px"
-                size="large"
-                v-model="curHostName"
-              >
-              </el-input>
-            </div>
-          </div>
-          <div class="input_div2">
             <div class="first_input">实例</div>
             <div>
               <el-select
@@ -129,6 +117,18 @@
                   :value="item.instanceName"
                 />
               </el-select>
+            </div>
+          </div>
+          <div class="input_div2">
+            <div class="first_input">主机名</div>
+            <div>
+              <el-input
+                class="w-50 m-2"
+                style="width: 400px"
+                size="large"
+                v-model="curHostName"
+              >
+              </el-input>
             </div>
           </div>
           <div class="input_div2">
@@ -362,6 +362,7 @@ export default {
       });
     },
     versionChange() {
+      this.curHostName=this.curInstanceName;
       for (var instancePort of this.instancesPorts) {
         if (instancePort.instanceName == this.curInstanceName) {
           this.curPorts = instancePort.ports;
