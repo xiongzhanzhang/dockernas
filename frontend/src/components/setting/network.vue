@@ -136,6 +136,8 @@
             <div>
               <el-select
                 collapse-tags
+                filterable
+                allow-create
                 size="large"
                 style="width: 400px"
                 v-model="curSelectPort"
