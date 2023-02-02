@@ -33,10 +33,10 @@
 
             <el-sub-menu>
               <template #title>帮助</template>
-              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">文档</el-menu-item>
-              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">社区</el-menu-item>
-              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">github</el-menu-item>
-              <el-menu-item @click="gotoLink('https://gitee.com/dockernas/dockernas')" index="">gitee</el-menu-item>
+              <el-menu-item @click="gotoLink('https://doc.dockernas.com')" index="">文档</el-menu-item>
+              <el-menu-item @click="gotoLink('https://doc.dockernas.com')" index="">社区</el-menu-item>
+              <el-menu-item @click="gotoLink('https://github.com/xiongzhanzhang/dockernas')" index="">github</el-menu-item>
+              <el-menu-item @click="gotoLink('https://gitee.com/xiongzhanzhang/dockernas')" index="">gitee</el-menu-item>
               <el-menu-item @click="logout" index="">退出</el-menu-item>
             </el-sub-menu>
           </el-menu>
