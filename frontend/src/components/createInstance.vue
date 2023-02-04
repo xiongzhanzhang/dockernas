@@ -115,6 +115,8 @@
             size="large"
             v-model="param.value"
             check-strictly
+            filterable
+            allow-create
             lazy
             :load="loadNode"
           >

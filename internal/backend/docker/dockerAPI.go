@@ -271,7 +271,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		}
 	}
 
-	for _, item := range param.DfsVolume {
+	for index, item := range param.DfsVolume {
 		//mount a local dir if dfs dir is empty, let user decide whether or not delete data when delete instance
 		if item.Value == "" {
 			if item.Name == "" || utils.Contains(usedVolumeName, item.Name) {
@@ -285,6 +285,10 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 				Target: item.Key,
 			})
 		} else {
+			if item.Value[0] != '/' {
+				item.Value = "/" + item.Value
+				param.DfsVolume[index].Value = item.Value
+			}
 			dfsPath := config.GetFullDfsPath(item.Value)
 			utils.CheckCreateDir(dfsPath)
 			m = append(m, mount.Mount{
