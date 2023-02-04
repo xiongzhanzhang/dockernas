@@ -16,14 +16,14 @@ type ParamItem struct {
 type DockerTemplate struct {
 	ImageUrl    string      `json:"imageUrl"`
 	Version     string      `json:"version"`
+	Privileged  bool        `json:"privileged"`
+	Cmd         string      `json:"cmd"`
+	OSList      string      `json:"osList"`
 	PortParams  []ParamItem `json:"portParams"`
 	EnvParams   []ParamItem `json:"envParams"`
 	LocalVolume []ParamItem `json:"localVolume"`
 	DfsVolume   []ParamItem `json:"dfsVolume"`
 	OtherParams []ParamItem `json:"otherParams"`
-	Privileged  bool        `json:"privileged"`
-	Cmd         string      `json:"cmd"`
-	OSList      string      `json:"osList"`
 }
 
 type InstanceParam struct {
@@ -31,7 +31,8 @@ type InstanceParam struct {
 	AppName  string `json:"appName"`
 	Summary  string `json:"summary"`
 	IconUrl  string `json:"iconUrl"`
-	HostOnly bool   `json:"hostOnly"`  // can only access by 127.0.0.1
+	AppUrl   string `json:"appUrl"`
+	HostOnly bool   `json:"hostOnly"` // can only access by 127.0.0.1
 	DockerTemplate
 }
 

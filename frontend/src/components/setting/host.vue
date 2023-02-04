@@ -10,6 +10,10 @@
         <div>{{ hostData.platform }}</div>
       </div>
       <div class="input_div">
+        <div class="first_input">DockerNAS版本</div>
+        <div>{{ hostData.dockerNASVersion }}</div>
+      </div>
+      <div class="input_div">
         <div class="first_input">cpu型号</div>
         <div>{{ hostData.modelName }}</div>
       </div>

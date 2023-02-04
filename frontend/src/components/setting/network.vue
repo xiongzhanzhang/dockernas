@@ -307,6 +307,7 @@ export default {
           })
           .catch((error) => {
             this.changeHttpStateLoding = false;
+            this.flush();
           });
       } else {
         disableHttps()
@@ -316,6 +317,7 @@ export default {
           })
           .catch((error) => {
             this.changeHttpStateLoding = false;
+            this.flush();
           });
       }
     },

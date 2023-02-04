@@ -52,3 +52,7 @@ func SetConfig(key string, value string) {
 func SaveConfig() {
 	utils.WriteFile(getConfigPath(), utils.GetJsonFromObj(configMap))
 }
+
+func GetDockerNASVersion() string {
+	return "0.1.0"
+}

@@ -32,6 +32,7 @@ func GetHostInfo() models.HostInfo {
 	}
 
 	hostData.HostName = hostInfo.Hostname
+	hostData.DockerNASVersion = config.GetDockerNASVersion()
 	hostData.BootTime = hostInfo.BootTime * 1000
 	hostData.Platform = hostInfo.Platform
 	hostData.ModelName = cpuData[0].ModelName

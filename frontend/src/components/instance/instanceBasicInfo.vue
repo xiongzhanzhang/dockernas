@@ -26,7 +26,10 @@
       </div>
       <div class="input_div">
         <div class="first_input">应用名</div>
-        <div>{{ instance.appName }}</div>
+        <div v-if="instanceParam.appUrl != ''">
+          <a target="_blank" :href="instanceParam.appUrl">{{ instance.appName }}</a>
+        </div>
+        <div v-if="instanceParam.appUrl == ''">{{instance.appName }}</div>
       </div>
       <div class="input_div">
         <div class="first_input">仅本地访问</div>
@@ -47,11 +50,7 @@
       >
         <div class="first_input">{{ param.prompt }}</div>
         <div v-if="param.protocol == 'http'">
-          <a
-            target="_blank"
-            :href="getInstanceWebUrl(instance.name, param.value)"
-            >{{ param.value }}</a
-          >
+          <a target="_blank" :href="getInstanceWebUrl(instance.name, param.value)">{{ param.value }}</a>
         </div>
         <div v-if="param.protocol != 'http'">{{ param.value }}</div>
       </div>

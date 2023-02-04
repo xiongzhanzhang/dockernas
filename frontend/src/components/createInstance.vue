@@ -34,7 +34,14 @@
         <div class="input_div">
           <div class="first_input">{{ $t("store.appName") }}</div>
           <div>
-            {{ instanceParam.appName }}
+            <span v-if="instanceParam.appUrl != ''">
+              <a target="_blank" :href="instanceParam.appUrl">{{
+                instanceParam.appName
+              }}</a></span
+            >
+            <span v-if="instanceParam.appUrl == ''">{{
+              instanceParam.appName
+            }}</span>
             <el-tooltip effect="dark" placement="bottom">
               <el-icon><InfoFilled /></el-icon>
               <template #content
@@ -183,6 +190,7 @@ export default {
         summary: "",
         appName: "",
         version: "",
+        appUrl: "",
         portParams: [],
         envParams: [],
         dfsVolume: [],
@@ -228,6 +236,7 @@ export default {
     setApp(app) {
       this.app = app;
       this.instanceParam.iconUrl = app.iconUrl;
+      this.instanceParam.appUrl = app.url;
       this.instanceParam.appName = app.name;
     },
     setAppName(name) {

@@ -77,9 +77,9 @@ func GetApps() []models.App {
 func GetAppByName(name string, flush bool) *models.App {
 	app, ok := appMap[name]
 	if ok {
-		return &app
+		return GetAppByNameAndPath(app.Name, app.Path, app.UrlPrefix) //get lastest data on disk
 	}
-	if flush == false {
+	if !flush {
 		return nil
 	}
 
@@ -98,6 +98,8 @@ func GetAppByNameAndPath(name string, path string, urlPrefix string) *models.App
 		return nil
 	}
 	app.Name = name
+	app.Path = path
+	app.UrlPrefix = urlPrefix
 
 	return &app
 }
