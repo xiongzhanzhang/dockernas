@@ -17,8 +17,14 @@ cd frontend
 npm install
 npm run build
 cd ..
-CGO_ENABLED=0 go build ./dockernas.go
+go build ./dockernas.go
+```
+docker镜像构建方式如下
+```sh
+#需要在本地编译前端代码
 docker build . -t dockernas
+#多平台构建，构建后直接push到dockerhub
+docker buildx build --platform linux/arm,linux/arm64,linux/amd64 -t xiongzhanzhang/dockernas:latest . --push
 ```
 
 目前主要在windows上测试，Linux下问题可能相对多些，可以提issue反馈

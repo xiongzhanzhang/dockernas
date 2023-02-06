@@ -32,7 +32,7 @@
     "dfsVolume":[
         {
             "prompt":"共享数据目录",
-            "key":"/var/lib/dav",
+            "key":"/var/lib/dav/data",
             "value":"",
             "name":"data"
         }
