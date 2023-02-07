@@ -13,7 +13,7 @@ const index = {
 }
 
 const store = {
-  appType: '应用类别',
+  appType: '类别',
   instanceApp: '实例化应用',
   appName: '应用名',
   instanceName: '实例名',

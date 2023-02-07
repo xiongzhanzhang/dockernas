@@ -4,7 +4,6 @@
       <el-container class="full_size">
         <el-header class="no-padding" style="height: 50px">
           <el-menu
-            :ellipsis="false"
             active-text-color="#ffd04b"
             background-color="#545c64"
             text-color="#fff"
@@ -29,7 +28,7 @@
               $t("index.setting")
             }}</el-menu-item>
 
-            <div style="flex-grow: 1"></div>
+            <!-- <div style="flex-grow: 1"></div> -->
 
             <el-sub-menu>
               <template #title>帮助</template>

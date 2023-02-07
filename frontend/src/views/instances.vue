@@ -3,8 +3,8 @@
     <div style="padding: 6px">
       <el-row>
         <el-col
-          :xs="12"
-          :sm="8"
+          :xs="24"
+          :sm="12"
           :md="8"
           :lg="6"
           v-for="instance in instances"
