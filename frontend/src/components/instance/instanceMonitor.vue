@@ -1,11 +1,11 @@
 <template>
-  <div class="card">
+  <div class="card_style">
     <div style="padding: 16px; display: flex">
       <el-date-picker
         v-model="time"
         type="datetimerange"
         size="large"
-        style="width: 450px"
+        class="big_input"
         range-separator="To"
         start-placeholder="Start date"
         end-placeholder="End date"
@@ -17,22 +17,22 @@
       </div>
     </div>
     <el-row>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="cpu" class="chart"></div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="mem" class="chart"></div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="network_in" class="chart"></div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="network_out" class="chart"></div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="disk_in" class="chart"></div>
       </el-col>
-      <el-col :xs="12" :sm="12" :md="12" :lg="12">
+      <el-col :xs="24" :sm="12" :md="12" :lg="12">
         <div ref="disk_out" class="chart"></div>
       </el-col>
     </el-row>
@@ -217,14 +217,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.card {
-  /* padding: 6px; */
-  /* margin: 6px; */
-  margin-top: 16px;
-  border-radius: 3px;
-  background-color: white;
-}
+<style>
+@import "../../css/common.css";
+@import "../../css/picture.css";
+@import "../../css/text.css";
 
 .chart {
   margin-top: 18px;

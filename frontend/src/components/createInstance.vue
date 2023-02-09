@@ -2,7 +2,7 @@
   <el-dialog
     v-model="dialogTableVisible"
     :title="title"
-    style="min-height: 500px; min-width: 700px"
+    class="big_dialog"
   >
     <div class="center_div">
       <div>
@@ -11,8 +11,7 @@
           <div>
             <el-input
               v-model="instanceParam.name"
-              class="w-50 m-2"
-              style="width: 400px"
+              class="w-50 m-2 big_input"
               size="large"
               :disabled="editMode == true"
             >
@@ -24,8 +23,7 @@
           <div>
             <el-input
               v-model="instanceParam.summary"
-              class="w-50 m-2"
-              style="width: 400px"
+              class="w-50 m-2 big_input"
               size="large"
             >
             </el-input>
@@ -65,7 +63,7 @@
               v-model="instanceParam.version"
               collapse-tags
               size="large"
-              style="width: 400px"
+              class="big_input"
               @change="versionChange"
             >
               <el-option
@@ -88,8 +86,7 @@
           <div>
             <el-input
               v-model="param.value"
-              class="w-50 m-2"
-              style="width: 400px"
+              class="w-50 m-2 big_input"
               size="large"
             ></el-input>
           </div>
@@ -110,8 +107,7 @@
             ></el-input>
           </div> -->
           <el-tree-select
-            class="w-50 m-2"
-            style="width: 400px"
+            class="w-50 m-2 big_input"
             size="large"
             v-model="param.value"
             check-strictly
@@ -134,8 +130,7 @@
             <el-input
               :type="param.passwd == true ? 'password' : 'text'"
               v-model="param.value"
-              class="w-50 m-2"
-              style="width: 400px"
+              class="w-50 m-2 big_input"
               size="large"
               :show-password="param.passwd"
             ></el-input>
@@ -152,8 +147,7 @@
           <div>
             <el-input
               v-model="param.value"
-              class="w-50 m-2"
-              style="width: 400px"
+              class="w-50 m-2 big_input"
               size="large"
             ></el-input>
           </div>
@@ -291,18 +285,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 @import "../css/common.css";
-.input_div {
-  display: flex;
-  color: black !important;
-  font-size: 16px;
-  align-items: center;
-  height: 50px;
-}
-.first_input {
-  width: 200px;
-  text-align: right;
-  margin-right: 30px;
-}
+@import "../css/dialog.css";
+@import "../css/text.css";
+
 </style>

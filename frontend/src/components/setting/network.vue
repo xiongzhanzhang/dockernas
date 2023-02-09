@@ -1,26 +1,26 @@
 <template>
   <div>
-    <div class="card">
-      <div class="input_div">
-        <div class="first_input">IPv4地址</div>
-        <div>{{ networkData.ip }}</div>
+    <div class="card_style">
+      <div class="input_div bottom_border">
+        <div class="table_first_input">IPv4地址</div>
+        <div class="table_second_input">{{ networkData.ip }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">IPv6地址</div>
-        <div>{{ networkData.ipv6 }}</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">IPv6地址</div>
+        <div class="table_second_input">{{ networkData.ipv6 }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">域名</div>
-        <div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">域名</div>
+        <div class="table_second_input">
           {{ networkData.domain }}
           <el-icon class="click_able" @click="showSetDomain"
             ><EditPen
           /></el-icon>
         </div>
       </div>
-      <div class="input_div">
-        <div class="first_input">HTTP网关</div>
-        <div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">HTTP网关</div>
+        <div class="table_second_input">
           <el-switch
             v-model="networkData.httpGatewayEnable"
             :loading="networkData.HttpGatewayLoading"
@@ -28,9 +28,9 @@
           />
         </div>
       </div>
-      <div class="input_div">
-        <div class="first_input">开启HTTPS</div>
-        <div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">开启HTTPS</div>
+        <div class="table_second_input">
           <el-switch
             v-model="networkData.httpsEnable"
             @change="changeHttpsState"
@@ -38,8 +38,8 @@
           />
         </div>
       </div>
-      <div class="input_div">
-        <div class="first_input">ssl证书路径
+      <div class="input_div bottom_border">
+        <div class="table_first_input">ssl证书路径
           <el-tooltip effect="dark" placement="bottom">
               <el-icon><InfoFilled /></el-icon>
               <template #content
@@ -47,7 +47,7 @@
               >
             </el-tooltip>
         </div>
-        <div>
+        <div class="table_second_input">
           {{ networkData.sslCertificatePath }}
           <el-icon class="click_able" @click="showSetCaFilePath"
             ><EditPen
@@ -57,7 +57,7 @@
 
     </div>
 
-    <div class="card" style="margin-top: 16px; min-height: 300px">
+    <div class="card_style" style="margin-top: 16px; min-height: 300px">
       <div class="center_div" style="padding-top: 10px; padding-bottom: 10px; margin-right: 20px;">
         <div style="flex-grow: 1"></div>
         <el-button
@@ -71,7 +71,7 @@
       <el-table
         :data="httpProxyConfigs"
         stripe
-        style="width: 100%; font-size: 18px"
+        class="table_css"
         :row-style="{ height: '50px' }"
         :cell-style="{ padding: '0px' }"
       >
@@ -81,8 +81,8 @@
           <a  v-if="networkData.httpsEnable" target="_blank" :href="'https://' + scope.row.url">{{scope.row.url}}</a>
         </el-table-column>
         <el-table-column prop="instanceName" label="代理实例" min-width="20%" />
-        <el-table-column prop="port" label="代理端口" min-width="10%" />
-        <el-table-column label="操作" min-width="10%" #default="scope">
+        <el-table-column prop="port" label="代理端口" min-width="15%" />
+        <el-table-column label="操作" width="90px" #default="scope">
           <el-button
             size="small"
             type="danger"
@@ -96,17 +96,17 @@
     <el-dialog
       v-model="createProxyVisible"
       title="创建HTTP代理"
-      style="min-height: 500px"
+      class="big_dialog"
     >
       <div class="center_div">
         <div>
-          <div class="input_div2">
+          <div class="input_div">
             <div class="first_input">实例</div>
             <div>
               <el-select
                 collapse-tags
                 size="large"
-                style="width: 400px"
+                class="big_input"
                 @change="versionChange"
                 v-model="curInstanceName"
               >
@@ -119,19 +119,18 @@
               </el-select>
             </div>
           </div>
-          <div class="input_div2">
+          <div class="input_div">
             <div class="first_input">主机名</div>
             <div>
               <el-input
-                class="w-50 m-2"
-                style="width: 400px"
+                class="big_input"
                 size="large"
                 v-model="curHostName"
               >
               </el-input>
             </div>
           </div>
-          <div class="input_div2">
+          <div class="input_div">
             <div class="first_input">端口</div>
             <div>
               <el-select
@@ -139,7 +138,7 @@
                 filterable
                 allow-create
                 size="large"
-                style="width: 400px"
+                class="big_input"
                 v-model="curSelectPort"
               >
                 <el-option
@@ -166,15 +165,14 @@
     <el-dialog
       v-model="setDomainVisiable"
       title="设置域名"
-      style="min-height: 300px; width: 600px"
+      class="big_dialog"
     >
       <div class="center_div">
         <div>
-          <div class="input_div2">
+          <div class="input_div">
             <div>
               <el-input
-                class="w-50 m-2"
-                style="width: 350px"
+                class="big_input"
                 size="large"
                 v-model="curDomain"
               >
@@ -196,14 +194,14 @@
     <el-dialog
       v-model="setCaFilePathVisiable"
       title="设置证书文件路径"
-      style="min-height: 300px; width: 600px"
+      class="big_dialog"
     >
       <div class="center_div">
         <div>
-          <div class="input_div2">
+          <div class="input_div">
             <div>
               <el-tree-select
-                class="w-50 m-2"
+                class="big_input"
                 style="width: 400px"
                 size="large"
                 v-model="caFilePath"
@@ -410,34 +408,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.card {
-  /* padding: 6px; */
-  /* margin: 6px; */
-  border-radius: 3px;
-  background-color: white;
-}
-
-.input_div {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-  border-bottom: 1px solid rgb(222, 222, 222);
-}
-.first_input {
-  width: 33%;
-  padding-left: 30px;
-  /* text-align: right; */
-  margin-right: 80px;
-}
-
-.input_div2 {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-}
+<style>
+@import "../../css/common.css";
+@import "../../css/picture.css";
+@import "../../css/menu.css";
+@import "../../css/text.css";
+@import "../../css/dialog.css";
 </style>

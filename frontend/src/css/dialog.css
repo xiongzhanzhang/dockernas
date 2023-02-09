@@ -1,0 +1,22 @@
+
+@media (max-width: 600px) {
+    .big_dialog {
+        min-height: 500px;
+        min-width: 360px;
+    }
+    .table_css {
+        width: 100%;
+        font-size: 14px 
+    }
+}
+
+@media (min-width: 600px) {
+    .big_dialog {
+        min-height: 500px;
+        min-width: 700px;
+    }
+    .table_css {
+        width: 100%;
+        font-size: 18px 
+    }
+}

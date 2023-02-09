@@ -1,12 +1,9 @@
 <template>
   <div class="common-layout" style="height: 100%">
     <el-container style="height: 100%">
-      <el-aside class="card" width="200px">
+      <el-aside class="card_style left_menu">
         <div class="vertical_div">
-          <el-image
-            style="width: 160px; height: 160px; border-radius: 3px"
-            :src="iconUrl"
-          ></el-image>
+          <el-image class="image_icon" :src="iconUrl"></el-image>
 
           <el-menu
             active-text-color="rgb(64,158,255)"
@@ -17,15 +14,15 @@
             router
           >
             <el-menu-item :index="`/index/instances/${name}/basicInfo`"
-              ><div class="menu-item">基本信息</div></el-menu-item
+              ><div class="menu-item">配置</div></el-menu-item
             >
             <el-menu-item :index="`/index/instances/${name}/event`"
-              ><div class="menu-item">事件记录</div></el-menu-item
+              ><div class="menu-item">事件</div></el-menu-item
             >
             <el-menu-item :index="`/index/instances/${name}/log`"
               ><div class="menu-item">日志</div></el-menu-item
             >
-            <el-menu-item :index="`/index/instances/${name}/monitor`" 
+            <el-menu-item :index="`/index/instances/${name}/monitor`"
               ><div class="menu-item">监控</div></el-menu-item
             >
             <el-menu-item :index="`/index/instances/${name}/terminal`"
@@ -34,12 +31,41 @@
           </el-menu>
         </div>
       </el-aside>
-      <el-main class="card" style="min-height: 100px;padding: 5px; margin: 6px">
-        <RouterView  v-slot="{ Component }">
-          <keep-alive>
-            <component  ref="view" :is="Component"/>
-          </keep-alive>
-        </RouterView>
+      <el-main class="router_view_border">
+        <div class="card_style top_menu">
+          <el-menu
+            active-text-color="rgb(64,158,255)"
+            text-color="#000"
+            class="el-menu-demo"
+            mode="horizontal"
+            :default-active="$router.currentRoute.value.path"
+            style="width: 100%"
+            router
+          >
+            <el-menu-item :index="`/index/instances/${name}/basicInfo`"
+              ><div class="menu-item">配置</div></el-menu-item
+            >
+            <el-menu-item :index="`/index/instances/${name}/event`"
+              ><div class="menu-item">事件</div></el-menu-item
+            >
+            <el-menu-item :index="`/index/instances/${name}/log`"
+              ><div class="menu-item">日志</div></el-menu-item
+            >
+            <el-menu-item :index="`/index/instances/${name}/monitor`"
+              ><div class="menu-item">监控</div></el-menu-item
+            >
+            <el-menu-item :index="`/index/instances/${name}/terminal`"
+              ><div class="menu-item">终端</div></el-menu-item
+            >
+          </el-menu>
+        </div>
+        <div class="card_style" style="height: 100%">
+          <RouterView v-slot="{ Component }">
+            <keep-alive>
+              <component ref="view" :is="Component" />
+            </keep-alive>
+          </RouterView>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -75,8 +101,8 @@ export default {
         });
     },
   },
-  created(){
-      this.flushInstance();
+  created() {
+    this.flushInstance();
   },
   mounted() {},
 };
@@ -84,17 +110,6 @@ export default {
 
 <style scoped>
 @import "../css/common.css";
-
-.card {
-  /* padding: 6px; */
-  margin: 6px;
-  border-radius: 3px;
-  background-color: white;
-}
-
-.menu-item {
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-}
+@import "../css/picture.css";
+@import "../css/menu.css";
 </style>

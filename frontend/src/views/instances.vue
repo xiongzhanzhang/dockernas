@@ -3,7 +3,7 @@
     <div style="padding: 6px">
       <el-row>
         <el-col
-          :xs="24"
+          :xs="12"
           :sm="12"
           :md="8"
           :lg="6"

@@ -1,0 +1,47 @@
+.card {
+    background-color: white;
+    margin: 6px;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px #ccc;
+}
+
+.card:hover {
+    box-shadow: 0 0 8px 8px #ccc;
+}
+
+.image_icon {
+    border-radius: 3px;
+}
+
+@media (max-width: 600px) {
+    .image_icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .card {
+        height: 150px;
+    }
+
+    .router_view_border{
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+@media (min-width: 600px) {
+    .image_icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .card {
+        height: 250px;
+    }
+
+    .router_view_border{
+        padding: 5px;
+        margin: 6px;
+        background-color: white;
+    }
+}

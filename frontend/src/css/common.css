@@ -39,19 +39,13 @@
     align-items: center;
 }
 
-.main_text{
-    font-weight: bold;
-    font-size: 18px;
-    margin-top:12px
-}
-
-.secondary_text{
-    color: rgb(71, 71, 71);
-    font-size: 14px;
-    margin-top:8px
-}
-
 .click_able{
     cursor: pointer;
 }
 
+.card_style {
+    /* padding: 6px; */
+    margin: 6px;
+    border-radius: 3px;
+    background-color: white;
+}

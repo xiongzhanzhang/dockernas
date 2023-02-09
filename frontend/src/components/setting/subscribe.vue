@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card" style="min-height: 600px">
+    <div class="card_style" style="min-height: 600px">
       <div class="center_div" style="padding-top: 10px; padding-bottom: 20px">
         <div style="flex-grow: 1"></div>
         <el-button
@@ -20,7 +20,7 @@
       <el-table
         :data="subscribeData"
         stripe
-        style="width: 100%; font-size: 18px"
+        class="table_css"
         :row-style="{ height: '50px' }"
         :cell-style="{ padding: '0px' }"
       >
@@ -28,7 +28,7 @@
         <el-table-column prop="url" label="git链接" min-width="40%" />
         <el-table-column prop="state" label="状态" min-width="10%" />
         <el-table-column prop="updateTime" label="更新时间" min-width="15%" />
-        <el-table-column label="操作" min-width="10%" #default="scope">
+        <el-table-column label="操作" width="90px" #default="scope">
           <el-button
             size="small"
             type="danger"
@@ -42,28 +42,26 @@
     <el-dialog
       v-model="createSubcribeVisible"
       title="创建订阅"
-      style="min-height: 300px"
+      class="big_dialog"
     >
       <div class="center_div">
         <div>
-          <div class="input_div2">
+          <div class="input_div">
             <div class="first_input">名字</div>
             <div>
               <el-input
-                class="w-50 m-2"
-                style="width: 400px"
+                class="big_input"
                 size="large"
                 v-model="curSubscribeName"
               >
               </el-input>
             </div>
           </div>
-          <div class="input_div2">
+          <div class="input_div">
             <div class="first_input">git链接</div>
             <div>
               <el-input
-                class="w-50 m-2"
-                style="width: 400px"
+                class="big_input"
                 size="large"
                 v-model="curUrl"
               >
@@ -148,34 +146,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.card {
-  /* padding: 6px; */
-  /* margin: 6px; */
-  border-radius: 3px;
-  background-color: white;
-}
-
-.input_div {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-  border-bottom: 1px solid rgb(222, 222, 222);
-}
-.first_input {
-  width: 33%;
-  padding-left: 30px;
-  /* text-align: right; */
-  margin-right: 80px;
-}
-
-.input_div2 {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-}
+<style>
+@import "../../css/common.css";
+@import "../../css/picture.css";
+@import "../../css/menu.css";
+@import "../../css/text.css";
+@import "../../css/dialog.css";
 </style>

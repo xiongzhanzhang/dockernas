@@ -2,13 +2,13 @@
   <el-table
     :data="events"
     stripe
-    style="width: 100%; font-size: 18px"
+    class="table_css"
     :row-style="{ height: '50px' }"
     :cell-style="{ padding: '0px' }"
   >
-    <el-table-column prop="createTime" label="时间" width="250" />
-    <el-table-column prop="eventType" label="事件类别" width="250" />
-    <el-table-column prop="msg" label="具体信息" />
+    <el-table-column prop="createTime" label="时间" min-width="30%" />
+    <el-table-column prop="eventType" label="事件类别" min-width="30%" />
+    <el-table-column prop="msg" label="具体信息" min-width="30%"/>
   </el-table>
 </template>
 
@@ -60,5 +60,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import "../../css/dialog.css";
 </style>

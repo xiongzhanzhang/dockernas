@@ -3,16 +3,16 @@
     <div class="card" @click="clicked">
       <div class="vertical_div">
         <el-image
-          style="width: 120px; height: 120px; border-radius: 3px"
+          :class='[url==null ?"":"click_able","image_icon"]'
+          @click="tryOpen"
           :src="instance.iconUrl"
         />
       </div>
-      <div class="text_div" style="padding-left: 6px">
-        <div :class='[url==null ?"":"click_able","main_text"]' @click="tryOpen" >{{ instance.name }}</div>
+      <div class="text_div" style="padding-left: 6px; flex-grow: 1;">
+        <div class="main_text" >{{ instance.name }}</div>
         <div class="secondary_text">{{ instance.summary }}</div>
       </div>
-      <div style="flex-grow: 1"></div>
-      <div style="height: 100%">
+      <div style="height: 100%;">
         <div class="color_dot" v-if="instance.state == 4" style="background-color:gray"></div>
         <div class="color_dot" v-if="instance.state == 0 || instance.state == 1" style="background-color:yellow"></div>
         <div class="color_dot" v-if="instance.state == 2" style="background-color:red"></div>
@@ -61,11 +61,10 @@ export default {
   
   <style scoped>
 @import "../css/common.css";
+@import "../css/picture.css";
+@import "../css/text.css";
 
 .card {
-  width: 95%;
-  height: 150px;
-
   margin: 6px;
   padding-left: 6px;
 
@@ -75,6 +74,17 @@ export default {
 
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 600px) {
+  .card{
+    height: 100px;
+  }
+}
+@media (min-width: 600px) {
+  .card{
+    height: 150px;
+  }
 }
 
 .card:hover {

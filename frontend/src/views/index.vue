@@ -79,4 +79,6 @@ export default {
 
 <style>
 @import "../css/common.css";
+@import "../css/picture.css";
+@import "../css/menu.css";
 </style>

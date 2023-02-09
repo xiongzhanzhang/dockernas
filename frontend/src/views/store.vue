@@ -1,15 +1,13 @@
 <template>
   <div class="main_page">
     <div class="two_item_div">
-      <div class="two_item_div">
-        <div style="margin-right: 10px; font-weight: 500; font-size: large">
-          {{ $t("store.appType") }}
-        </div>
+      <div>
         <el-select
           v-model="selectTypes"
           multiple
           collapse-tags
-          placeholder="Select"
+          :placeholder='$t("store.appType")'
+          class="small_input"
           size="large"
           @change="filterApps"
         >
@@ -24,8 +22,7 @@
       <div>
         <el-input
           v-model="searchStr"
-          class="w-50 m-2"
-          style="width: 300px"
+          class="w-50 m-2 big_input"
           placeholder="search"
           size="large"
           @input="filterApps"

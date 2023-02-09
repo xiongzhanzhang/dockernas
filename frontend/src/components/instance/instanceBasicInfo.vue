@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div style="background-color: white">
     <div>
-      <div class="input_div">
-        <div class="first_input">实例名</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">实例名</div>
         <div>{{ instance.name }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">创建时间</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">创建时间</div>
         <div>{{ new Date(instance.createTime).toLocaleString() }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">注备</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">注备</div>
         <div>{{ instance.summary }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">状态</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">状态</div>
         <div v-if="instance.state == 0" style="color: green">
           拉取镜像 {{ instance.imagePullState }}
         </div>
@@ -24,31 +24,31 @@
         <div v-if="instance.state == 4" style="color: gray">已停止</div>
         <div v-if="instance.state == 5" style="color: red">拉取失败</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">应用名</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">应用名</div>
         <div v-if="instanceParam.appUrl != ''">
           <a target="_blank" :href="instanceParam.appUrl">{{ instance.appName }}</a>
         </div>
         <div v-if="instanceParam.appUrl == ''">{{instance.appName }}</div>
       </div>
-      <div class="input_div">
-        <div class="first_input">仅本地访问</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">仅本地访问</div>
         <div>
           <el-switch v-model="instanceParam.hostOnly" disabled></el-switch>
         </div>
       </div>
-      <div class="input_div">
-        <div class="first_input">版本</div>
+      <div class="input_div bottom_border">
+        <div class="table_first_input">版本</div>
         <div>{{ instance.version }}</div>
       </div>
 
       <div
-        class="input_div"
+        class="input_div bottom_border"
         v-for="param in instanceParam.portParams"
         v-show="param.hide == false"
         :key="param.prompt"
       >
-        <div class="first_input">{{ param.prompt }}</div>
+        <div class="table_first_input">{{ param.prompt }}</div>
         <div v-if="param.protocol == 'http'">
           <a target="_blank" :href="getInstanceWebUrl(instance.name, param.value)">{{ param.value }}</a>
         </div>
@@ -56,32 +56,32 @@
       </div>
 
       <div
-        class="input_div"
+        class="input_div bottom_border"
         v-for="param in instanceParam.envParams"
         v-show="param.hide == false && param.passwd != true"
         :key="param.prompt"
       >
-        <div class="first_input">{{ param.prompt }}</div>
+        <div class="table_first_input">{{ param.prompt }}</div>
         <div>{{ param.value }}</div>
       </div>
 
       <div
-        class="input_div"
+        class="input_div bottom_border"
         v-for="param in instanceParam.otherParams"
         v-show="param.hide == false && param.passwd != true"
         :key="param.prompt"
       >
-        <div class="first_input">{{ param.prompt }}</div>
+        <div class="table_first_input">{{ param.prompt }}</div>
         <div>{{ param.value }}</div>
       </div>
 
       <div
-        class="input_div"
+        class="input_div bottom_border"
         v-for="param in instanceParam.dfsVolume"
         v-show="param.hide == false"
         :key="param.prompt"
       >
-        <div class="first_input">{{ param.prompt }}</div>
+        <div class="table_first_input">{{ param.prompt }}</div>
         <div>{{ param.value }}</div>
       </div>
 
@@ -217,19 +217,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.input_div {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-  border-bottom: 1px solid rgb(222, 222, 222);
-}
-.first_input {
-  width: 33%;
-  padding-left: 30px;
-  /* text-align: right; */
-  margin-right: 80px;
-}
+<style>
+@import "../../css/text.css";
 </style>

@@ -4,11 +4,9 @@
       <div class="vertical_div">
         <el-image
           style="
-            width: 120px;
-            height: 120px;
-            border-radius: 3px;
-            margin-top: 36px;
+            margin-top: 10%;
           "
+          class="image_icon"
           :src="app.iconUrl"
         />
       </div>
@@ -45,17 +43,6 @@ export default {
 
 <style scoped>
 @import "../css/common.css";
-
-.card {
-    width: 95%;
-    height: 250px;
-    background-color: white;
-    margin: 6px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px 2px #ccc;
-  }
-  
-  .card:hover {
-    box-shadow: 0 0 8px 8px #ccc;
-  }
+@import "../css/picture.css";
+@import "../css/text.css";
 </style>

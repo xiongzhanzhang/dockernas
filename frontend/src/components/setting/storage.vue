@@ -1,29 +1,29 @@
 <template>
   <div>
-    <div class="card">
-      <div class="input_div">
+    <div class="card_style">
+      <div class="input_div bottom_border">
         <div class="first_input">存储路径</div>
         <div>{{ storageData.baseDir }}</div>
       </div>
-      <div class="input_div">
+      <div class="input_div bottom_border">
         <div class="first_input">设备</div>
         <div>{{ storageData.device }}</div>
       </div>
-      <div class="input_div">
+      <div class="input_div bottom_border">
         <div class="first_input">容量</div>
         <div>{{ getSizeInGB(storageData.capacity, 0) }} GB</div>
       </div>
-      <div class="input_div">
+      <div class="input_div bottom_border">
         <div class="first_input">格式</div>
         <div>{{ storageData.fstype }}</div>
       </div>
     </div>
-    <div class="card" style="margin-top: 16px">
+    <div class="card_style" style="margin-top: 16px">
       <el-row>
-        <el-col :xs="12" :sm="12" :md="12" :lg="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <div ref="all" class="chart"></div>
         </el-col>
-        <el-col :xs="12" :sm="12" :md="12" :lg="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <div ref="local" class="chart"></div>
         </el-col>
       </el-row>
@@ -145,28 +145,10 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  /* padding: 6px; */
-  /* margin: 6px; */
-  border-radius: 3px;
-  background-color: white;
-}
-
-.input_div {
-  display: flex;
-  color: black !important;
-  font-size: 18px;
-  align-items: center;
-  height: 80px;
-  border-bottom: 1px solid rgb(222, 222, 222);
-}
-.first_input {
-  width: 33%;
-  padding-left: 30px;
-  /* text-align: right; */
-  margin-right: 80px;
-}
-
+@import "../../css/common.css";
+@import "../../css/picture.css";
+@import "../../css/menu.css";
+@import "../../css/text.css";
 .chart {
   margin-top: 18px;
   height: 400px;
