@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="card_style" style="min-height: 600px">
-      <div class="center_div" style="padding-top: 10px; padding-bottom: 20px">
+      <div class="center_div" style="padding-top: 5px; padding-bottom: 10px">
         <div style="flex-grow: 1"></div>
         <el-button
           type="primary"
-          style="height: 40px; width: 150px; margin-right: 30px"
+          style="height: 35px; width: 100px; margin-right: 10px"
           @click="createSubcribe"
           >添加订阅</el-button
         >
         <el-button
           type="success"
-          style="height: 40px; width: 150px; margin-right: 30px"
+          style="height: 35px; width: 100px; margin-right: 10px"
           @click="tryFlushSubcribe"
           >刷新订阅</el-button
         >
