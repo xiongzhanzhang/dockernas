@@ -5,3 +5,4 @@ config.json
 __debug_bin
 logs
 dockernas
+frontend/dev-dist

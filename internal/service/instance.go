@@ -244,16 +244,17 @@ func DeleteInstance(instance models.Instance) {
 	models.DelInstanceStatData(instance.Name)
 	models.DelEvents(instance.Id)
 
-	log.Println("delete container of instance " + instance.Name)
-	err := docker.Delete(instance.ContainerID)
-	if err != nil {
-		models.AddEventLog(instance.Id, models.DELETE_EVENT, err.Error())
-		panic(err)
-	} else {
-		models.DeleteInstance(&instance)
-		os.RemoveAll(config.GetAppLocalPath(instance.Name))
-		// models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
+	if docker.IsContainerExist(instance.ContainerID) {
+		log.Println("delete container of instance " + instance.Name)
+		err := docker.Delete(instance.ContainerID)
+		if err != nil {
+			models.AddEventLog(instance.Id, models.DELETE_EVENT, err.Error())
+			panic(err)
+		}
 	}
+	models.DeleteInstance(&instance)
+	os.RemoveAll(config.GetAppLocalPath(instance.Name))
+	// models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
 }
 
 func GetInstanceLog(instance models.Instance) string {

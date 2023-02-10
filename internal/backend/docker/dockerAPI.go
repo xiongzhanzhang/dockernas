@@ -164,6 +164,15 @@ func ListContainer() []types.Container {
 	return containers
 }
 
+func IsContainerExist(containerID string) bool {
+	for _, container := range ListContainer() {
+		if container.ID == containerID {
+			return true
+		}
+	}
+	return false
+}
+
 func GetContainerInspect(containerID string) types.ContainerJSON {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())

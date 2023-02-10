@@ -2,15 +2,17 @@ package service
 
 import (
 	"dockernas/internal/config"
+	"time"
 
 	"github.com/google/uuid"
 )
 
-var userToken string
+var tokenMap = make(map[string]int64)
 
 func IsTokenValid(token string) bool {
 	// log.Println(userToken)
-	return token != "" && userToken == token
+	_, ok := tokenMap[token]
+	return ok
 }
 
 func GenToken(user string, passwd string) string {
@@ -19,6 +21,7 @@ func GenToken(user string, passwd string) string {
 		panic("user password error")
 	}
 
-	userToken = uuid.New().String()
+	userToken := uuid.New().String()
+	tokenMap[userToken] = time.Now().UnixMilli()
 	return userToken
 }
