@@ -28,7 +28,9 @@ func StartServer() {
 		router.Static("/extra/apps", config.GetExtraAppPath())
 	}
 	router.NoRoute(func(ctx *gin.Context) {
-		if strings.Index(ctx.Request.URL.Path, "/index/") == 0 {
+		if strings.Index(ctx.Request.URL.Path, "/index/") == 0 ||
+			ctx.Request.URL.Path == "/login" ||
+			ctx.Request.URL.Path == "/basepath" {
 			ctx.Request.URL.Path = "/"
 			router.HandleContext(ctx)
 		}
