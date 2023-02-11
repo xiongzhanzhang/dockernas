@@ -3,9 +3,28 @@ package server
 import (
 	"dockernas/internal/api"
 	"dockernas/internal/middleware"
+	"io/ioutil"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
+
+func initStaticFileRouter(router *gin.Engine) {
+	router.StaticFile("/", "./frontend/dist/index.html")
+	router.Static("/assets", "./frontend/dist/assets")
+	router.Static("/apps", "./apps")
+
+	dir1, err1 := ioutil.ReadDir("./frontend/dist")
+	if err1 != nil {
+		log.Println("list dir error", err1)
+	} else {
+		for _, fi1 := range dir1 {
+			if !fi1.IsDir() {
+				router.StaticFile("/"+fi1.Name(), "./frontend/dist/"+fi1.Name())
+			}
+		}
+	}
+}
 
 func registerRoutes(router *gin.Engine) {
 	router.GET("/terminal", api.InstanceWebTerminal)

@@ -15,6 +15,7 @@ export default defineConfig({
       },
       manifest: {
         name: 'DockerNAS',
+        short_name: 'DockerNAS',
         icons: [
           // {
           //   src: 'pwa-192x192.png',

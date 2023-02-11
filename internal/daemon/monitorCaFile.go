@@ -25,10 +25,9 @@ func MonitorCaFile() {
 	if lastCerModTime == 0 || lastKeyModTime == 0 {
 		lastCerModTime = cerModTime
 		lastKeyModTime = keyModTime
-	} else {
+	} else if lastCerModTime < cerModTime || lastKeyModTime < keyModTime {
 		lastCerModTime = cerModTime
 		lastKeyModTime = keyModTime
-
 		service.RestartHttpGateway()
 	}
 }

@@ -110,16 +110,14 @@ func EnableHttpGateway() {
 		param.IconUrl = app.IconUrl
 		param.ImageUrl = app.DockerVersions[0].ImageUrl
 		param.Version = app.DockerVersions[0].Version
-		param.DfsVolume = []models.ParamItem{}
 		param.LocalVolume = app.DockerVersions[0].LocalVolume
 		param.EnvParams = app.DockerVersions[0].EnvParams
 		param.PortParams = app.DockerVersions[0].PortParams
 		param.Privileged = true
 
-		if config.GetIsHttpsEnabled() {
-			param.DfsVolume = app.DockerVersions[0].DfsVolume
-			param.DfsVolume[0].Value = config.GetCaFileDir()
-		}
+		param.DfsVolume = []models.ParamItem{}
+		param.DfsVolume = app.DockerVersions[0].DfsVolume
+		param.DfsVolume[0].Value = config.GetCaFileDir()
 
 		CreateInstance(param, true)
 	} else {

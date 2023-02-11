@@ -2,6 +2,7 @@ package service
 
 import (
 	"dockernas/internal/config"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,7 +18,7 @@ func IsTokenValid(token string) bool {
 
 func GenToken(user string, passwd string) string {
 	realUserName, realPasswd := config.GetUserInfo()
-	if realUserName != user || realPasswd != passwd {
+	if strings.ToLower(realUserName) != strings.ToLower(user) || realPasswd != passwd {
 		panic("user password error")
 	}
 

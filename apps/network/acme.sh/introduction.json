@@ -3,5 +3,5 @@
   "category": [
     "网络"
   ],
-  "summary": "acme.sh 实现了 acme 协议, 可以生成免费的证书。需要在容器内执行一次acme.sh --issue --dns dns_dp(或dns_cf等) -d *.yourdomain.com --debug 2 。注意cloudflare不支持tk等免费域名。参考https://github.com/acmesh-official/acme.sh/wiki"
+  "summary": "acme.sh 实现了 acme 协议, 可以生成免费的证书。需要在容器内执行一次acme.sh --issue --server letsencrypt --dns dns_dp(或dns_cf等) -d *.yourdomain.com --debug 2 。注意cloudflare不支持tk等免费域名。参考https://github.com/acmesh-official/acme.sh/wiki"
 }
