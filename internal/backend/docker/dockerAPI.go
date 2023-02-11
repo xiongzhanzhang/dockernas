@@ -259,6 +259,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			instanceLocalPath := config.GetAppLocalFilePath(param.Name, item.Name)
 			if !utils.IsFileExist(instanceLocalPath) {
 				_, err := utils.CopyFile(templateFilePath, instanceLocalPath)
+				utils.MakePathReadAble(instanceLocalPath)
 				if err != nil {
 					panic(err)
 				}
@@ -271,6 +272,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			})
 		} else {
 			localDir := config.GetLocalVolumePath(param.Name, item.Name)
+			utils.MakePathReadAble(localDir)
 			param.LocalVolume[index].Value = localDir
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
@@ -288,6 +290,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			}
 			usedVolumeName = append(usedVolumeName, item.Name)
 			localDir := config.GetLocalVolumePath(param.Name, item.Name)
+			utils.MakePathReadAble(localDir)
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
 				Source: GetPathOnHost(localDir),
@@ -300,6 +303,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 			}
 			dfsPath := config.GetFullDfsPath(item.Value)
 			utils.CheckCreateDir(dfsPath)
+			utils.MakePathReadAble(dfsPath)
 			m = append(m, mount.Mount{
 				Type:   mount.TypeBind,
 				Source: GetPathOnHost(dfsPath),

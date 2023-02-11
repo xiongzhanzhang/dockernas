@@ -20,6 +20,10 @@ func CheckCreateDir(path string) {
 	}
 }
 
+func MakePathReadAble(path string) {
+	os.Chmod(path, 0777)
+}
+
 func GetFileModTimestamp(filePath string) (int64, error) {
 	fileInfo, err := os.Stat(filePath)
 	if err != nil {
@@ -48,7 +52,7 @@ func ReadFile(filePath string) string {
 }
 
 func WriteFile(filePath string, data string) {
-	f, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	f, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		log.Println("open file error :", err)
 		panic(err)
