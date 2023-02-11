@@ -9,10 +9,10 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
-      devOptions: {
-        enabled: true
-        /* other options */
-      },
+      // devOptions: {
+      //   enabled: true
+      //   /* other options */
+      // },
       manifest: {
         name: 'DockerNAS',
         short_name: 'DockerNAS',
