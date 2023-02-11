@@ -12,7 +12,9 @@ import (
 func initStaticFileRouter(router *gin.Engine) {
 	router.StaticFile("/", "./frontend/dist/index.html")
 	router.Static("/assets", "./frontend/dist/assets")
-	router.Static("/apps", "./apps")
+
+	router.GET("apps/:path1/:path2/icon.jpg", api.GetAppImage)
+	router.GET("extra/apps/:path1/:path2/icon.jpg", api.GetAppImage)
 
 	dir1, err1 := ioutil.ReadDir("./frontend/dist")
 	if err1 != nil {

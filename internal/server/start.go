@@ -21,11 +21,7 @@ func StartServer() {
 	)
 
 	initStaticFileRouter(router)
-
-	// if config.IsBasePathSet() {
-	// 	router.Static("/extra/apps", config.GetExtraAppPath())
-	// }
-	
+	registerRoutes(router)
 	router.NoRoute(func(ctx *gin.Context) {
 		if strings.Index(ctx.Request.URL.Path, "/index/") == 0 ||
 			ctx.Request.URL.Path == "/login" ||
@@ -35,6 +31,5 @@ func StartServer() {
 		}
 	})
 
-	registerRoutes(router)
 	router.Run(config.GetBindAddr())
 }

@@ -129,3 +129,12 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 
 	return dockerTemplates
 }
+
+func GetIconPath(path1 string, path2 string) string {
+	tryPath1 := "./apps/" + path1 + "/" + path2 + "/icon.jpg"
+	if utils.IsFileExist(tryPath1) {
+		return tryPath1
+	}
+
+	return config.GetExtraAppPath() + "/" + path1 + "/" + path2 + "/icon.jpg"
+}
