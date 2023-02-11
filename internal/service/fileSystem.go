@@ -46,7 +46,7 @@ func GetDfsDirInfo(path string) []models.DirInfo {
 func GetSystemDirInfo(path string) []models.DirInfo {
 	if path == "" {
 		dirInfoList := []models.DirInfo{}
-		if utils.GetOperationSystemName() == "windows" {
+		if utils.IsRunOnWindows() {
 			infos, err := disk.Partitions(false)
 			if err != nil {
 				panic(err)

@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func CheckCreateDir(path string) {
@@ -41,6 +42,36 @@ func IsFileExist(path string) bool {
 	}
 	return true
 }
+
+// func CheckCaExist(path string) bool {
+// 	if IsRunOnWindows() {
+// 		return CheckPathByList(path)
+// 	}
+// 	return IsFileExist(path)
+// }
+
+// func CheckPathByList(path string) bool {
+// 	strList := strings.Split(path, "/")
+// 	name := strList[len(strList)-1]
+// 	return CheckFileByList(path[:len(path)-len(name)], name)
+// }
+
+// func CheckFileByList(path string, file string) bool {
+// 	dirs, err := ioutil.ReadDir(path)
+// 	if err != nil {
+// 		return false
+// 	}
+
+// 	for _, fi := range dirs {
+// 		if !fi.IsDir() {
+// 			if fi.Name() == file {
+// 				return true
+// 			}
+// 		}
+// 	}
+
+// 	return false
+// }
 
 func ReadFile(filePath string) string {
 	data, error := ioutil.ReadFile(filePath)
@@ -90,4 +121,11 @@ func CopyFile(srcFile, destFile string) (int64, error) {
 	defer file2.Close()
 
 	return io.Copy(file2, file1)
+}
+
+func TryFixCaPathOnWindows(path string) string {
+	if IsRunOnWindows() {
+		return strings.ReplaceAll(path, "\uf02a", "*")
+	}
+	return path
 }

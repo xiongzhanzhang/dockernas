@@ -77,7 +77,8 @@ func getGatewayInstance() *models.Instance {
 }
 
 func RestartHttpGateway() {
-	tryFlushGatewayConfig()
+	StopHttpGateway()
+	EnableHttpGateway()
 }
 
 func StopHttpGateway() {
@@ -130,6 +131,7 @@ func EnableHttpGateway() {
 
 func EnableHttps() {
 	getCaFilePath(config.GetCaFileDir())
+	RestartHttpGateway()
 	config.EnableHttps()
 	tryFlushGatewayConfig()
 }
@@ -162,14 +164,19 @@ func GetCaFilePathOnHost(caFileDir string) (string, string, string) {
 	key := ""
 	msg := ""
 
-	for _, subfix := range []string{".cer", ".crt", "_bundle.crt"} {
-		cer, key, msg = tryGetCaFilePathOnHost(caFileDir, subfix)
+	for _, prefix := range []string{"", "*.", "\uf02a."} {
+		for _, subfix := range []string{".cer", ".crt", "_bundle.crt"} {
+			cer, key, msg = tryGetCaFilePathOnHost(caFileDir, prefix, subfix)
+			if msg == "" {
+				break
+			}
+		}
 	}
 
-	return cer, key, msg
+	return utils.TryFixCaPathOnWindows(cer), utils.TryFixCaPathOnWindows(key), msg
 }
 
-func tryGetCaFilePathOnHost(caFileDir string, subfix string) (string, string, string) {
+func tryGetCaFilePathOnHost(caFileDir string, prefix string, subfix string) (string, string, string) {
 	if caFileDir == "" {
 		return "", "", "ca file dir is not set"
 	}
@@ -180,17 +187,25 @@ func tryGetCaFilePathOnHost(caFileDir string, subfix string) (string, string, st
 
 	fullPath := config.GetFullDfsPath(caFileDir)
 
-	cer := fullPath + "/" + domain + subfix
-	key := fullPath + "/" + domain + ".key"
-	if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
-		cer = fullPath + "/" + domain + "/" + domain + subfix
-		key = fullPath + "/" + domain + "/" + domain + ".key"
-		if !utils.IsFileExist(cer) || !utils.IsFileExist(key) {
-			return "", "", "can't find ca file under " + caFileDir
-		}
+	cer := fullPath + "/" + prefix + domain + subfix
+	key := fullPath + "/" + prefix + domain + ".key"
+	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
+		return cer, key, ""
 	}
 
-	return cer, key, ""
+	cer = fullPath + "/" + prefix + domain + "/" + prefix + domain + subfix
+	key = fullPath + "/" + prefix + domain + "/" + prefix + domain + ".key"
+	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
+		return cer, key, ""
+	}
+
+	cer = fullPath + "/" + prefix + domain + "_ecc/" + prefix + domain + subfix
+	key = fullPath + "/" + prefix + domain + "_ecc/" + prefix + domain + ".key"
+	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
+		return cer, key, ""
+	}
+
+	return "", "", "can't find ca file under " + caFileDir
 }
 
 func tryFlushGatewayConfig() {

@@ -22,7 +22,7 @@
         {
             "prompt":"备份模式",
             "key":"ALIYUNPAN_SYNC_MODE",
-            "value":"upload"
+            "value":"sync"
         },
         {
             "prompt":"任务步骤",

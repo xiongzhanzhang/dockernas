@@ -19,6 +19,10 @@ func GetOperationSystemName() string {
 	return runtime.GOOS
 }
 
+func IsRunOnWindows() bool {
+	return GetOperationSystemName() == "windows"
+}
+
 func GetHostMemUsed() float64 {
 	memData, err := mem.VirtualMemory()
 	if err != nil {
