@@ -56,24 +56,25 @@ func GetInstanceHttpPorts() []models.InstanceHttpPorts {
 	return instanceHttpPortsList
 }
 
+func getGatewayInstance() *models.Instance {
+	return models.GetInstanceByName(config.GetGateWayInstanceName())
+}
+
 func CreateHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 	proxyConfig.CreateTime = time.Now().UnixMilli()
 	models.AddHttpProxyConfig(&proxyConfig)
-	tryFlushGatewayConfig()
+	utils.RunBackgroundTaskSafe(tryFlushGatewayConfig, time.Second*3)
 }
 
 func DelHttpProxyConfig(proxyConfig models.HttpProxyConfig) {
 	models.DelHttpProxyConfig(&proxyConfig)
-	tryFlushGatewayConfig()
+	utils.RunBackgroundTaskSafe(tryFlushGatewayConfig, time.Second*3)
 }
 
 func SetDomain(domain string) {
 	config.SetDomain(domain)
-	tryFlushGatewayConfig()
-}
-
-func getGatewayInstance() *models.Instance {
-	return models.GetInstanceByName(config.GetGateWayInstanceName())
+	config.DisableHttps()
+	utils.RunBackgroundTaskSafe(tryFlushGatewayConfig, time.Second*3)
 }
 
 func RestartHttpGateway() {
@@ -131,9 +132,8 @@ func EnableHttpGateway() {
 
 func EnableHttps() {
 	getCaFilePath(config.GetCaFileDir())
-	RestartHttpGateway()
 	config.EnableHttps()
-	tryFlushGatewayConfig()
+	RestartHttpGateway()
 }
 
 func DisableHttps() {
@@ -144,68 +144,9 @@ func DisableHttps() {
 func SetCaFileDir(path string) {
 	getCaFilePath(path)
 	config.SetCaFileDir(path)
-
-	tryFlushGatewayConfig()
-}
-
-func getCaFilePath(caFileDir string) (string, string) {
-	cer, key, msg := GetCaFilePathOnHost(caFileDir)
-	if msg != "" {
-		panic(msg)
+	if config.GetIsHttpsEnabled() {
+		utils.RunBackgroundTaskSafe(RestartHttpGateway, time.Second*3)
 	}
-
-	//change to path in nginx container
-	fullPath := config.GetFullDfsPath(caFileDir)
-	return strings.Replace(cer, fullPath, "/ca", 1), strings.Replace(key, fullPath, "/ca", 1)
-}
-
-func GetCaFilePathOnHost(caFileDir string) (string, string, string) {
-	cer := ""
-	key := ""
-	msg := ""
-
-	for _, prefix := range []string{"", "*.", "\uf02a."} {
-		for _, subfix := range []string{".cer", ".crt", "_bundle.crt"} {
-			cer, key, msg = tryGetCaFilePathOnHost(caFileDir, prefix, subfix)
-			if msg == "" {
-				break
-			}
-		}
-	}
-
-	return utils.TryFixCaPathOnWindows(cer), utils.TryFixCaPathOnWindows(key), msg
-}
-
-func tryGetCaFilePathOnHost(caFileDir string, prefix string, subfix string) (string, string, string) {
-	if caFileDir == "" {
-		return "", "", "ca file dir is not set"
-	}
-	domain := config.GetDomain()
-	if domain == "" {
-		return "", "", "domain is not set"
-	}
-
-	fullPath := config.GetFullDfsPath(caFileDir)
-
-	cer := fullPath + "/" + prefix + domain + subfix
-	key := fullPath + "/" + prefix + domain + ".key"
-	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
-		return cer, key, ""
-	}
-
-	cer = fullPath + "/" + prefix + domain + "/" + prefix + domain + subfix
-	key = fullPath + "/" + prefix + domain + "/" + prefix + domain + ".key"
-	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
-		return cer, key, ""
-	}
-
-	cer = fullPath + "/" + prefix + domain + "_ecc/" + prefix + domain + subfix
-	key = fullPath + "/" + prefix + domain + "_ecc/" + prefix + domain + ".key"
-	if utils.IsFileExist(cer) && utils.IsFileExist(key) {
-		return cer, key, ""
-	}
-
-	return "", "", "can't find ca file under " + caFileDir
 }
 
 func tryFlushGatewayConfig() {
@@ -218,6 +159,17 @@ func tryFlushGatewayConfig() {
 			RestartInstance(*gateway)
 		}
 	}
+}
+
+func getCaFilePath(caFileDir string) (string, string) {
+	cer, key, msg := utils.GetCaFilePathOnHost(config.GetFullDfsPath(caFileDir), config.GetDomain())
+	if msg != "" {
+		panic(msg)
+	}
+
+	//change to path in nginx container
+	fullPath := config.GetFullDfsPath(caFileDir)
+	return strings.Replace(cer, fullPath, "/ca", 1), strings.Replace(key, fullPath, "/ca", 1)
 }
 
 func updateNginxConfig(instance models.Instance) {

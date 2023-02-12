@@ -368,6 +368,9 @@ export default {
       for (var instancePort of this.instancesPorts) {
         if (instancePort.instanceName == this.curInstanceName) {
           this.curPorts = instancePort.ports;
+          if(this.curPorts.length>0){
+            this.curSelectPort=this.curPorts[0];
+          }
         }
       }
     },

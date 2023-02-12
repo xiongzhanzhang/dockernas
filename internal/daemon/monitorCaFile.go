@@ -14,7 +14,7 @@ func MonitorCaFile() {
 		return
 	}
 
-	cer, key, msg := service.GetCaFilePathOnHost(config.GetCaFileDir())
+	cer, key, msg := utils.GetCaFilePathOnHost(config.GetFullDfsPath(config.GetCaFileDir()), config.GetDomain())
 	if msg != "" {
 		return
 	}

@@ -129,3 +129,49 @@ func TryFixCaPathOnWindows(path string) string {
 	}
 	return path
 }
+
+func GetCaFilePathOnHost(caFileDir string, domain string) (string, string, string) {
+	cer := ""
+	key := ""
+	msg := ""
+
+	for _, prefix := range []string{"", "*.", "\uf02a."} {
+		for _, subfix := range []string{".cer", ".crt", "_bundle.crt"} {
+			cer, key, msg = tryGetCaFilePathOnHost(caFileDir, domain, prefix, subfix)
+			if msg == "" {
+				break
+			}
+		}
+	}
+
+	return TryFixCaPathOnWindows(cer), TryFixCaPathOnWindows(key), msg
+}
+
+func tryGetCaFilePathOnHost(caFileDir string, domain string, prefix string, subfix string) (string, string, string) {
+	if caFileDir == "" {
+		return "", "", "ca file dir is not set"
+	}
+	if domain == "" {
+		return "", "", "domain is not set"
+	}
+
+	cer := caFileDir + "/" + prefix + domain + subfix
+	key := caFileDir + "/" + prefix + domain + ".key"
+	if IsFileExist(cer) && IsFileExist(key) {
+		return cer, key, ""
+	}
+
+	cer = caFileDir + "/" + prefix + domain + "/" + prefix + domain + subfix
+	key = caFileDir + "/" + prefix + domain + "/" + prefix + domain + ".key"
+	if IsFileExist(cer) && IsFileExist(key) {
+		return cer, key, ""
+	}
+
+	cer = caFileDir + "/" + prefix + domain + "_ecc/" + prefix + domain + subfix
+	key = caFileDir + "/" + prefix + domain + "_ecc/" + prefix + domain + ".key"
+	if IsFileExist(cer) && IsFileExist(key) {
+		return cer, key, ""
+	}
+
+	return "", "", "can't find ca file under " + caFileDir
+}

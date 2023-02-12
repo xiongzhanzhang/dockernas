@@ -66,6 +66,9 @@ func GetNetIo() (float64, float64) {
 }
 
 func IsPortUsed(host string, protocol string, port string) bool {
+	if port == "80" || port == "443" {
+		return false //aviod http gateway restart error
+	}
 	if protocol != "tcp" && protocol != "http" {
 		return false //only check tcp port
 	}
