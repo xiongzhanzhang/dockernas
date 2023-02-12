@@ -180,6 +180,7 @@ func updateNginxConfig(instance models.Instance) {
 
 	proxyConfigs := models.GetHttpProxyConfig()
 	configStr := `
+	    client_max_body_size 102400m;
 		map $http_upgrade $connection_upgrade {
 			default upgrade;
 			''      close;
