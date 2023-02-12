@@ -123,6 +123,8 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 					continue
 				}
 				dockerTemplates = append(dockerTemplates, dockerTemplate)
+			} else {
+				log.Println("load template error for " + fi.Name() + " under " + path)
 			}
 		}
 	}

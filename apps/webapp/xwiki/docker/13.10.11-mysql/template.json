@@ -12,7 +12,7 @@
         {
             "prompt":"mysql地址",
             "key":"DB_HOST",
-            "value":"host.docker.internal:3306",
+            "value":"host.docker.internal:3306"
         },
         {
             "prompt":"mysql用户",
