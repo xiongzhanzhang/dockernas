@@ -22,7 +22,11 @@ func CheckIsPortUsed(param models.InstanceParam) {
 			panic(err)
 		}
 		if port != nil {
-			panic("port " + port.Port + " with " + port.Protocol + " protocol is used by " + port.InstanceName)
+			if port.InstanceName == param.Name {
+				continue
+			} else {
+				panic("port " + port.Port + " with " + port.Protocol + " protocol is used by " + port.InstanceName)
+			}
 		}
 		portValue, err := strconv.Atoi(item.Value)
 		if err != nil {

@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-func checkParamIsValid(param models.InstanceParam) {
+func CheckParamIsValid(param models.InstanceParam) {
 	match, _ := regexp.MatchString("[a-zA-Z0-9][a-zA-Z0-9_.-]", param.Name)
 	if match == false {
 		panic(param.Name + " not match [a-zA-Z0-9][a-zA-Z0-9_.-] to be a container name")
@@ -33,6 +33,8 @@ func checkParamIsValid(param models.InstanceParam) {
 			}
 		}
 	}
+
+	CheckIsPortUsed(param)
 }
 
 func GetInstance() []models.Instance {
@@ -143,9 +145,6 @@ func GetInstanceByName(name string) models.Instance {
 }
 
 func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance {
-	checkParamIsValid(param)
-	CheckIsPortUsed(param)
-
 	var instance models.Instance
 	instance.Name = param.Name
 	instance.Summary = param.Summary
@@ -164,9 +163,7 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 }
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {
-	checkParamIsValid(param)
 	DelInstancePorts(instance)
-	CheckIsPortUsed(param)
 	log.Println("delete comtainer of instance " + instance.Name)
 	err := docker.Delete(instance.ContainerID)
 	if err != nil {

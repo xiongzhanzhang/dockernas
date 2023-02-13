@@ -17,6 +17,7 @@ func PostInstance(c *gin.Context) {
 	if config.IsInstanceNameConflict(param.Name) {
 		panic(param.Name + " is internal used")
 	}
+	service.CheckParamIsValid(param)
 	service.CreateInstance(param, false)
 
 	c.JSON(200, gin.H{
@@ -59,6 +60,7 @@ func PatchInstance(c *gin.Context) {
 			log.Println(err)
 			panic(err)
 		}
+		service.CheckParamIsValid(param)
 		service.EditInstance(*instance, param)
 	}
 
