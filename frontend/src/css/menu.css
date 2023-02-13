@@ -3,12 +3,13 @@
         padding: 0 12px;
     }
 
+    .el-sub-menu__title{
+        padding: 0 12px;
+    }
+
     .left_menu {
         display: none;
     }
-
-
-
 
     .menu-item {
         width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="main_page">
     <div class="two_item_div">
-      <div>
+      <div style="margin-left: 6px;">
         <el-select
           v-model="selectTypes"
           multiple
@@ -19,7 +19,7 @@
           />
         </el-select>
       </div>
-      <div>
+      <div style="margin-right: 6px;">
         <el-input
           v-model="searchStr"
           class="w-50 m-2 big_input"

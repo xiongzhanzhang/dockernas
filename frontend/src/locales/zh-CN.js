@@ -7,9 +7,9 @@ const setting = {
 }
 
 const index = {
-  apps: '应用实例',
-  store: '应用市场',
-  setting: '系统设置'
+  apps: '应用',
+  store: '商店',
+  setting: '设置'
 }
 
 const store = {

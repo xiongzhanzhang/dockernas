@@ -9,6 +9,7 @@
             text-color="#fff"
             class="el-menu-demo"
             mode="horizontal"
+            :ellipsis="true"
             :default-active="
               splitRouterPathByIndex($router.currentRoute.value.path, 3)
             "
