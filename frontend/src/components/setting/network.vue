@@ -81,7 +81,7 @@
           <a  v-if="networkData.httpsEnable" target="_blank" :href="'https://' + scope.row.url">{{scope.row.url}}</a>
         </el-table-column>
         <el-table-column prop="instanceName" label="代理实例" min-width="20%" />
-        <el-table-column prop="port" label="代理端口" min-width="15%" />
+        <el-table-column prop="port" label="代理端口" min-width="20%" />
         <el-table-column label="操作" width="90px" #default="scope">
           <el-button
             size="small"

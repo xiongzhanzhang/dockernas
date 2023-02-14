@@ -2,19 +2,19 @@
   <div>
     <div class="card_style">
       <div class="input_div bottom_border">
-        <div class="first_input">存储路径</div>
+        <div class="table_first_input">存储路径</div>
         <div>{{ storageData.baseDir }}</div>
       </div>
       <div class="input_div bottom_border">
-        <div class="first_input">设备</div>
+        <div class="table_first_input">设备</div>
         <div>{{ storageData.device }}</div>
       </div>
       <div class="input_div bottom_border">
-        <div class="first_input">容量</div>
+        <div class="table_first_input">容量</div>
         <div>{{ getSizeInGB(storageData.capacity, 0) }} GB</div>
       </div>
       <div class="input_div bottom_border">
-        <div class="first_input">格式</div>
+        <div class="table_first_input">格式</div>
         <div>{{ storageData.fstype }}</div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card" @click="clicked">
+    <div class="card" @click="clicked" style="position:relative">
       <div class="vertical_div">
         <el-image
           :class='[url==null ?"":"click_able","image_icon"]'
@@ -12,7 +12,7 @@
         <div class="main_text" >{{ instance.name }}</div>
         <div class="secondary_text">{{ instance.summary }}</div>
       </div>
-      <div style="height: 100%;">
+      <div style="position:absolute;right:0;top:0">
         <div class="color_dot" v-if="instance.state == 4" style="background-color:gray"></div>
         <div class="color_dot" v-if="instance.state == 0 || instance.state == 1" style="background-color:yellow"></div>
         <div class="color_dot" v-if="instance.state == 2" style="background-color:red"></div>
