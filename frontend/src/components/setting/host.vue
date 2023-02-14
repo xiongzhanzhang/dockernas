@@ -26,10 +26,10 @@
         <div class="table_second_input">{{ new Date(hostData.bootTime).toLocaleString() }}</div>
       </div>
     </div>
-    <div>
+    <div class="card_style">
       <instanceMonitor name="dockernas"></instanceMonitor>
     </div>
-    <div>
+    <div class="card_style">
       <instanceMonitor></instanceMonitor>
     </div>
   </div>

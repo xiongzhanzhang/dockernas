@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card_style" style="min-height: 600px">
+    <div class="card_style" style="min-height: 800px">
       <el-table
         :data="image"
         stripe

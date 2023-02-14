@@ -95,7 +95,7 @@
       </div> -->
     </div>
 
-    <div class="center_div" style="margin-top: 100px">
+    <div class="center_div" style="margin-top: 50px">
       <el-button type="primary" style="height: 40px; width: 200px" @click="edit"
         >配置</el-button
       >

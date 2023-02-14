@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card_style" style="min-height: 600px">
+    <div class="card_style" style="min-height: 800px">
       <div class="center_div" style="padding-top: 5px; padding-bottom: 10px">
         <div style="flex-grow: 1"></div>
         <el-button

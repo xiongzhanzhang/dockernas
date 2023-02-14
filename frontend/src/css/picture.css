@@ -40,8 +40,7 @@
     }
 
     .router_view_border{
-        padding: 5px;
-        margin: 6px;
-        background-color: white;
+        padding: 0px;
+        /* margin: 6px; */
     }
 }

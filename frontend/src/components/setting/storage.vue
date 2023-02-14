@@ -18,7 +18,7 @@
         <div>{{ storageData.fstype }}</div>
       </div>
     </div>
-    <div class="card_style" style="margin-top: 16px">
+    <div class="card_style">
       <el-row>
         <el-col :xs="24" :sm="12" :md="12" :lg="12">
           <div ref="all" class="chart"></div>

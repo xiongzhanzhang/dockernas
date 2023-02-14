@@ -57,7 +57,7 @@
 
     </div>
 
-    <div class="card_style" style="margin-top: 16px; min-height: 300px">
+    <div class="card_style" style="min-height: 600px">
       <div class="center_div" style="padding-top: 10px; padding-bottom: 10px; margin-right: 20px;">
         <div style="flex-grow: 1"></div>
         <el-button

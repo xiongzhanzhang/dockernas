@@ -57,7 +57,7 @@
             >
           </el-menu>
         </div>
-        <div class="card_style" style="height: 100%">
+        <div style="height: 100%">
         <RouterView v-slot="{ Component }">
           <component ref="view" :is="Component" />
         </RouterView>
