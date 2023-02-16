@@ -22,16 +22,22 @@ http.interceptors.response.use(response => {
     return response;
 }, error => {
     console.log(error);
-    if (error.response.status == 555) {
-        storage.rm("token");
-        router.replace({ path: "/login" });
-    }else if(error.response.status == 556){
-        router.replace({ path: "/basepath" });
-    } else {
-        var msg=error.response.data.msg;
-        if(msg==null||msg==""){
-            msg=error.response.statusText;
+    if (error.response != null) {
+        if (error.response.status == 555) {
+            storage.rm("token");
+            router.replace({ path: "/login" });
+        } else if (error.response.status == 556) {
+            router.replace({ path: "/basepath" });
+        } else {
+            var msg = error.response.data.msg;
+            if (msg == null || msg == "") {
+                msg = error.response.statusText;
+            }
+            ElMessage.error(msg);
         }
+    }
+    else {
+        msg = error.message;
         ElMessage.error(msg);
     }
 

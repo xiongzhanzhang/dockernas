@@ -28,6 +28,31 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
+      },
+      workbox: {
+        // globPatterns: [],
+        runtimeCaching: [
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|ico)$/,
+            handler: 'NetworkFirst'
+          },
+          {
+            urlPattern:  /.*\.js.*/,
+            handler: 'NetworkFirst'
+          },
+          {
+            urlPattern: /.*\.css.*/,
+            handler: 'NetworkFirst'
+          },
+          {
+            urlPattern: /.*\/index\/.*/,
+            handler: 'NetworkFirst'
+          },
+          {
+            urlPattern: /.*\/api\/(?:instance|app)$/,
+            handler: 'NetworkFirst'
+          },
+        ]
       }
     })
   ],
@@ -36,7 +61,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base:"/",
+  base: "/",
   server: {
     port: 8081,
     proxy: {
@@ -45,8 +70,8 @@ export default defineConfig({
         ws: true,
         changeOrigin: true
       },
-      '/apps':'http://localhost:8080',
-      '/extra/apps':'http://localhost:8080',
+      '/apps': 'http://localhost:8080',
+      '/extra/apps': 'http://localhost:8080',
       '/terminal': {
         target: 'http://localhost:8080',
         ws: true,
