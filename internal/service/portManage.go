@@ -17,6 +17,9 @@ func DelInstancePorts(instance models.Instance) {
 
 func CheckIsPortUsed(param models.InstanceParam) {
 	for _, item := range param.PortParams {
+		if item.Value == "" {
+			continue
+		}
 		port, err := models.GetInstancePort(item.Protocol, item.Value)
 		if err != nil {
 			panic(err)

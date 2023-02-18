@@ -192,6 +192,12 @@ func GetContainerInspect(containerID string) types.ContainerJSON {
 func Create(param *models.InstanceParam) (string, error) {
 	containerConfig, hostConfig := buildConfig(param)
 
+	err := CheckNetwork()
+	if err != nil {
+		log.Println("check network error")
+		return "", err
+	}
+
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
@@ -331,6 +337,9 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		hostIp = "127.0.0.1"
 	}
 	for _, item := range param.PortParams {
+		if item.Value == "" {
+			continue
+		}
 		proto := "tcp"
 		if item.Protocol == "udp" {
 			proto = "udp"
@@ -352,6 +361,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		PortBindings:  netPort,
 		Mounts:        m,
 		RestartPolicy: container.RestartPolicy{Name: "always"},
+		NetworkMode:   container.NetworkMode(GetDockerNasNetworkName()),
 	}
 
 	if param.Privileged {
