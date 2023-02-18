@@ -32,6 +32,10 @@ docker buildx build --platform linux/arm,linux/arm64,linux/amd64 -t xiongzhanzha
 ```
 
 ## 版本记录
+### [0.3.0] 发布日期: 2023-02-18
+- 支持多种网络模式
+- 前端样式优化
+- 应用模板支持配置运行容器的user
 ### [0.2.0] 发布日期: 2023-02-11
 - 移动端适配
 - pwa配置
