@@ -7,7 +7,7 @@ export const getSubscribes = () => {
 export const createSubscribe = (name, url) => {
     return http.post("/api/subscribe", {
         name: name,
-        url, url
+        url: url
     })
 };
 
