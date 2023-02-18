@@ -48,7 +48,7 @@ func GetInstanceHttpPorts() []models.InstanceHttpPorts {
 				if param.NetworkMode == models.HOST_MODE {
 					instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Key)
 				} else {
-					if item.Value == "" {
+					if item.Value == "" || param.NetworkMode == models.NOBUND_MODE {
 						instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Key)
 					} else {
 						instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Value)

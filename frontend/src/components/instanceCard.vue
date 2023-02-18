@@ -25,7 +25,7 @@
   
   <script>
 import createInstance from "./createInstance.vue";
-import {getInstanceWebUrl} from "../utils/url"
+import {getFirstHttpPortUrl} from "../utils/url"
 
 export default {
   name: "instanceCard",
@@ -53,7 +53,7 @@ export default {
     if(this.instance.url!=""){
       this.url=this.instance.url;
     }else{
-      this.url=getInstanceWebUrl(this.instance.name, this.instance.port);
+      this.url=getFirstHttpPortUrl(JSON.parse(this.instance.instanceParamStr));
     }
   }
 };

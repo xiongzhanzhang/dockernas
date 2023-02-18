@@ -30,7 +30,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // globPatterns: [],
+        globPatterns: ["index.html"],
         runtimeCaching: [
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|ico)$/,

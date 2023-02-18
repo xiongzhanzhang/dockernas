@@ -12,7 +12,6 @@ import (
 	"os"
 	"regexp"
 	"runtime/debug"
-	"strconv"
 	"time"
 )
 
@@ -49,7 +48,7 @@ func GetInstance() []models.Instance {
 	networkInfo := GetNetworkInfo()
 	if networkInfo.HttpGatewayEnable {
 		for i, instance := range instances {
-			proxyConfig := models.GetHttpProxyConfigByInstance(instance.Name, strconv.Itoa(instance.Port))
+			proxyConfig := models.GetHttpProxyConfigByInstance(instance.Name)
 			if proxyConfig != nil {
 				if networkInfo.HttpsEnable {
 					instances[i].Url = "https://" + proxyConfig.HostName + "." + networkInfo.Domain

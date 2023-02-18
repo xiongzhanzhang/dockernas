@@ -67,9 +67,9 @@ func GetHttpProxyConfigByHostName(hostName string) HttpProxyConfig {
 	return config
 }
 
-func GetHttpProxyConfigByInstance(instanceName string, port string) *HttpProxyConfig {
+func GetHttpProxyConfigByInstance(instanceName string) *HttpProxyConfig {
 	var config HttpProxyConfig
-	err := GetDb().First(&config, "instance_name=? and port=?", instanceName, port).Error
+	err := GetDb().First(&config, "instance_name=?", instanceName).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil

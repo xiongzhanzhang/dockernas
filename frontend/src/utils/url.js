@@ -24,3 +24,18 @@ export const getInstancePortText = (instanceParam, portParamItem) => {
 export const splitRouterPathByIndex = (router, index) =>{
     return router.split("/").slice(0,index).join("/")
 }
+
+export const getFirstHttpPortUrl = (instanceParam) => {
+    if(instanceParam.networkMode === "nobund"){
+        return null
+    }
+    for(let param of instanceParam.portParams) {
+        if(param.protocol === 'http'){
+            if(instanceParam.networkMode !== "host"&&instanceParam.value===""){
+                continue
+            }
+            return getInstanceWebUrl(instanceParam, param)
+        }
+    }
+    return null;
+}
