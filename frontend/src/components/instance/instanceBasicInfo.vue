@@ -32,10 +32,8 @@
         <div v-if="instanceParam.appUrl == ''">{{instance.appName }}</div>
       </div>
       <div class="input_div bottom_border">
-        <div class="table_first_input">仅本地访问</div>
-        <div>
-          <el-switch v-model="instanceParam.hostOnly" disabled></el-switch>
-        </div>
+        <div class="table_first_input">网络模式</div>
+        <div>{{ instanceParam.networkMode }}</div>
       </div>
       <div class="input_div bottom_border">
         <div class="table_first_input">版本</div>
@@ -50,9 +48,9 @@
       >
         <div class="table_first_input">{{ param.prompt }}</div>
         <div v-if="param.protocol == 'http'">
-          <a target="_blank" :href="getInstanceWebUrl(instance.name, param.value)">{{ param.value }}</a>
+          <a target="_blank" :href="getInstanceWebUrl(instanceParam, param)">{{ getInstancePortText(instanceParam, param) }}</a>
         </div>
-        <div v-if="param.protocol != 'http'">{{ param.value }}</div>
+        <div v-if="param.protocol != 'http'">{{ getInstancePortText(instanceParam, param) }}</div>
       </div>
 
       <div
@@ -145,7 +143,7 @@
 </template>
 
 <script>
-import { getInstanceWebUrl } from "../../utils/url";
+import {getInstancePortText, getInstanceWebUrl} from "../../utils/url";
 import createInstance from "../createInstance.vue";
 import {
   stopInstance,
@@ -172,6 +170,7 @@ export default {
   },
   methods: {
     getInstanceWebUrl,
+    getInstancePortText,
     initData(instance) {
       this.instance = instance;
       this.instanceParam = JSON.parse(this.instance.instanceParamStr);

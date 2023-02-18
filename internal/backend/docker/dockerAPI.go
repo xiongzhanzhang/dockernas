@@ -332,23 +332,25 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 	exports := make(nat.PortSet)
 	netPort := make(nat.PortMap)
 
-	hostIp := "0.0.0.0"
-	if param.HostOnly {
-		hostIp = "127.0.0.1"
-	}
-	for _, item := range param.PortParams {
-		if item.Value == "" {
-			continue
+	if param.NetworkMode != models.HOST_MODE && param.NetworkMode != models.NOBUND_MODE {
+		hostIp := "0.0.0.0"
+		if param.NetworkMode == models.LOCAL_MODE {
+			hostIp = "127.0.0.1"
 		}
-		proto := "tcp"
-		if item.Protocol == "udp" {
-			proto = "udp"
+		for _, item := range param.PortParams {
+			if item.Value == "" {
+				continue
+			}
+			proto := "tcp"
+			if item.Protocol == "udp" {
+				proto = "udp"
+			}
+			natPort, _ := nat.NewPort(proto, item.Key)
+			exports[natPort] = struct{}{}
+			portList := make([]nat.PortBinding, 0, 1)
+			portList = append(portList, nat.PortBinding{HostIP: hostIp, HostPort: item.Value})
+			netPort[natPort] = portList
 		}
-		natPort, _ := nat.NewPort(proto, item.Key)
-		exports[natPort] = struct{}{}
-		portList := make([]nat.PortBinding, 0, 1)
-		portList = append(portList, nat.PortBinding{HostIP: hostIp, HostPort: item.Value})
-		netPort[natPort] = portList
 	}
 
 	containerConfig := container.Config{
@@ -361,7 +363,12 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		PortBindings:  netPort,
 		Mounts:        m,
 		RestartPolicy: container.RestartPolicy{Name: "always"},
-		NetworkMode:   container.NetworkMode(GetDockerNasNetworkName()),
+	}
+
+	if param.NetworkMode != models.HOST_MODE {
+		hostConfig.NetworkMode = container.NetworkMode(GetDockerNasNetworkName())
+	} else {
+		hostConfig.NetworkMode = "host"
 	}
 
 	if param.Privileged {

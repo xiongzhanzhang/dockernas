@@ -50,9 +50,21 @@
         </div>
 
         <div class="input_div">
-          <div class="first_input">仅本地访问</div>
+          <div class="first_input">网络模式</div>
           <div>
-            <el-switch v-model="instanceParam.hostOnly"></el-switch>
+            <el-select
+                v-model="instanceParam.networkMode"
+                collapse-tags
+                size="large"
+                class="big_input"
+            >
+              <el-option
+                  v-for="item in networkModes"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+              />
+            </el-select>
           </div>
         </div>
 
@@ -79,7 +91,7 @@
         <div
           class="input_div"
           v-for="param in instanceParam.portParams"
-          v-show="param.hide == false"
+          v-show="param.hide == false && instanceParam.networkMode!='nobund' && instanceParam.networkMode!='host'"
           :key="param.prompt"
         >
           <div class="first_input">{{ param.prompt }}</div>
@@ -187,6 +199,7 @@ export default {
         appName: "",
         version: "",
         appUrl: "",
+        networkMode:"bridge",
         portParams: [],
         envParams: [],
         dfsVolume: [],
@@ -197,6 +210,10 @@ export default {
       selectVersion: "",
       appVersions: [],
       title: this.$t("store.instanceApp"),
+
+      networkModes:[
+          "bridge", "host", "local", "nobund"
+      ]
     };
   },
   methods: {

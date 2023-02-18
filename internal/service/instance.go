@@ -34,6 +34,12 @@ func CheckParamIsValid(param models.InstanceParam) {
 		}
 	}
 
+	if param.NetworkMode == models.HOST_MODE {
+		if docker.DetectRealSystem() != "linux" {
+			panic("host network is only work on linux now")
+		}
+	}
+
 	CheckIsPortUsed(param)
 }
 

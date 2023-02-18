@@ -39,13 +39,21 @@ func GetInstanceHttpPorts() []models.InstanceHttpPorts {
 		err := json.Unmarshal([]byte(instance.InstanceParamStr), &param)
 		if err != nil {
 			log.Println(err)
-			panic(err)
+			continue
 		}
 		var instanceHttpPorts models.InstanceHttpPorts
 		instanceHttpPorts.InstanceName = instance.Name
 		for _, item := range param.PortParams {
 			if item.Protocol == "http" {
-				instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Value)
+				if param.NetworkMode == models.HOST_MODE {
+					instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Key)
+				} else {
+					if item.Value == "" {
+						instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Key)
+					} else {
+						instanceHttpPorts.Ports = append(instanceHttpPorts.Ports, item.Value)
+					}
+				}
 			}
 		}
 		if len(instanceHttpPorts.Ports) > 0 {
@@ -116,6 +124,7 @@ func EnableHttpGateway() {
 		param.EnvParams = app.DockerVersions[0].EnvParams
 		param.PortParams = app.DockerVersions[0].PortParams
 		param.Privileged = true
+		param.NetworkMode = models.BIRDGE_MODE
 
 		param.DfsVolume = []models.ParamItem{}
 		param.DfsVolume = app.DockerVersions[0].DfsVolume
@@ -187,6 +196,29 @@ func updateNginxConfig(instance models.Instance) {
 		}
 	`
 	for _, proxyConfig := range proxyConfigs {
+		host := "host.docker.internal"
+		if proxyConfig.InstanceName != "" {
+			proxyedInstance := models.GetInstanceByName(proxyConfig.InstanceName)
+			var param models.InstanceParam
+			err := json.Unmarshal([]byte(proxyedInstance.InstanceParamStr), &param)
+			if err != nil {
+				log.Println(err)
+			} else {
+				if param.NetworkMode == models.NOBUND_MODE {
+					host = proxyConfig.InstanceName
+				} else if param.NetworkMode != models.HOST_MODE {
+					for _, item := range param.PortParams {
+						if item.Protocol == "http" {
+							if item.Key == proxyConfig.Port && item.Value == "" {
+								host = proxyConfig.InstanceName
+								break
+							}
+						}
+					}
+				}
+			}
+		}
+
 		configStr += `
 		server {
 			listen       PORT_PLACEHOLDER;
@@ -203,7 +235,7 @@ func updateNginxConfig(instance models.Instance) {
                 proxy_send_timeout 300s;
 				proxy_set_header Upgrade $http_upgrade;
         		proxy_set_header Connection  $connection_upgrade;
-				proxy_pass  http://host.docker.internal:` + proxyConfig.Port + `;
+				proxy_pass  http://` + host + `:` + proxyConfig.Port + `;
 			}
 		}
 		`

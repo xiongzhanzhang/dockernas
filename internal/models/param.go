@@ -28,15 +28,19 @@ type DockerTemplate struct {
 }
 
 type InstanceParam struct {
-	Name     string `json:"name"`
-	AppName  string `json:"appName"`
-	Summary  string `json:"summary"`
-	IconUrl  string `json:"iconUrl"`
-	AppUrl   string `json:"appUrl"`
-	HostOnly bool   `json:"hostOnly"` // can only access by 127.0.0.1
+	Name        string `json:"name"`
+	AppName     string `json:"appName"`
+	Summary     string `json:"summary"`
+	IconUrl     string `json:"iconUrl"`
+	AppUrl      string `json:"appUrl"`
+	NetworkMode string `json:"networkMode"` // can only access by 127.0.0.1
 	DockerTemplate
 }
 
 const (
 	PLACEHOLDER_PARAM = "placeholder"
+	BIRDGE_MODE       = "bridge"
+	LOCAL_MODE        = "local"
+	HOST_MODE         = "host"
+	NOBUND_MODE       = "nobund"
 )
