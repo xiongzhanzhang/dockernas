@@ -58,11 +58,11 @@
     </div>
 
     <div class="card_style" style="min-height: 600px">
-      <div class="center_div" style="padding-top: 10px; padding-bottom: 10px; margin-right: 20px;">
+      <div class="center_div" style="padding-top: 10px; padding-bottom: 10px;">
         <div style="flex-grow: 1"></div>
         <el-button
         type="primary"
-          style="height: 35px; width: 100px"
+          class="big_button"
           @click="showCreateProxy"
           >添加代理
         </el-button>
@@ -96,7 +96,7 @@
     <el-dialog
       v-model="createProxyVisible"
       title="创建HTTP代理"
-      class="big_dialog"
+      class="small_dialog"
     >
       <div class="center_div">
         <div>
@@ -165,7 +165,7 @@
     <el-dialog
       v-model="setDomainVisiable"
       title="设置域名"
-      class="big_dialog"
+      class="small_dialog"
     >
       <div class="center_div">
         <div>
@@ -194,7 +194,7 @@
     <el-dialog
       v-model="setCaFilePathVisiable"
       title="设置证书文件路径"
-      class="big_dialog"
+      class="small_dialog"
     >
       <div class="center_div">
         <div>

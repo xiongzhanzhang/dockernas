@@ -43,6 +43,13 @@
     cursor: pointer;
 }
 
+.big_button{
+    height: 35px;
+    width: 75px;
+    margin-right: 10px;
+    margin-left: 0px !important;
+}
+
 .card_style {
     /* padding: 6px; */
     margin: 6px;

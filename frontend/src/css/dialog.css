@@ -1,5 +1,9 @@
 
 @media (max-width: 600px) {
+    .small_dialog {
+        min-height: 300px;
+        min-width: 360px;
+    }
     .big_dialog {
         min-height: 500px;
         min-width: 360px;
@@ -11,6 +15,10 @@
 }
 
 @media (min-width: 600px) {
+    .small_dialog {
+        min-height: 300px;
+        min-width: 700px;
+    }
     .big_dialog {
         min-height: 500px;
         min-width: 700px;

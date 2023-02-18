@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="card_style" style="min-height: 800px">
-      <div class="center_div" style="padding-top: 5px; padding-bottom: 10px">
+      <div class="center_div" style="padding-top: 10px; padding-bottom: 10px">
         <div style="flex-grow: 1"></div>
         <el-button
           type="primary"
-          style="height: 35px; width: 100px; margin-right: 10px"
+          class="big_button"
           @click="createSubcribe"
           >添加订阅</el-button
         >
         <el-button
           type="success"
-          style="height: 35px; width: 100px; margin-right: 10px"
+          class="big_button"
           @click="tryFlushSubcribe"
           >刷新订阅</el-button
         >
@@ -42,7 +42,7 @@
     <el-dialog
       v-model="createSubcribeVisible"
       title="创建订阅"
-      class="big_dialog"
+      class="small_dialog"
     >
       <div class="center_div">
         <div>
