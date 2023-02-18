@@ -358,7 +358,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		hostConfig.Privileged = true
 	}
 
-	if utils.GetOperationSystemName() == "linux" {
+	if DetectRealSystem() == "linux" {
 		// if param.Privileged == false {
 		// 	curUser, err := user.Current()
 		// 	if err != nil {
@@ -391,6 +391,32 @@ func GetLog(containerID string) string {
 	io.Copy(&writer, out)
 
 	return writer.String()
+}
+
+func GetDockerVersion() types.Version {
+	ctx := context.Background()
+	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
+	if err != nil {
+		log.Println("create docker client error")
+		panic(err)
+	}
+
+	version, err := cli.ServerVersion(ctx)
+	if err != nil {
+		log.Println("get docker version error")
+		panic(err)
+	}
+
+	return version
+}
+
+func DetectRealSystem() string {
+	version := GetDockerVersion()
+	if strings.Contains(version.KernelVersion, "microsoft") &&
+		strings.Contains(version.KernelVersion, "WSL") {
+		return "windows"
+	}
+	return utils.GetOperationSystemName()
 }
 
 func Exec(container string, columns string) types.HijackedResponse {

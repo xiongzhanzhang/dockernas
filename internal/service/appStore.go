@@ -1,6 +1,7 @@
 package service
 
 import (
+	"dockernas/internal/backend/docker"
 	"dockernas/internal/config"
 	"dockernas/internal/models"
 	"dockernas/internal/utils"
@@ -119,7 +120,7 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 			dockerTemplate.Version = fi.Name()
 			if utils.GetObjFromJsonFile(path+"/"+fi.Name()+"/template.json", &dockerTemplate) != nil {
 				if dockerTemplate.OSList != "" &&
-					strings.Contains(dockerTemplate.OSList, utils.GetOperationSystemName()) == false {
+					strings.Contains(dockerTemplate.OSList, docker.DetectRealSystem()) == false {
 					continue
 				}
 				dockerTemplates = append(dockerTemplates, dockerTemplate)
