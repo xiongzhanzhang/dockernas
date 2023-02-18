@@ -253,6 +253,16 @@ func updateNginxConfig(instance models.Instance) {
 		`
 		configStr = strings.ReplaceAll(configStr, "PORT_PLACEHOLDER", "443 ssl http2")
 		configStr = strings.ReplaceAll(configStr, "SSL_PLACEHOLDER", sslCOnfig)
+
+		for _, proxyConfig := range proxyConfigs {
+			configStr += `
+		server {
+			listen 80;
+			server_name ` + proxyConfig.HostName + "." + config.GetDomain() + `;
+			return 301 https://$server_name$request_uri;
+		}
+		`
+		}
 	} else {
 		configStr = strings.ReplaceAll(configStr, "PORT_PLACEHOLDER", "80")
 		configStr = strings.ReplaceAll(configStr, "SSL_PLACEHOLDER", "")
