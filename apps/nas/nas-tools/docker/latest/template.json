@@ -1,5 +1,5 @@
 {
-    "imageUrl":"jxxghp/nas-tools",
+    "imageUrl":"sungamma/nas-tools",
     "portParams":[
         {
             "prompt":"服务器端口",

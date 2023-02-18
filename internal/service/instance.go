@@ -90,7 +90,14 @@ func runNewContainer(instance *models.Instance, param models.InstanceParam) {
 func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, blocking bool) *models.Instance {
 	docker.GetBasePathOnHost() //check base path
 	log.Println("pull image " + param.ImageUrl)
-	reader := docker.PullImage(param.ImageUrl) //if pull image error, break exec here
+
+	reader, err := docker.PullImage(param.ImageUrl)
+	if err != nil {
+		instance.State = models.PULL_ERROR
+		models.UpdateInstance(instance)
+		models.AddEventLog(instance.Id, models.START_EVENT, err.Error())
+		panic(err)
+	}
 
 	instance.State = models.PULL_IMAGE
 	models.UpdateInstance(instance)

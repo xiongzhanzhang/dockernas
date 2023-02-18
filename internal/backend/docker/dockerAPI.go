@@ -89,21 +89,21 @@ func Restart(containerID string) error {
 	return nil
 }
 
-func PullImage(imageUrl string) io.ReadCloser {
+func PullImage(imageUrl string) (io.ReadCloser, error) {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
 	if err != nil {
 		log.Println("create docker client error")
-		panic(err)
+		return nil, err
 	}
 
 	reader, err2 := cli.ImagePull(ctx, imageUrl, types.ImagePullOptions{})
 	if err2 != nil {
 		log.Println("pull image error: " + imageUrl)
-		panic(err2)
+		return nil, err2
 	}
 
-	return reader
+	return reader, nil
 }
 
 func DelImage(imageId string) {
