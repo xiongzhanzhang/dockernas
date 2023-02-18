@@ -19,6 +19,7 @@ type DockerTemplate struct {
 	Privileged  bool        `json:"privileged"`
 	Cmd         string      `json:"cmd"`
 	OSList      string      `json:"osList"`
+	User        string      `json:"user"`
 	PortParams  []ParamItem `json:"portParams"`
 	EnvParams   []ParamItem `json:"envParams"`
 	LocalVolume []ParamItem `json:"localVolume"`

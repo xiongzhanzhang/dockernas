@@ -358,6 +358,10 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 		hostConfig.Privileged = true
 	}
 
+	if param.User != "" {
+		containerConfig.User = param.User
+	}
+
 	if DetectRealSystem() == "linux" {
 		// if param.Privileged == false {
 		// 	curUser, err := user.Current()
