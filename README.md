@@ -21,7 +21,7 @@ cd frontend
 npm install
 npm run build
 cd ..
-CGO_ENABLED=0 go build ./dockernas.go
+go build ./dockernas.go
 ```
 docker镜像构建方式如下
 ```sh
