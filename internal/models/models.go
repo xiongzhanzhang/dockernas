@@ -5,7 +5,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/glebarez/sqlite"
+	//"github.com/glebarez/sqlite"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
@@ -43,6 +44,13 @@ func GetDb() *gorm.DB {
 	if err != nil || _db == nil {
 		log.Println(err)
 		panic(err)
+	}
+
+	sqlDB, err := _db.DB()
+	if err != nil {
+		sqlDB.SetMaxOpenConns(1)
+	} else {
+		log.Println(err)
 	}
 
 	_db.AutoMigrate(&ParamItem{})

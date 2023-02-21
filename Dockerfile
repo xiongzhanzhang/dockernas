@@ -1,15 +1,16 @@
-FROM golang:alpine AS gobuilder
+FROM golang AS gobuilder
 ENV GOPROXY https://goproxy.cn
+ENV CGO_ENABLED=1
 RUN mkdir /app
 WORKDIR /app
 COPY internal ./internal
 COPY dockernas.go ./
 COPY go.sum ./
 COPY go.mod ./
-RUN go build ./dockernas.go
+RUN go build -ldflags '--extldflags "-static -fpic"' ./dockernas.go
 
 
-FROM alpine:3.17
+FROM alpine
 
 WORKDIR /home/dockernas
 COPY apps ./apps

@@ -28,7 +28,7 @@ docker镜像构建方式如下
 #注意需要先在本地构建好前端代码
 docker build . -t dockernas
 #多平台构建，构建后直接push到dockerhub
-docker buildx build --platform linux/arm,linux/arm64,linux/amd64 -t xiongzhanzhang/dockernas:latest . --push
+docker buildx build --platform linux/arm64,linux/amd64 -t xiongzhanzhang/dockernas:latest . --push
 ```
 
 ## 版本记录
