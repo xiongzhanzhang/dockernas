@@ -20,6 +20,7 @@ type DockerTemplate struct {
 	Cmd         string      `json:"cmd"`
 	OSList      string      `json:"osList"`
 	User        string      `json:"user"`
+	Path        string      `json:"path"`
 	PortParams  []ParamItem `json:"portParams"`
 	EnvParams   []ParamItem `json:"envParams"`
 	LocalVolume []ParamItem `json:"localVolume"`

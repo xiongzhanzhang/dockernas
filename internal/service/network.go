@@ -118,16 +118,9 @@ func EnableHttpGateway() {
 		param.Summary = "http gateway"
 		param.AppName = app.Name
 		param.IconUrl = app.IconUrl
-		param.ImageUrl = app.DockerVersions[0].ImageUrl
-		param.Version = app.DockerVersions[0].Version
-		param.LocalVolume = app.DockerVersions[0].LocalVolume
-		param.EnvParams = app.DockerVersions[0].EnvParams
-		param.PortParams = app.DockerVersions[0].PortParams
-		param.Privileged = true
 		param.NetworkMode = models.BIRDGE_MODE
-
-		param.DfsVolume = []models.ParamItem{}
-		param.DfsVolume = app.DockerVersions[0].DfsVolume
+		param.Version = app.DockerVersions[0].Version
+		param.DockerTemplate = app.DockerVersions[0]
 		param.DfsVolume[0].Value = config.GetCaFileDir()
 
 		CreateInstance(param, true)
@@ -182,7 +175,13 @@ func getCaFilePath(caFileDir string) (string, string) {
 }
 
 func updateNginxConfig(instance models.Instance) {
-	templateFilePath := config.GetAppMountFilePath(instance.AppName, instance.Version, "nginx.conf")
+	var param models.InstanceParam
+	err := json.Unmarshal([]byte(instance.InstanceParamStr), &param)
+	if err != nil {
+		log.Println("updateNginxConfig error:" + err.Error())
+		return
+	}
+	templateFilePath := config.GetAppMountFilePath(param.Path, "nginx.conf")
 	instanceLocalPath := config.GetAppLocalFilePath(instance.Name, "nginx.conf")
 
 	templateData := utils.ReadFile(templateFilePath)
@@ -199,6 +198,9 @@ func updateNginxConfig(instance models.Instance) {
 		host := "host.docker.internal"
 		if proxyConfig.InstanceName != "" {
 			proxyedInstance := models.GetInstanceByName(proxyConfig.InstanceName)
+			if proxyedInstance == nil {
+				continue
+			}
 			var param models.InstanceParam
 			err := json.Unmarshal([]byte(proxyedInstance.InstanceParamStr), &param)
 			if err != nil {

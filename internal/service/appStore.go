@@ -75,7 +75,7 @@ func GetApps() []models.App {
 func GetAppByName(name string, flush bool) *models.App {
 	app, ok := appMap[name]
 	if ok {
-		return GetAppByNameAndPath(app.Name, app.Path) //get lastest data on disk
+		return GetAppByNameAndPath(app.Name, config.GetAbsolutePath(app.Path)) //get lastest data on disk
 	}
 	if !flush {
 		return nil
@@ -87,7 +87,7 @@ func GetAppByName(name string, flush bool) *models.App {
 
 func GetAppByNameAndPath(name string, path string) *models.App {
 	var app models.App
-	app.IconUrl = "/api/icon?path=" + path + "/icon.jpg"
+	app.IconUrl = "/api/icon?path=" + config.GetRelativePath(path) + "/icon.jpg"
 	app.DockerVersions = getDockerTemplates(path + "/docker")
 	if len(app.DockerVersions) == 0 {
 		return nil
@@ -96,7 +96,7 @@ func GetAppByNameAndPath(name string, path string) *models.App {
 		return nil
 	}
 	app.Name = name
-	app.Path = path
+	app.Path = config.GetRelativePath(path)
 
 	return &app
 }
@@ -119,6 +119,7 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 					strings.Contains(dockerTemplate.OSList, docker.DetectRealSystem()) == false {
 					continue
 				}
+				dockerTemplate.Path = config.GetRelativePath(path) + "/" + fi.Name()
 				dockerTemplates = append(dockerTemplates, dockerTemplate)
 			} else {
 				log.Println("load template error for " + fi.Name() + " under " + path)

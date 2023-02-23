@@ -261,7 +261,7 @@ func buildConfig(param *models.InstanceParam) (container.Config, container.HostC
 
 		if item.MountFile {
 			config.GetLocalVolumePath(param.Name, "") // create dir if not exit
-			templateFilePath := config.GetAppMountFilePath(param.AppName, param.Version, item.Name)
+			templateFilePath := config.GetAppMountFilePath(param.Path, item.Name)
 			instanceLocalPath := config.GetAppLocalFilePath(param.Name, item.Name)
 			if !utils.IsFileExist(instanceLocalPath) {
 				_, err := utils.CopyFile(templateFilePath, instanceLocalPath)

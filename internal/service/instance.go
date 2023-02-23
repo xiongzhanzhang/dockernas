@@ -88,7 +88,7 @@ func runNewContainer(instance *models.Instance, param models.InstanceParam) {
 }
 
 func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, blocking bool) *models.Instance {
-	docker.GetBasePathOnHost() //check base path
+	config.GetBasePath() //check base path
 	log.Println("pull image " + param.ImageUrl)
 
 	reader, err := docker.PullImage(param.ImageUrl)
@@ -103,7 +103,11 @@ func pullAndRunContainer(instance *models.Instance, param models.InstanceParam, 
 	models.UpdateInstance(instance)
 
 	if blocking {
-		io.Copy(log.Writer(), reader)
+		_, err := io.Copy(log.Writer(), reader)
+		if err != nil {
+			log.Println(err)
+		}
+		reader.Close()
 		runNewContainer(instance, param)
 	} else {
 		go func() {

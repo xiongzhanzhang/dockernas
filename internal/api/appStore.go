@@ -1,6 +1,7 @@
 package api
 
 import (
+	"dockernas/internal/config"
 	"dockernas/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -27,5 +28,5 @@ func GetAppByName(c *gin.Context) {
 
 func GetIcon(c *gin.Context) {
 	iconPath := c.Query("path")
-	c.File(iconPath)
+	c.File(config.GetAbsolutePath(iconPath))
 }

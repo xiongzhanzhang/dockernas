@@ -2,9 +2,6 @@ package config
 
 import (
 	"dockernas/internal/utils"
-	"io/ioutil"
-	"log"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -76,36 +73,25 @@ func GetLocalVolumePath(instanceName string, volumeName string) string {
 	return basePath
 }
 
-func GetAppMountFilePath(appName string, version string, fileName string) string {
-	if strings.Index(appName, "/") > 0 {
-		return filepath.Join(GetExtraAppPath(), appName, "docker", version, fileName)
+func GetRelativePath(path string) string {
+	if path[0] == '.' {
+		return path
+	}
+	basePath := filepath.Join(GetBasePath(), "")
+	if strings.Index(path, basePath) == 0 {
+		return path[len(basePath):]
 	}
 
-	dir1, err1 := ioutil.ReadDir("./apps")
-	if err1 != nil {
-		log.Println("list dir error", err1)
-	} else {
-		for _, fi1 := range dir1 {
-			if fi1.IsDir() {
-				dir2, err2 := ioutil.ReadDir(filepath.Join("./apps", fi1.Name()))
-				if err2 != nil {
-					log.Println("list dir error", err2)
-				} else {
-					for _, fi2 := range dir2 {
-						if fi2.IsDir() {
-							if fi2.Name() == appName {
-								pwd, err := os.Getwd()
-								if err != nil {
-									panic(err)
-								}
-								return filepath.Join(pwd, "apps", fi1.Name(), appName, "docker", version, fileName)
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	panic("can't change to relative path: " + path)
+}
 
-	panic("unkown app :" + appName)
+func GetAbsolutePath(path string) string {
+	if path[0] == '.' {
+		return path
+	}
+	return filepath.Join(GetBasePath(), path)
+}
+
+func GetAppMountFilePath(path string, fileName string) string {
+	return filepath.Join(GetAbsolutePath(path), fileName)
 }
