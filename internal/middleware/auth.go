@@ -14,6 +14,10 @@ func Authentication() gin.HandlerFunc {
 		// log.Println(token)
 		// log.Println(path)
 
+		if path == "/api/icon" {
+			token = c.Query("token")
+		}
+
 		if path == "/api/network/ipv4" || path == "/api/network/ipv6" {
 			if strings.Index(c.Request.Host, "localhost") != 0 || strings.Index(c.Request.RemoteAddr, "127.0.0.1") != 0 {
 				c.String(404, "")

@@ -7,7 +7,7 @@
             margin-top: 10%;
           "
           class="image_icon"
-          :src="app.iconUrl"
+          :src="getIconUrl(app.iconUrl)"
         />
       </div>
       <div class="vertical_div" style="">
@@ -21,6 +21,7 @@
 
 <script>
 import createInstance from "./createInstance.vue";
+import {getIconUrl} from "@/utils/url"
 export default {
   name: "appCard",
   components: {
@@ -31,6 +32,7 @@ export default {
     return {};
   },
   methods: {
+    getIconUrl,
     clicked() {
       this.$refs.createCard.showDialog();
     },

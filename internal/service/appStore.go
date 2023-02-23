@@ -28,10 +28,7 @@ func GetApps() []models.App {
 				} else {
 					for _, fi2 := range dir2 {
 						if fi2.IsDir() {
-							app := GetAppByNameAndPath(
-								fi2.Name(),
-								"./apps/"+fi1.Name(),
-								"/apps/"+fi1.Name())
+							app := GetAppByNameAndPath(fi2.Name(), "./apps/"+fi1.Name()+"/"+fi2.Name())
 							if app != nil {
 								apps = append(apps, *app)
 							}
@@ -54,7 +51,7 @@ func GetApps() []models.App {
 				} else {
 					for _, fi2 := range dir2 {
 						if fi2.IsDir() {
-							app := GetAppByNameAndPath(fi1.Name()+"/"+fi2.Name(), config.GetExtraAppPath(), "/extra/apps")
+							app := GetAppByNameAndPath(fi1.Name()+"/"+fi2.Name(), config.GetExtraAppPath()+"/"+fi1.Name()+"/"+fi2.Name())
 							if app != nil {
 								apps = append(apps, *app)
 							}
@@ -78,7 +75,7 @@ func GetApps() []models.App {
 func GetAppByName(name string, flush bool) *models.App {
 	app, ok := appMap[name]
 	if ok {
-		return GetAppByNameAndPath(app.Name, app.Path, app.UrlPrefix) //get lastest data on disk
+		return GetAppByNameAndPath(app.Name, app.Path) //get lastest data on disk
 	}
 	if !flush {
 		return nil
@@ -88,19 +85,18 @@ func GetAppByName(name string, flush bool) *models.App {
 	return GetAppByName(name, false)
 }
 
-func GetAppByNameAndPath(name string, path string, urlPrefix string) *models.App {
+func GetAppByNameAndPath(name string, path string) *models.App {
 	var app models.App
-	app.IconUrl = urlPrefix + "/" + name + "/icon.jpg"
-	app.DockerVersions = getDockerTemplates(path + "/" + name + "/docker")
+	app.IconUrl = "/api/icon?path=" + path + "/icon.jpg"
+	app.DockerVersions = getDockerTemplates(path + "/docker")
 	if len(app.DockerVersions) == 0 {
 		return nil
 	}
-	if utils.GetObjFromJsonFile(path+"/"+name+"/introduction.json", &app) == nil {
+	if utils.GetObjFromJsonFile(path+"/introduction.json", &app) == nil {
 		return nil
 	}
 	app.Name = name
 	app.Path = path
-	app.UrlPrefix = urlPrefix
 
 	return &app
 }
@@ -131,13 +127,4 @@ func getDockerTemplates(path string) []models.DockerTemplate {
 	}
 
 	return dockerTemplates
-}
-
-func GetIconPath(path1 string, path2 string) string {
-	tryPath1 := "./apps/" + path1 + "/" + path2 + "/icon.jpg"
-	if utils.IsFileExist(tryPath1) {
-		return tryPath1
-	}
-
-	return config.GetExtraAppPath() + "/" + path1 + "/" + path2 + "/icon.jpg"
 }

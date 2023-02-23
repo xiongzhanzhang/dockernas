@@ -5,7 +5,7 @@
         <el-image
           :class='[url==null ?"":"click_able","image_icon"]'
           @click="tryOpen"
-          :src="instance.iconUrl"
+          :src="getIconUrl(instance.iconUrl)"
         />
       </div>
       <div class="text_div" style="padding-left: 6px; flex-grow: 1;">
@@ -25,7 +25,7 @@
   
   <script>
 import createInstance from "./createInstance.vue";
-import {getFirstHttpPortUrl} from "../utils/url"
+import {getFirstHttpPortUrl, getIconUrl} from "../utils/url"
 
 export default {
   name: "instanceCard",
@@ -39,6 +39,7 @@ export default {
     };
   },
   methods: {
+    getIconUrl,
     clicked() {
       this.$router.push("/index/instances/"+this.instance.name+"/basicInfo");
     },

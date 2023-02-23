@@ -3,7 +3,7 @@
     <el-container style="height: 100%">
       <el-aside class="card_style left_menu">
         <div class="vertical_div">
-          <el-image class="image_icon" :src="iconUrl"></el-image>
+          <el-image class="image_icon" :src="getIconUrl(iconUrl)"></el-image>
 
           <el-menu
             active-text-color="rgb(64,158,255)"
@@ -73,6 +73,7 @@
 
 <script>
 import { getInstance } from "../api/instance";
+import {getIconUrl} from "@/utils/url"
 
 export default {
   name: "instanceInfo",
@@ -87,6 +88,7 @@ export default {
     };
   },
   methods: {
+    getIconUrl,
     flushInstance() {
       getInstance(this.$route.params.name)
         .then((response) => {

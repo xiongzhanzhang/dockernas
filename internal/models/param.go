@@ -33,7 +33,7 @@ type InstanceParam struct {
 	Summary     string `json:"summary"`
 	IconUrl     string `json:"iconUrl"`
 	AppUrl      string `json:"appUrl"`
-	NetworkMode string `json:"networkMode"` // can only access by 127.0.0.1
+	NetworkMode string `json:"networkMode"`
 	DockerTemplate
 }
 

@@ -13,9 +13,6 @@ func initStaticFileRouter(router *gin.Engine) {
 	router.StaticFile("/", "./frontend/dist/index.html")
 	router.Static("/assets", "./frontend/dist/assets")
 
-	router.GET("apps/:path1/:path2/icon.jpg", api.GetAppImage)
-	router.GET("extra/apps/:path1/:path2/icon.jpg", api.GetAppImage)
-
 	dir1, err1 := ioutil.ReadDir("./frontend/dist")
 	if err1 != nil {
 		log.Println("list dir error", err1)
@@ -33,9 +30,10 @@ func registerRoutes(router *gin.Engine) {
 
 	apiv1 := router.Group("/api", middleware.Authentication(), middleware.PathCheck())
 	{
+		apiv1.GET("icon", api.GetIcon)
+
 		apiv1.GET("app", api.GetApps)
-		apiv1.GET("app/:name", api.GetAppByName)
-		apiv1.GET("extra/app/:dir/:name", api.GetExtraAppByName)
+		apiv1.GET("app/*name", api.GetAppByName)
 
 		apiv1.GET("image", api.GetImages)
 		apiv1.DELETE("image", api.DelImage)
