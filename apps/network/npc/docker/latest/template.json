@@ -1,0 +1,34 @@
+{
+    "imageUrl":"ffdfgdfg/npc",
+    "cmd":"-server=SERVER_PLACEHOLDER -vkey=VKEY_PLACEHOLDER -type=TYPE_PLACEHOLDER",
+    "portParams":[
+    ],
+    "envParams":[
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ],
+    "otherParams":[
+        {
+            "prompt":"server",
+            "key":"SERVER_PLACEHOLDER",
+            "value":"nps.example.com:8024",
+            "otherType":"placeholder"
+        },
+        {
+            "prompt":"vkey",
+            "key":"VKEY_PLACEHOLDER",
+            "value":"",
+            "otherType":"placeholder",
+            "passwd":true
+        },
+        {
+            "prompt":"协议类型",
+            "key":"TYPE_PLACEHOLDER",
+            "value":"tcp",
+            "otherType":"placeholder"
+        }
+    ]
+}
+
