@@ -38,22 +38,6 @@
           />
         </div>
       </div>
-      <div class="input_div bottom_border">
-        <div class="table_first_input">ssl证书路径
-          <el-tooltip effect="dark" placement="bottom">
-              <el-icon><InfoFilled /></el-icon>
-              <template #content
-                ><div style="width: 300px">证书需要命名为example.com.key，example.com.key.crt或example.com.key.cer或example.com_bundle.crt。设置后需要重启网关</div></template
-              >
-            </el-tooltip>
-        </div>
-        <div class="table_second_input">
-          {{ networkData.sslCertificatePath }}
-          <el-icon class="click_able" @click="showSetCaFilePath"
-            ><EditPen
-          /></el-icon>
-        </div>
-      </div>
 
     </div>
 
@@ -190,41 +174,6 @@
         </div>
       </div>
     </el-dialog>
-
-    <el-dialog
-      v-model="setCaFilePathVisiable"
-      title="设置证书文件路径"
-      class="small_dialog"
-    >
-      <div class="center_div">
-        <div>
-          <div class="input_div">
-            <div>
-              <el-tree-select
-                class="big_input"
-                style="width: 400px"
-                size="large"
-                v-model="caFilePath"
-                check-strictly
-                lazy
-                :load="loadNode"
-              >
-                <template #default="{ data: { name } }">{{ name }}</template>
-              </el-tree-select>
-            </div>
-          </div>
-          <div class="center_div" style="margin-top: 50px">
-            <el-button
-              type="primary"
-              style="height: 40px; width: 200px"
-              @click="trySetCaPath"
-              :loading="setCaFilePathLoading"
-              >{{ $t("common.yes") }}</el-button
-            >
-          </div>
-        </div>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -240,7 +189,6 @@ import {
   restartHttpGateway,
   enableHttps,
   disableHttps,
-  setCaPath,
 } from "../../api/host";
 import { getInstanceHttpPort } from "../../api/instance";
 import { getDfsDirs } from "../../api/filesystem";
@@ -263,10 +211,6 @@ export default {
 
       restartGatewayLoading: false,
       changeHttpStateLoding: false,
-
-      setCaFilePathLoading: false,
-      setCaFilePathVisiable: false,
-      caFilePath: "",
     };
   },
   methods: {
@@ -334,21 +278,6 @@ export default {
           this.flush();
         });
       }
-    },
-    showSetCaFilePath() {
-      this.setCaFilePathVisiable = true;
-    },
-    trySetCaPath() {
-      this.setCaFilePathLoading = true;
-      setCaPath(this.caFilePath)
-        .then((response) => {
-          this.setCaFilePathLoading = false;
-          this.setCaFilePathVisiable = false;
-          this.flush();
-        })
-        .catch((error) => {
-          this.setCaFilePathLoading = false;
-        });
     },
     showSetDomain() {
       this.curDomain = this.networkData.domain;

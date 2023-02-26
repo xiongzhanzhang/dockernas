@@ -194,6 +194,7 @@ func updateGatewayConfig(instance models.Instance) {
 
 		configStr += `` + directive + ` {
   log
+  encode gzip
   reverse_proxy ` + host + `:` + proxyConfig.Port + `
 }
 
