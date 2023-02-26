@@ -1,0 +1,29 @@
+{
+    "imageUrl":"caddy:latest",
+    "portParams":[
+        {
+            "prompt":"http访问端口",
+            "key":"80",
+            "value":"80",
+            "protocol":"http"
+        },
+        {
+            "prompt":"https访问端口",
+            "key":"443",
+            "value":"443",
+            "protocol":"http"
+        }
+    ],
+    "localVolume":[
+        {
+            "prompt":"配置文件",
+            "key":"/etc/caddy/Caddyfile",
+            "value":"",
+            "name":"Caddyfile",
+            "mountFile":true
+        }
+    ],
+    "dfsVolume":[
+    ]
+}
+

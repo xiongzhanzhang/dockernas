@@ -180,13 +180,15 @@ func CreateInstance(param models.InstanceParam, blocking bool) *models.Instance 
 
 func EditInstance(instance models.Instance, param models.InstanceParam) {
 	DelInstancePorts(instance)
-	log.Println("delete comtainer of instance " + instance.Name)
-	err := docker.Delete(instance.ContainerID)
-	if err != nil {
-		models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
-		panic(err)
-	} else {
-		models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
+	if docker.IsContainerExist(instance.ContainerID) {
+		log.Println("delete comtainer of instance " + instance.Name)
+		err := docker.Delete(instance.ContainerID)
+		if err != nil {
+			models.AddEventLog(instance.Id, models.CONFIG_EVENT, err.Error())
+			panic(err)
+		} else {
+			models.AddEventLog(instance.Id, models.CONFIG_EVENT, "")
+		}
 	}
 
 	instance.Summary = param.Summary

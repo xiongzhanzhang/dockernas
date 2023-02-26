@@ -1,0 +1,9 @@
+{
+  "name": "caddy",
+  "category": [
+    "网络",
+    "编程开发"
+  ],
+  "url":"https://caddyserver.com/",
+  "summary": "Caddy is the first and only web server to use HTTPS automatically and by default."
+}
