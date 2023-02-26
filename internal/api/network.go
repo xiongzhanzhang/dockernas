@@ -102,21 +102,6 @@ func DisableHttps(c *gin.Context) {
 	})
 }
 
-func SetCaFileDir(c *gin.Context) {
-	postMap := map[string]string{}
-	c.BindJSON(&postMap)
-	path, ok := postMap["path"]
-	if ok == false {
-		panic("SetCaFilePath without a param")
-	}
-
-	service.SetCaFileDir(path)
-
-	c.JSON(200, gin.H{
-		"state": "ok",
-	})
-}
-
 func GetHostIpv4(c *gin.Context) {
 	c.String(200, utils.GetLocalAddress())
 }

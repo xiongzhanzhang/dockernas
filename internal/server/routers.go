@@ -68,7 +68,6 @@ func registerRoutes(router *gin.Engine) {
 		apiv1.PATCH("httpgateway", api.PatchHttpGateway)
 		apiv1.POST("httpgateway/https", api.EnableHttps)
 		apiv1.DELETE("httpgateway/https", api.DisableHttps)
-		apiv1.POST("httpgateway/capath", api.SetCaFileDir)
 
 		apiv1.GET("subscribe", api.GetSubscribes)
 		apiv1.PATCH("subscribe", api.UpdateSubscribe)

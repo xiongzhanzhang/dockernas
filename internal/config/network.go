@@ -36,16 +36,3 @@ func DisableHttpGateway() {
 	SetConfig("httpGateWay", "false")
 	SaveConfig()
 }
-
-func GetIsHttpGatewayEnabled() bool {
-	return GetConfig("httpGateWay", "") == "true"
-}
-
-func GetCaFileDir() string {
-	return GetConfig("ca_dir", "")
-}
-
-func SetCaFileDir(path string) {
-	SetConfig("ca_dir", path)
-	SaveConfig()
-}

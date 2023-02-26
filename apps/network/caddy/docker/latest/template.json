@@ -21,6 +21,12 @@
             "value":"",
             "name":"Caddyfile",
             "mountFile":true
+        },
+        {
+            "prompt":"数据",
+            "key":"/data",
+            "value":"",
+            "name":"data"
         }
     ],
     "dfsVolume":[
