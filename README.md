@@ -41,3 +41,5 @@ docker buildx build --platform linux/arm64,linux/amd64 -t xiongzhanzhang/dockern
 - pwa配置
 - 部分bug修复
 
+## 感谢JetBrains对本项目的支持
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg">
