@@ -1,3 +1,6 @@
+![GitHub CI](https://github.com/xiongzhanzhang/dockernas/actions/workflows/docker-image.yml/badge.svg)
+![](https://img.shields.io/badge/version-0.3.0-brightgreen.svg)
+
 ## 简介
 基于docker的NAS系统，特点是简单、免费开源、跨平台
 
