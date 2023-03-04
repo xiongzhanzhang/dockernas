@@ -268,7 +268,10 @@ func DeleteInstance(instance models.Instance) {
 		}
 	}
 	models.DeleteInstance(&instance)
-	os.RemoveAll(config.GetAppLocalPath(instance.Name))
+	err := os.RemoveAll(config.GetAppLocalPath(instance.Name))
+	if err != nil {
+		log.Println(err)
+	}
 	// models.AddEventLog(instance.Id, models.DELETE_EVENT, "")
 }
 

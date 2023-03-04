@@ -156,7 +156,7 @@ func ListContainer() []types.Container {
 		panic(err)
 	}
 
-	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{})
+	containers, err := cli.ContainerList(ctx, types.ContainerListOptions{All: true})
 	if err != nil {
 		panic(err)
 	}

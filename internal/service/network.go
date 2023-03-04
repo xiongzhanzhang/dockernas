@@ -92,7 +92,7 @@ func StopHttpGateway() {
 	config.DisableHttpGateway()
 	gateway := getGatewayInstance()
 	if gateway != nil {
-		DeleteInstance(*gateway)
+		StopInstance(*gateway)
 	}
 }
 
@@ -128,7 +128,7 @@ func EnableHttpGateway() {
 
 func EnableHttps() {
 	config.EnableHttps()
-	RestartHttpGateway()
+	tryFlushGatewayConfig()
 }
 
 func DisableHttps() {
@@ -140,9 +140,7 @@ func tryFlushGatewayConfig() {
 	gateway := getGatewayInstance()
 	if gateway != nil {
 		updateGatewayConfig(*gateway)
-		if gateway.State == models.STOPPED {
-			StartInstance(*gateway)
-		} else {
+		if gateway.State == models.RUNNING {
 			RestartInstance(*gateway)
 		}
 	}
@@ -201,6 +199,8 @@ func updateGatewayConfig(instance models.Instance) {
 `
 	}
 
-	instanceLocalPath := config.GetAppLocalFilePath(instance.Name, "Caddyfile")
-	utils.WriteFile(instanceLocalPath, configStr)
+	if configStr != "" {
+		instanceLocalPath := config.GetAppLocalFilePath(instance.Name, "Caddyfile")
+		utils.WriteFile(instanceLocalPath, configStr)
+	}
 }
