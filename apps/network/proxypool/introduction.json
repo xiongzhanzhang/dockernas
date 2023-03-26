@@ -1,0 +1,8 @@
+{
+  "name": "proxy_pool",
+  "category": [
+    "网络"
+  ],
+  "summary": "爬虫代理IP池",
+  "url":"https://github.com/jhao104/proxy_pool"
+}

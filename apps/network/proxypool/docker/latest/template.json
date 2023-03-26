@@ -1,0 +1,23 @@
+{
+    "imageUrl":"jhao104/proxy_pool",
+    "portParams":[
+        {
+            "prompt":"http访问端口",
+            "key":"5010",
+            "value":"5010",
+            "protocol":"http"
+        }
+    ],
+    "envParams":[
+        {
+            "prompt":"redis地址",
+            "key":"DB_CONN",
+            "value":"redis://host.docker.internal:6379/0"
+        }
+    ],
+    "localVolume":[
+    ],
+    "dfsVolume":[
+    ]
+}
+
